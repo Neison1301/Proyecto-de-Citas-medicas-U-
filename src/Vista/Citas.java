@@ -10,8 +10,7 @@ import javax.swing.JTable;
 public class Citas extends javax.swing.JFrame {
 
 CitasMedicas citasMedicas = new CitasMedicas(0, 0, null, null, null, null, null);
-    NPacientes nPacientes = new NPacientes(null, 0, null, null, null, null, false);
-
+    NPacientes nPacientes = new NPacientes(0, 0, 0, null, null, null,null, false);
     public Citas() {
         initComponents();
 
@@ -489,7 +488,4 @@ CitasMedicas citasMedicas = new CitasMedicas(0, 0, null, null, null, null, null)
     private javax.swing.JTextArea tfInfoCita;
     // End of variables declaration//GEN-END:variables
 
-    private Object NPacientes() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

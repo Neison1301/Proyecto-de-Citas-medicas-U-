@@ -3,7 +3,7 @@ package Clases;
 public abstract class Persona {
 
     // Atributos comunes a todas las personas
-    private int id;
+    public int id;
     private String nombre;
     private String apellido;
     private String telefono;
