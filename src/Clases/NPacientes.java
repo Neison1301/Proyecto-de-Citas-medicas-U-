@@ -1,122 +1,124 @@
 package Clases;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 
-public class NPacientes extends CitasMedicas {
+public class NPacientes extends Persona implements Reporte, CRUD {
 
-    String rutaArchivo = "src/Almacenamiento/RegistroPaciente.txt";
-    
-    private int cantidadActual = 0;
 
-    private int[] idPaciente;
-    private String[] nombrePaciente;
-    private String[] apellidoPaciente;
-    private String[] telefonoPaciente;
-    private String[] emailPaciente;
-    private int[] edadPaciente;
-    private boolean[] generoPaciente;
+    private String archivo = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\Documents\\NetBeansProjects\\CitasMedicas-master\\src\\Almacenamiento\\RegistroPaciente.txt";
+    private int dni;
+    private int edad;
+    private  int id;
 
-    public int[] getIdPaciente() {
-        return idPaciente;
+    public NPacientes(int dni, int edad, int id, String nombre, String apellido, String telefono, String email, boolean genero) {
+        super(id, nombre, apellido, telefono, email, genero);
+        this.dni = dni;
+        this.edad = edad;
     }
 
-    public String[] getNombrePaciente() {
-        return nombrePaciente;
+
+    public int getEdad() {
+        return edad;
     }
 
-    public String[] getApellidoPaciente() {
-        return apellidoPaciente;
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 
-    public String[] getTelefonoPaciente() {
-        return telefonoPaciente;
+    @Override
+    public int getId() {
+        return id;
     }
 
-    public String[] getEmailPaciente() {
-        return emailPaciente;
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int[] getEdadPaciente() {
-        return edadPaciente;
+    public String getArchivo() {
+        return archivo;
     }
 
-    public boolean[] getGeneroPaciente() {
-        return generoPaciente;
+    public void setArchivo(String archivo) {
+        this.archivo = archivo;
     }
 
-    public void setIdPaciente(int[] idPaciente) {
-        this.idPaciente = idPaciente;
+    public int getDni() {
+        return dni;
     }
 
-    public void setNombrePaciente(String[] nombrePaciente) {
-        this.nombrePaciente = nombrePaciente;
+    public void setDni(int dni) {
+        this.dni = dni;
     }
 
-    public void setApellidoPaciente(String[] apellidoPaciente) {
-        this.apellidoPaciente = apellidoPaciente;
+    public void agregarPaciente(int id, int dni, String nombre, String apellido, String telefono, String email, boolean genero) {
+        setId(id);
+        setNombre(nombre);
+        setApellido(apellido);
+        setTelefono(telefono);
+        setEmail(email);
+        setGenero(genero);
+        setDni(dni);
     }
 
-    public void setTelefonoPaciente(String[] telefonoPaciente) {
-        this.telefonoPaciente = telefonoPaciente;
-    }
-
-    public void setEmailPaciente(String[] emailPaciente) {
-        this.emailPaciente = emailPaciente;
-    }
-
-    public void setEdadPaciente(int[] edadPaciente) {
-        this.edadPaciente = edadPaciente;
-    }
-
-    public void setGeneroPaciente(boolean[] generoPaciente) {
-        this.generoPaciente = generoPaciente;
-    }
-
-    public NPacientes(int[] idPaciente, String[] nombrePaciente, String[] apellidoPaciente, String[] telefonoPaciente, String[] emailPaciente, int[] edadPaciente, boolean[] generoPaciente) {
-        this.idPaciente = idPaciente;
-        this.nombrePaciente = nombrePaciente;
-        this.apellidoPaciente = apellidoPaciente;
-        this.telefonoPaciente = telefonoPaciente;
-        this.emailPaciente = emailPaciente;
-        this.edadPaciente = edadPaciente;
-        this.generoPaciente = generoPaciente;
-    }
-    
-
-    public void agregarPaciente(int id, String nombre, String apellido, String telefono, String email, int edad, boolean genero) {
-
-        if (cantidadActual < 99999999) {
-            idPaciente[cantidadActual] = id;
-            nombrePaciente[cantidadActual] = nombre;
-            apellidoPaciente[cantidadActual] = apellido;
-            telefonoPaciente[cantidadActual] = telefono;
-            emailPaciente[cantidadActual] = email;
-            edadPaciente[cantidadActual] = edad;
-            generoPaciente[cantidadActual] = genero;
-            cantidadActual++;
-        }
-    }
-
-    public void escribirDatosEnArchivo(String Archivo) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo,true));
-            for (int i = 0; i < cantidadActual; i++) {
-                writer.write(idPaciente[i] + ", ");
-                writer.write(nombrePaciente[i] + ", ");
-                writer.write(apellidoPaciente[i] + ", ");
-                writer.write(telefonoPaciente[i] + ", ");
-                writer.write(emailPaciente[i] + ", ");
-                writer.write(edadPaciente[i] + ", ");
-                writer.write(generoPaciente[i] ? "Masculino" : "Femenino");
-                writer.newLine();
-            }
-            writer.close();
+    @Override
+    public void crear(String archivo) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo, true))) {
+            writer.write(String.format("%d, %d, %d, %s, %s, %s, %s, %s%n", id, getDni(), getEdad(), getNombre(), getApellido(),
+                    getTelefono(), getEmail(), isGenero() ? "Masculino" : "Femenino"));
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al escribir en el archivo.");
+            JOptionPane.showMessageDialog(null, "Error al escribir en el archivo: " + e.getMessage());
         }
+    }
+
+    @Override
+    public ArrayList<Object[]> leer(String archivo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mostrarInformacion() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void generarReporte() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void actualizar(HashMap<String, Object> nuevosValores, String archivo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void eliminar(int id, String archivo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String buscarNombrePorDNI(int dni) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(", ");
+                if (parts.length >= 8) {
+                    int pacienteDNI = Integer.parseInt(parts[1]);
+                    if (pacienteDNI == dni) {
+                        return parts[3]; // Retorna el nombre del paciente
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace(); // Maneja la excepción apropiadamente en tu aplicación
+        }
+        return null; // Retorna null si no se encuentra el paciente
     }
 
 }

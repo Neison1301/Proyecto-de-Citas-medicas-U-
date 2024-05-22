@@ -1,118 +1,93 @@
 package Clases;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 
-public class Ndoctor extends CitasMedicas {
+public class Ndoctor extends Persona implements CRUD {
 
-    String registrodoctor = "src/Almacenamiento/RegistroDoctor.txt";
+    String registrodoctor = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\Documents\\NetBeansProjects\\CitasMedicas-master\\src\\Almacenamiento\\RegistroDoctor.txt";
 
     private int cantidadActual;
+    private String especialidad;
 
-    private int[] idDoctor;
-    private String[] nombreDoctor;
-    private String[] apellidoDoctor;
-    private String[] telefonoDoctor;
-    private String[] emailDoctor;
-    private boolean[] generoDoctor;
-    private String[] especialidadDoctor;
-
-    public int[] getIdDoctor() {
-        return idDoctor;
+    public String getRegistrodoctor() {
+        return registrodoctor;
     }
 
-    public String[] getNombreDoctor() {
-        return nombreDoctor;
+    public void setRegistrodoctor(String registrodoctor) {
+        this.registrodoctor = registrodoctor;
     }
 
-    public String[] getApellidoDoctor() {
-        return apellidoDoctor;
+    public int getCantidadActual() {
+        return cantidadActual;
     }
 
-    public String[] getTelefonoDoctor() {
-        return telefonoDoctor;
+    public void setCantidadActual(int cantidadActual) {
+        this.cantidadActual = cantidadActual;
     }
 
-    public String[] getEmailDoctor() {
-        return emailDoctor;
+    public String getEspecialidad() {
+        return especialidad;
     }
 
-    public boolean[] getGeneroDoctor() {
-        return generoDoctor;
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
     }
 
-    public void setIdDoctor(int[] idDoctor) {
-        this.idDoctor = idDoctor;
+    public Ndoctor(int cantidadActual, String especialidad, int id, String nombre, String apellido, String telefono, String email, boolean genero) {
+        super(id, nombre, apellido, telefono, email, genero);
+        this.cantidadActual = cantidadActual;
+        this.especialidad = especialidad;
     }
 
-    public void setNombreDoctor(String[] nombreDoctor) {
-        this.nombreDoctor = nombreDoctor;
-    }
-
-    public void setApellidoDoctor(String[] apellidoDoctor) {
-        this.apellidoDoctor = apellidoDoctor;
-    }
-
-    public void setTelefonoDoctor(String[] telefonoDoctor) {
-        this.telefonoDoctor = telefonoDoctor;
-    }
-
-    public void setEmailDoctor(String[] emailDoctor) {
-        this.emailDoctor = emailDoctor;
-    }
-
-    public void setGeneroDoctor(boolean[] generoDoctor) {
-        this.generoDoctor = generoDoctor;
-
-    }
-
-    public void setEspecialidadDoctor(String[] especialidadDoctor) {
-        this.especialidadDoctor = especialidadDoctor;
-    }
-
-    public Ndoctor(int[] idDoctor, String[] nombreDoctor, String[] apellidoDoctor, String[] telefonoDoctor, String[] emailDoctor, boolean[] generoDoctor, String[] especialidadDoctor) {
-        this.idDoctor = idDoctor;
-        this.nombreDoctor = nombreDoctor;
-        this.apellidoDoctor = apellidoDoctor;
-        this.telefonoDoctor = telefonoDoctor;
-        this.emailDoctor = emailDoctor;
-        this.generoDoctor = generoDoctor;
-        this.especialidadDoctor = especialidadDoctor;
-    }
-
-    public void agregarDoctor(int id, String nombre, String apellido, String telefono, String email, boolean genero, String especialidad) {
-
-        if (cantidadActual < 99999999) {
-            idDoctor[cantidadActual] = id;
-            nombreDoctor[cantidadActual] = nombre;
-            apellidoDoctor[cantidadActual] = apellido;
-            telefonoDoctor[cantidadActual] = telefono;
-            emailDoctor[cantidadActual] = email;
-            generoDoctor[cantidadActual] = genero;
-            especialidadDoctor[cantidadActual] = especialidad;
-            cantidadActual++;
-        }
-    }
-
-    public void escribirDatosEnArchivo(String Archivo) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(registrodoctor, true));
-            for (int i = 0; i < cantidadActual; i++) {
-                writer.write(idDoctor[i] + ", ");
-                writer.write(nombreDoctor[i] + ", ");
-                writer.write(apellidoDoctor[i] + ", ");
-                writer.write(telefonoDoctor[i] + ", ");
-                writer.write(emailDoctor[i] + ", ");
-                writer.write(generoDoctor[i] ? "Masculino" : "Femenino" +", ");
-                writer.write(especialidadDoctor[i] + ", ");
-                writer.newLine();
-            }
-            writer.close();
+    @Override
+    public void crear(String archivo) {
+       try (BufferedWriter writer = new BufferedWriter(new FileWriter(registrodoctor, true))) {
+            writer.write(String.format("%d, %s, %s, %s, %s, %s, %s%n", getId(), getNombre(), getApellido(), getTelefono(), getEmail(),
+                    isGenero() ? "Masculino" : "Femenino", especialidad));
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al escribir en el archivo.");
+            JOptionPane.showMessageDialog(null, "Error al escribir en el archivo: " + e.getMessage());
+        }    }
+
+    @Override
+    public ArrayList<Object[]> leer(String archivo) {
+        ArrayList<Object[]> doctores = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(registrodoctor))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(", ");
+                if (parts.length >= 7) {
+                    int id = Integer.parseInt(parts[0]);
+                    String nombre = parts[1];
+                    String apellido = parts[2];
+                    String telefono = parts[3];
+                    String email = parts[4];
+                    boolean genero = parts[5].equals("Masculino");
+                    String especialidad = parts[6];
+                    Object[] doctor = {id, nombre, apellido, telefono, email, genero, especialidad};
+                    doctores.add(doctor);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace(); // Maneja la excepción apropiadamente en tu aplicación
         }
+        return doctores;
+    }
+
+    @Override
+    public void actualizar(HashMap<String, Object> nuevosValores, String archivo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void eliminar(int id, String archivo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

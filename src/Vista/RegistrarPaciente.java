@@ -1,11 +1,13 @@
 package Vista;
 
 import Clases.NPacientes;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 public class RegistrarPaciente extends javax.swing.JFrame {
 
-    NPacientes nPacientes = new NPacientes(new int[100], new String[100], new String[100], new String[100], new String[100], new int[100], new boolean[100]);
+    Menu menu = new Menu();
+    NPacientes nPacientes = new NPacientes(100);
 
     public RegistrarPaciente() {
         initComponents();
@@ -325,40 +327,40 @@ public class RegistrarPaciente extends javax.swing.JFrame {
 
     private void jbregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbregistrarActionPerformed
 
-        // Obtener los datos del formulario
-        int id = Integer.parseInt(tfDni.getText());
-        String nombre = tfNombre.getText();
-        String apellido = tfapellidos.getText();
-        String telefono = tfTelefono.getText();
-        String email = tfCorreo.getText();
-        int edad = Integer.parseInt(tfedad.getText());
-        boolean genero = cbGenero.getSelectedItem().toString().equals("Masculino"); 
-        
-        nPacientes.agregarPaciente(id, nombre, apellido, telefono, email, edad, genero);
-        
-        nPacientes.escribirDatosEnArchivo("RegistroPaciente.txt");
+        int id;
+        String nombre, apellido, telefono, correo;
+        int edad;
+        boolean genero;
 
-        JOptionPane.showMessageDialog(null, "Paciente registrado exitosamente.");
+        if (tfDni.getText().isEmpty() || tfNombre.getText().isEmpty() || tfapellidos.getText().isEmpty()
+                || tfTelefono.getText().isEmpty() || tfCorreo.getText().isEmpty() || tfedad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+            return;
+        }
 
-        Pacientes paciente = new Pacientes();
+        try {
+            id = Integer.parseInt(tfDni.getText());
+            nombre = tfNombre.getText();
+            apellido = tfapellidos.getText();
+            telefono = tfTelefono.getText();
+            correo = tfCorreo.getText();
+            edad = Integer.parseInt(tfedad.getText());
+            genero = cbGenero.getSelectedItem().toString().equals("Masculino");
 
-        paciente.setVisible(true);
+            nPacientes.agregarPaciente(id, nombre, apellido, telefono, correo, edad, genero);
+            nPacientes.crear(nPacientes.getRegistroPaciente());
+            JOptionPane.showMessageDialog(null, "Paciente registrado exitosamente.");
+            this.dispose();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para el DNI o la edad.");
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Error al registrar el paciente: " + e.getMessage());
+        }
 
-        this.dispose();
     }//GEN-LAST:event_jbregistrarActionPerformed
-    /*private void limpiarCampos() {
-        tfDni.setText("");
-        tfNombre.setText("");
-        tfapellidos.setText("");
-        tfTelefono.setText("");
-        tfCorreo.setText("");
-        tfedad.setText("");
-        cbGenero.setSelectedIndex(0); 
-    }*/
-    private void BtnRegresarInicio1jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarInicio1jButton1ActionPerformed
-        Pacientes paciente = new Pacientes();
 
-        paciente.setVisible(true);
+    private void BtnRegresarInicio1jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarInicio1jButton1ActionPerformed
+        menu.setVisible(true);
 
         this.dispose();
     }//GEN-LAST:event_BtnRegresarInicio1jButton1ActionPerformed

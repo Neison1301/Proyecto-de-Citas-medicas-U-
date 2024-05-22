@@ -1,152 +1,398 @@
 package Vista;
 
+import Clases.CitasMedicas;
+import java.awt.event.KeyEvent;
+
 public class Menu extends javax.swing.JFrame {
+
+CitasMedicas citasMedicas = new CitasMedicas(0, 0, null, null, null, null, null);
 
     public Menu() {
         initComponents();
+        citasMedicas.mostrarCitas(tbCitas);
+        jpMenu.requestFocus(); 
+
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jpMenu = new javax.swing.JPanel();
+        menu2 = new Label.Menu();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbCitas = new javax.swing.JTable();
         menu1 = new Label.Menu();
-        jLabel2 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        menu2 = new Label.Menu();
+        jLabel2 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         menu3 = new Label.Menu();
-        menu8 = new Label.Menu();
         menu4 = new Label.Menu();
-        jLabel7 = new javax.swing.JLabel();
-        menu14 = new Label.Menu();
-        menu16 = new Label.Menu();
-        menu17 = new Label.Menu();
-        menu18 = new Label.Menu();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        menu5 = new Label.Menu();
+        menu6 = new Label.Menu();
+        menu7 = new Label.Menu();
+        menu8 = new Label.Menu();
+        lblRegistrarPacientes = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        menu9 = new Label.Menu();
+        tfCantidadDoctores = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(238, 238, 238));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        menu1.setBackground(new java.awt.Color(0, 83, 118));
-
-        jLabel2.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Usuario");
-        menu1.add(jLabel2);
-        jLabel2.setBounds(30, 110, 70, 20);
-        menu1.add(jSeparator1);
-        jSeparator1.setBounds(10, 130, 100, 10);
-
-        jLabel1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("    HORARIO");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu1.add(jLabel1);
-        jLabel1.setBounds(0, 280, 110, 60);
-
-        jLabel5.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("  DOCTORES");
-        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu1.add(jLabel5);
-        jLabel5.setBounds(0, 340, 110, 60);
-
-        jLabel6.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("  PACIENTES");
-        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
+        jpMenu.setBackground(new java.awt.Color(173, 216, 230));
+        jpMenu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jpMenuKeyPressed(evt);
             }
         });
-        menu1.add(jLabel6);
-        jLabel6.setBounds(0, 220, 110, 60);
+
+        menu2.setBackground(new java.awt.Color(255, 255, 255));
+
+        tbCitas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "id", "Citas Registradas"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tbCitas);
+        if (tbCitas.getColumnModel().getColumnCount() > 0) {
+            tbCitas.getColumnModel().getColumn(0).setMinWidth(30);
+            tbCitas.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tbCitas.getColumnModel().getColumn(0).setMaxWidth(30);
+            tbCitas.getColumnModel().getColumn(1).setResizable(false);
+        }
+
+        menu2.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 10, 190, 220);
+
+        menu1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel10.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("       CITAS");
+        jLabel10.setText("      CITAS");
         jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu1.add(jLabel10);
-        jLabel10.setBounds(0, 160, 110, 60);
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("  Cerrar Sesion");
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu1.add(jLabel4);
-        jLabel4.setBounds(0, 450, 110, 30);
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
 
-        jPanel1.add(menu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 110, 500));
+        jLabel2.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
+        jLabel2.setText("Usuario");
 
-        menu2.setBackground(new java.awt.Color(55, 215, 255));
-        jPanel1.add(menu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 380, 130));
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel11.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel11.setText("   HORARIO");
+        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        jLabel12.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel12.setText("  PACIENTES");
+        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jLabel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel13.setText("   DOCTORES");
+        jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        menu1.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu1.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu1.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu1.setLayer(jLabel12, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu1.setLayer(jLabel13, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout menu1Layout = new javax.swing.GroupLayout(menu1);
+        menu1.setLayout(menu1Layout);
+        menu1Layout.setHorizontalGroup(
+            menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menu1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menu1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menu1Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(14, 14, 14))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menu1Layout.createSequentialGroup()
+                                .addGroup(menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(menu1Layout.createSequentialGroup()
+                                        .addGap(20, 20, 20)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(17, 17, 17))))
+                    .addGroup(menu1Layout.createSequentialGroup()
+                        .addGroup(menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(menu1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        menu1Layout.setVerticalGroup(
+            menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menu1Layout.createSequentialGroup()
+                .addGap(91, 91, 91)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+        );
 
         menu3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(menu3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, 250, 260));
+
+        menu4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel14.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel14.setText("                        CITAS");
+        jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel14MouseClicked(evt);
+            }
+        });
+        menu4.add(jLabel14);
+        jLabel14.setBounds(10, 0, 180, 130);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/3245540 (2).png"))); // NOI18N
+        menu4.add(jLabel1);
+        jLabel1.setBounds(30, 50, 30, 40);
+
+        menu5.setBackground(new java.awt.Color(255, 255, 255));
+
+        menu6.setBackground(new java.awt.Color(255, 255, 255));
+
+        menu7.setBackground(new java.awt.Color(255, 255, 255));
 
         menu8.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(menu8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 180, 90));
 
-        menu4.setBackground(new java.awt.Color(55, 215, 255));
-        jPanel1.add(menu4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 390, 190, 130));
+        lblRegistrarPacientes.setFont(new java.awt.Font("Cambria", 3, 18)); // NOI18N
+        lblRegistrarPacientes.setText("Pacientes");
+        lblRegistrarPacientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblRegistrarPacientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblRegistrarPacientesMouseClicked(evt);
+            }
+        });
+        menu8.add(lblRegistrarPacientes);
+        lblRegistrarPacientes.setBounds(60, 0, 110, 60);
 
-        jLabel7.setFont(new java.awt.Font("Cambria", 3, 20)); // NOI18N
-        jLabel7.setText("BIENVENIDO DE VUELTA ");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 300, 30));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/1800136.png"))); // NOI18N
+        menu8.add(jLabel5);
+        jLabel5.setBounds(20, 10, 32, 30);
 
-        menu14.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(menu14, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 360, 250, 160));
+        menu9.setBackground(new java.awt.Color(255, 255, 255));
 
-        menu16.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(menu16, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 180, 90));
+        tfCantidadDoctores.setFont(new java.awt.Font("Cambria", 3, 18)); // NOI18N
+        tfCantidadDoctores.setText("Doctores");
+        tfCantidadDoctores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tfCantidadDoctores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tfCantidadDoctoresMouseClicked(evt);
+            }
+        });
+        menu9.add(tfCantidadDoctores);
+        tfCantidadDoctores.setBounds(60, 0, 110, 60);
 
-        menu17.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(menu17, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 460, 170, 60));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/6040291_coronavirus_doctor_male_n-95 mask_white_icon (2).png"))); // NOI18N
+        menu9.add(jLabel3);
+        jLabel3.setBounds(20, 10, 32, 40);
 
-        menu18.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(menu18, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 390, 170, 60));
+        jLabel6.setFont(new java.awt.Font("Cambria", 1, 20)); // NOI18N
+        jLabel6.setText("Agregar : ");
+
+        javax.swing.GroupLayout jpMenuLayout = new javax.swing.GroupLayout(jpMenu);
+        jpMenu.setLayout(jpMenuLayout);
+        jpMenuLayout.setHorizontalGroup(
+            jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpMenuLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(menu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpMenuLayout.createSequentialGroup()
+                        .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpMenuLayout.createSequentialGroup()
+                                .addComponent(menu4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                                .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(menu8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(menu9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jpMenuLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(menu7, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpMenuLayout.createSequentialGroup()
+                        .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpMenuLayout.createSequentialGroup()
+                                .addComponent(menu5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(229, 229, 229))
+                            .addGroup(jpMenuLayout.createSequentialGroup()
+                                .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(menu3, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(menu6, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(menu2, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        jpMenuLayout.setVerticalGroup(
+            jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpMenuLayout.createSequentialGroup()
+                .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpMenuLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(menu3, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(menu5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(menu6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMenuLayout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(menu2, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jpMenuLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(menu4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jpMenuLayout.createSequentialGroup()
+                                .addComponent(menu8, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(menu9, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(menu7, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jpMenuLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(menu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
+            .addComponent(jpMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+            .addComponent(jpMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+    private void lblRegistrarPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarPacientesMouseClicked
+        RegistrarPaciente registrarse = new RegistrarPaciente();
+        registrarse.setVisible(true);
 
-        Pacientes pacientes = new Pacientes();
-        
-        pacientes.setVisible(true);
-        
         this.dispose();
+    }//GEN-LAST:event_lblRegistrarPacientesMouseClicked
 
-    }//GEN-LAST:event_jLabel6MouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
+    private void tfCantidadDoctoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfCantidadDoctoresMouseClicked
+        RegistrarDoctor registrarDoctor = new RegistrarDoctor(this);
+        registrarDoctor.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tfCantidadDoctoresMouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        Inicio inciarSesion = new Inicio();
+        inciarSesion.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+        RegistrarCitas registrarCitas = new RegistrarCitas();
+        registrarCitas.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel14MouseClicked
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        Citas citas = new Citas();
+        citas.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        Pacientes pacientes = new Pacientes();
+        pacientes.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel12MouseClicked
+
+    private void jpMenuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpMenuKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            Inicio inciarSesion = new Inicio();
+            inciarSesion.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_jpMenuKeyPressed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -170,6 +416,7 @@ public class Menu extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -182,21 +429,29 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel jpMenu;
+    private javax.swing.JLabel lblRegistrarPacientes;
     private Label.Menu menu1;
-    private Label.Menu menu14;
-    private Label.Menu menu16;
-    private Label.Menu menu17;
-    private Label.Menu menu18;
     private Label.Menu menu2;
     private Label.Menu menu3;
     private Label.Menu menu4;
+    private Label.Menu menu5;
+    private Label.Menu menu6;
+    private Label.Menu menu7;
     private Label.Menu menu8;
+    private Label.Menu menu9;
+    private javax.swing.JTable tbCitas;
+    private javax.swing.JLabel tfCantidadDoctores;
     // End of variables declaration//GEN-END:variables
 }

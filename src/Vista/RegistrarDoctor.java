@@ -1,349 +1,330 @@
 package Vista;
 
 import Clases.Ndoctor;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 public class RegistrarDoctor extends javax.swing.JFrame {
 
-    Ndoctor ndoctor = new Ndoctor(new int[100], new String[100], new String[100], new String[100], new String[100], new boolean[100], new String[100]);
+    Menu menu = new Menu();
 
-    public RegistrarDoctor() {
+    Ndoctor ndoctor = new Ndoctor(100);
+
+    public RegistrarDoctor(Menu menu) {
         initComponents();
+        this.menu = menu;
+
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        menu1 = new Label.Menu();
-        jPanel12 = new javax.swing.JPanel();
-        lblRegistrarDoctor = new javax.swing.JLabel();
-        lblDni = new javax.swing.JLabel();
-        tfDni = new javax.swing.JTextField();
-        jSeparator52 = new javax.swing.JSeparator();
-        LlbNombres = new javax.swing.JLabel();
-        tfNombre = new javax.swing.JTextField();
-        jSeparator55 = new javax.swing.JSeparator();
-        LlbApellidos = new javax.swing.JLabel();
-        tfapellidos = new javax.swing.JTextField();
-        jSeparator57 = new javax.swing.JSeparator();
-        LblEspecialidad = new javax.swing.JLabel();
-        tfEspecialidad = new javax.swing.JTextField();
-        jSeparator58 = new javax.swing.JSeparator();
-        LblTelefono = new javax.swing.JLabel();
-        tfTelefono = new javax.swing.JTextField();
-        jSeparator53 = new javax.swing.JSeparator();
-        LblCorreo = new javax.swing.JLabel();
-        tfCorreo = new javax.swing.JTextField();
-        jSeparator56 = new javax.swing.JSeparator();
-        BtnRegresarInicio1 = new javax.swing.JButton();
-        jbregistrar = new javax.swing.JButton();
-        LblGenero = new javax.swing.JLabel();
-        cbGenero = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+        menu2 = new Label.Menu();
+        jPanel13 = new javax.swing.JPanel();
+        lblRegistrarDoctor1 = new javax.swing.JLabel();
+        lblDni1 = new javax.swing.JLabel();
+        tfDni1 = new javax.swing.JTextField();
+        jSeparator54 = new javax.swing.JSeparator();
+        LlbNombres1 = new javax.swing.JLabel();
+        tfNombre1 = new javax.swing.JTextField();
+        jSeparator59 = new javax.swing.JSeparator();
+        LlbApellidos1 = new javax.swing.JLabel();
+        tfapellidos1 = new javax.swing.JTextField();
+        jSeparator60 = new javax.swing.JSeparator();
+        LblEspecialidad1 = new javax.swing.JLabel();
+        tfEspecialidad1 = new javax.swing.JTextField();
+        jSeparator61 = new javax.swing.JSeparator();
+        LblTelefono1 = new javax.swing.JLabel();
+        tfTelefono1 = new javax.swing.JTextField();
+        jSeparator62 = new javax.swing.JSeparator();
+        LblCorreo1 = new javax.swing.JLabel();
+        tfCorreo1 = new javax.swing.JTextField();
+        jSeparator63 = new javax.swing.JSeparator();
+        BtnRegresarInicio2 = new javax.swing.JButton();
+        jbregistrar1 = new javax.swing.JButton();
+        LblGenero1 = new javax.swing.JLabel();
+        cbGenero1 = new javax.swing.JComboBox<>();
+        menu3 = new Label.Menu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(9, 27, 48));
-        jPanel1.setForeground(new java.awt.Color(51, 0, 204));
-        jPanel1.setPreferredSize(new java.awt.Dimension(640, 100));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.setBackground(new java.awt.Color(0, 171, 228));
+        jPanel2.setForeground(new java.awt.Color(51, 0, 204));
+        jPanel2.setPreferredSize(new java.awt.Dimension(640, 100));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        menu1.setBackground(new java.awt.Color(255, 255, 255));
-        menu1.setForeground(new java.awt.Color(255, 255, 255));
+        menu2.setBackground(new java.awt.Color(255, 255, 255));
+        menu2.setForeground(new java.awt.Color(255, 255, 255));
 
-        jPanel12.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel13.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblRegistrarDoctor.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
-        lblRegistrarDoctor.setForeground(new java.awt.Color(51, 0, 153));
-        lblRegistrarDoctor.setText("Registrar Doctor");
+        lblRegistrarDoctor1.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        lblRegistrarDoctor1.setForeground(new java.awt.Color(51, 0, 153));
+        lblRegistrarDoctor1.setText("Registrar Doctor");
 
-        lblDni.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        lblDni.setText("DNI");
+        lblDni1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        lblDni1.setText("DNI");
 
-        tfDni.setBorder(null);
-        tfDni.setPreferredSize(new java.awt.Dimension(64, 20));
-        tfDni.addActionListener(new java.awt.event.ActionListener() {
+        tfDni1.setBorder(null);
+        tfDni1.setPreferredSize(new java.awt.Dimension(64, 20));
+
+        jSeparator54.setForeground(new java.awt.Color(0, 0, 0));
+
+        LlbNombres1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        LlbNombres1.setText("Nombres ");
+
+        tfNombre1.setBorder(null);
+
+        jSeparator59.setForeground(new java.awt.Color(0, 0, 0));
+
+        LlbApellidos1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        LlbApellidos1.setText("Apellidos");
+
+        tfapellidos1.setBorder(null);
+
+        jSeparator60.setForeground(new java.awt.Color(0, 0, 0));
+
+        LblEspecialidad1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        LblEspecialidad1.setText("Especialidad");
+
+        tfEspecialidad1.setBorder(null);
+
+        jSeparator61.setForeground(new java.awt.Color(0, 0, 0));
+
+        LblTelefono1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        LblTelefono1.setText("Telefono");
+
+        tfTelefono1.setBorder(null);
+
+        jSeparator62.setForeground(new java.awt.Color(0, 0, 0));
+
+        LblCorreo1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        LblCorreo1.setText("Correo Electronico");
+
+        tfCorreo1.setBorder(null);
+        tfCorreo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfDniActionPerformed(evt);
+                tfCorreo1jTextField5ActionPerformed(evt);
             }
         });
 
-        jSeparator52.setForeground(new java.awt.Color(0, 0, 0));
+        jSeparator63.setForeground(new java.awt.Color(0, 0, 0));
 
-        LlbNombres.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        LlbNombres.setText("Nombres ");
-
-        tfNombre.setBorder(null);
-
-        jSeparator55.setForeground(new java.awt.Color(0, 0, 0));
-
-        LlbApellidos.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        LlbApellidos.setText("Apellidos");
-
-        tfapellidos.setBorder(null);
-
-        jSeparator57.setForeground(new java.awt.Color(0, 0, 0));
-
-        LblEspecialidad.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        LblEspecialidad.setText("Especialidad");
-
-        tfEspecialidad.setBorder(null);
-
-        jSeparator58.setForeground(new java.awt.Color(0, 0, 0));
-
-        LblTelefono.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        LblTelefono.setText("Telefono");
-
-        tfTelefono.setBorder(null);
-        tfTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfTelefonoActionPerformed(evt);
-            }
-        });
-
-        jSeparator53.setForeground(new java.awt.Color(0, 0, 0));
-
-        LblCorreo.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        LblCorreo.setText("Correo Electronico");
-
-        tfCorreo.setBorder(null);
-        tfCorreo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfCorreojTextField5ActionPerformed(evt);
-            }
-        });
-
-        jSeparator56.setForeground(new java.awt.Color(0, 0, 0));
-
-        BtnRegresarInicio1.setBackground(new java.awt.Color(51, 0, 153));
-        BtnRegresarInicio1.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        BtnRegresarInicio1.setForeground(new java.awt.Color(255, 255, 255));
-        BtnRegresarInicio1.setText("Volver");
-        BtnRegresarInicio1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnRegresarInicio1.addMouseListener(new java.awt.event.MouseAdapter() {
+        BtnRegresarInicio2.setBackground(new java.awt.Color(51, 0, 153));
+        BtnRegresarInicio2.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        BtnRegresarInicio2.setForeground(new java.awt.Color(255, 255, 255));
+        BtnRegresarInicio2.setText("Volver");
+        BtnRegresarInicio2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnRegresarInicio2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnRegresarInicio1MouseClicked(evt);
+                BtnRegresarInicio2MouseClicked(evt);
             }
         });
-        BtnRegresarInicio1.addActionListener(new java.awt.event.ActionListener() {
+        BtnRegresarInicio2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnRegresarInicio1jButton1ActionPerformed(evt);
+                BtnRegresarInicio2jButton1ActionPerformed(evt);
             }
         });
 
-        jbregistrar.setBackground(new java.awt.Color(51, 0, 153));
-        jbregistrar.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jbregistrar.setForeground(new java.awt.Color(255, 255, 255));
-        jbregistrar.setText("Registrar");
-        jbregistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbregistrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbregistrarMouseClicked(evt);
-            }
-        });
-        jbregistrar.addActionListener(new java.awt.event.ActionListener() {
+        jbregistrar1.setBackground(new java.awt.Color(51, 0, 153));
+        jbregistrar1.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        jbregistrar1.setForeground(new java.awt.Color(255, 255, 255));
+        jbregistrar1.setText("Registrar");
+        jbregistrar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbregistrar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbregistrarActionPerformed(evt);
+                jbregistrar1ActionPerformed(evt);
             }
         });
 
-        LblGenero.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        LblGenero.setText("Genero");
+        LblGenero1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        LblGenero1.setText("Genero");
 
-        cbGenero.setFont(new java.awt.Font("Cambria", 0, 12)); // NOI18N
-        cbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
-        cbGenero.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        cbGenero.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cbGenero.addActionListener(new java.awt.event.ActionListener() {
+        cbGenero1.setFont(new java.awt.Font("Cambria", 0, 12)); // NOI18N
+        cbGenero1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
+        cbGenero1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        cbGenero1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbGenero1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbGenerojComboBox1ActionPerformed(evt);
+                cbGenero1jComboBox1ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
+        menu3.setBackground(new java.awt.Color(255, 255, 255));
+        menu3.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSeparator56, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel12Layout.createSequentialGroup()
-                            .addGap(24, 24, 24)
-                            .addComponent(BtnRegresarInicio1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbregistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(tfCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(LblCorreo)
-                        .addComponent(jSeparator53, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(LblTelefono))
-                    .addComponent(tfDni, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDni)
-                    .addComponent(jSeparator52, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRegistrarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LlbNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jSeparator55, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(LblEspecialidad))
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jSeparator63, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LblCorreo1)
+                    .addComponent(jSeparator62, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LblTelefono1)
+                    .addComponent(tfDni1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDni1)
+                    .addComponent(jSeparator54, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRegistrarDoctor1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfTelefono1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LlbNombres1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(tfNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator59, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(LblEspecialidad1))
                         .addGap(69, 69, 69)
-                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LblGenero)
-                            .addComponent(jSeparator57, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LlbApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfapellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator58, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LblGenero1)
+                            .addComponent(jSeparator60, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LlbApellidos1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfapellidos1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfEspecialidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator61, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbGenero1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel13Layout.createSequentialGroup()
+                            .addGap(24, 24, 24)
+                            .addComponent(BtnRegresarInicio2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbregistrar1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfCorreo1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(menu3, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(lblRegistrarDoctor1)
+                .addGap(12, 12, 12)
+                .addComponent(lblDni1)
+                .addGap(2, 2, 2)
+                .addComponent(tfDni1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menu3, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addComponent(jSeparator54, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7)
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(LlbNombres1)
+                                            .addComponent(LlbApellidos1))
+                                        .addGap(6, 6, 6)
+                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(tfNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tfapellidos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(5, 5, 5)
+                                        .addComponent(jSeparator59, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jSeparator60, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(LblEspecialidad1)
+                                    .addComponent(LblGenero1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfEspecialidad1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator61, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbGenero1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(LblTelefono1)
+                        .addGap(1, 1, 1)
+                        .addComponent(tfTelefono1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator62, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LblCorreo1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfCorreo1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator63, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BtnRegresarInicio2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbregistrar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(lblRegistrarDoctor)
-                .addGap(12, 12, 12)
-                .addComponent(lblDni)
-                .addGap(2, 2, 2)
-                .addComponent(tfDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator52, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(LlbNombres)
-                                    .addComponent(LlbApellidos))
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfapellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(5, 5, 5)
-                                .addComponent(jSeparator55, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jSeparator57, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(LblEspecialidad)
-                            .addComponent(LblGenero))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator58, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LblTelefono)
-                .addGap(1, 1, 1)
-                .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator53, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(LblCorreo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator56, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnRegresarInicio1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbregistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
-        );
 
-        menu1.add(jPanel12);
-        jPanel12.setBounds(0, 0, 410, 460);
+        menu2.add(jPanel13);
+        jPanel13.setBounds(10, 10, 410, 460);
 
-        jPanel1.add(menu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 440, 490));
+        jPanel2.add(menu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 420, 490));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfDniActionPerformed
+    private void tfCorreo1jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCorreo1jTextField5ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfDniActionPerformed
+    }//GEN-LAST:event_tfCorreo1jTextField5ActionPerformed
 
-    private void tfCorreojTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCorreojTextField5ActionPerformed
+    private void BtnRegresarInicio2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegresarInicio2MouseClicked
+        menu.setVisible(true);
+
+        this.dispose();    }//GEN-LAST:event_BtnRegresarInicio2MouseClicked
+
+    private void BtnRegresarInicio2jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarInicio2jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfCorreojTextField5ActionPerformed
+    }//GEN-LAST:event_BtnRegresarInicio2jButton1ActionPerformed
 
-    private void BtnRegresarInicio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegresarInicio1MouseClicked
-        Citas citas = new Citas();
+    private void jbregistrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbregistrar1ActionPerformed
+        int dni;
+        String nombre, apellido, telefono, correo, especialidad;
+        boolean genero;
 
-        citas.setVisible(true);
+        if (tfDni1.getText().isEmpty() || tfNombre1.getText().isEmpty() || tfapellidos1.getText().isEmpty()
+                || tfTelefono1.getText().isEmpty() || tfCorreo1.getText().isEmpty() || tfEspecialidad1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+            return;
+        }
 
-        this.dispose();
-    }//GEN-LAST:event_BtnRegresarInicio1MouseClicked
+        try {
+            dni = Integer.parseInt(tfDni1.getText());
+            nombre = tfNombre1.getText();
+            apellido = tfapellidos1.getText();
+            telefono = tfTelefono1.getText();
+            correo = tfCorreo1.getText();
+            genero = cbGenero1.getSelectedItem().toString().equals("Masculino");
+            especialidad = tfEspecialidad1.getText();
 
-    private void BtnRegresarInicio1jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarInicio1jButton1ActionPerformed
-        Pacientes paciente = new Pacientes();
+            ndoctor.agregarDoctor(dni, nombre, apellido, telefono, correo, genero, especialidad);
+            ndoctor.crear(ndoctor.getRegistrodoctor());
+            JOptionPane.showMessageDialog(null, "Doctor registrado exitosamente.");
+            menu.setVisible(true);
+            this.dispose();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para el DNI.");
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Error al registrar el doctor: " + e.getMessage());
+        }    }//GEN-LAST:event_jbregistrar1ActionPerformed
 
-        paciente.setVisible(true);
-
-        
-    }//GEN-LAST:event_BtnRegresarInicio1jButton1ActionPerformed
-
-    private void jbregistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbregistrarMouseClicked
-
-        Citas citas = new Citas();
-
-        citas.setVisible(true);
-
-        this.dispose();
-
-
-    }//GEN-LAST:event_jbregistrarMouseClicked
-
-    private void jbregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbregistrarActionPerformed
-
-        int dni = Integer.parseInt(tfDni.getText());
-        String nombre = tfNombre.getText();
-        String apellido = tfapellidos.getText();
-        String telefono = tfTelefono.getText();
-        String correo = tfCorreo.getText();
-        boolean genero = cbGenero.getSelectedItem().toString().equals("Masculino");
-        String especialidad = tfEspecialidad.getText();
-
-        ndoctor.agregarDoctor(dni, nombre, apellido, telefono, correo, genero, especialidad);
-        
-        ndoctor.escribirDatosEnArchivo("RegistroDoctor.txt");
-               
-        
-        JOptionPane.showMessageDialog(null, "Paciente registrado exitosamente.");
-
-        Pacientes paciente = new Pacientes();
-
-        paciente.setVisible(true);
-
-        this.dispose();
-    }//GEN-LAST:event_jbregistrarActionPerformed
-
-    private void tfTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTelefonoActionPerformed
+    private void cbGenero1jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenero1jComboBox1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfTelefonoActionPerformed
-
-    private void cbGenerojComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenerojComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbGenerojComboBox1ActionPerformed
+    }//GEN-LAST:event_cbGenero1jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,37 +356,40 @@ public class RegistrarDoctor extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegistrarDoctor().setVisible(true);
+                Menu menu = new Menu();
+                new RegistrarDoctor(menu).setVisible(true);
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnRegresarInicio1;
-    private javax.swing.JLabel LblCorreo;
-    private javax.swing.JLabel LblEspecialidad;
-    private javax.swing.JLabel LblGenero;
-    private javax.swing.JLabel LblTelefono;
-    private javax.swing.JLabel LlbApellidos;
-    private javax.swing.JLabel LlbNombres;
-    private javax.swing.JComboBox<String> cbGenero;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JSeparator jSeparator52;
-    private javax.swing.JSeparator jSeparator53;
-    private javax.swing.JSeparator jSeparator55;
-    private javax.swing.JSeparator jSeparator56;
-    private javax.swing.JSeparator jSeparator57;
-    private javax.swing.JSeparator jSeparator58;
-    private javax.swing.JButton jbregistrar;
-    private javax.swing.JLabel lblDni;
-    private javax.swing.JLabel lblRegistrarDoctor;
-    private Label.Menu menu1;
-    private javax.swing.JTextField tfCorreo;
-    private javax.swing.JTextField tfDni;
-    private javax.swing.JTextField tfEspecialidad;
-    private javax.swing.JTextField tfNombre;
-    private javax.swing.JTextField tfTelefono;
-    private javax.swing.JTextField tfapellidos;
+    private javax.swing.JButton BtnRegresarInicio2;
+    private javax.swing.JLabel LblCorreo1;
+    private javax.swing.JLabel LblEspecialidad1;
+    private javax.swing.JLabel LblGenero1;
+    private javax.swing.JLabel LblTelefono1;
+    private javax.swing.JLabel LlbApellidos1;
+    private javax.swing.JLabel LlbNombres1;
+    private javax.swing.JComboBox<String> cbGenero1;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator54;
+    private javax.swing.JSeparator jSeparator59;
+    private javax.swing.JSeparator jSeparator60;
+    private javax.swing.JSeparator jSeparator61;
+    private javax.swing.JSeparator jSeparator62;
+    private javax.swing.JSeparator jSeparator63;
+    private javax.swing.JButton jbregistrar1;
+    private javax.swing.JLabel lblDni1;
+    private javax.swing.JLabel lblRegistrarDoctor1;
+    private Label.Menu menu2;
+    private Label.Menu menu3;
+    private javax.swing.JTextField tfCorreo1;
+    private javax.swing.JTextField tfDni1;
+    private javax.swing.JTextField tfEspecialidad1;
+    private javax.swing.JTextField tfNombre1;
+    private javax.swing.JTextField tfTelefono1;
+    private javax.swing.JTextField tfapellidos1;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,6 @@
 package Clases;
 
-public class InicioSesion extends CitasMedicas{
+public class InicioSesion  {
 
     private String[][] usuarios = {{"usuario", "123"}};
     private boolean inicio;
