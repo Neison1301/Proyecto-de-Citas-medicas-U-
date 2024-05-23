@@ -4,16 +4,16 @@ import Clases.CitasMedicas;
 import java.awt.event.KeyEvent;
 
 public class MenuPrincipal extends javax.swing.JFrame {
-
+    
     CitasMedicas citasMedicas = new CitasMedicas(0, null, null, null, null, null);
-
+    
     public MenuPrincipal() {
         initComponents();
         citasMedicas.mostrarCitas(tbCitas);
         jpMenu.requestFocus();
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -350,10 +350,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void lblRegistrarPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarPacientesMouseClicked
         RegistrarPaciente registrarse = new RegistrarPaciente();
         registrarse.setVisible(true);
-
+        
         this.dispose();
     }//GEN-LAST:event_lblRegistrarPacientesMouseClicked
-
+    
 
     private void tfCantidadDoctoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfCantidadDoctoresMouseClicked
         RegistrarDoctor registrarDoctor = new RegistrarDoctor(this);
@@ -394,12 +394,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jpMenuKeyPressed
 
     private void tbCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCitasMouseClicked
-
+        
         if (evt.getClickCount() == 2) { // Verificar si se hizo doble clic
             int filaSeleccionada = tbCitas.getSelectedRow();
             if (filaSeleccionada != -1) { // Verificar si se seleccionó una fila
                 // Obtener el ID de la cita seleccionada
-                int idCita = (int) tbCitas.getValueAt(filaSeleccionada, 0);
+                int idCita = Integer.parseInt(tbCitas.getValueAt(filaSeleccionada, 0).toString());
 
                 // Obtener la cita correspondiente al ID seleccionado
                 CitasMedicas cita = citasMedicas.obtenerCitaPorId(idCita);
@@ -418,7 +418,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tbCitasMouseClicked
-
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -2,15 +2,13 @@ package Clases;
 
 public abstract class Persona {
 
-    // Atributos comunes a todas las personas
     public int id;
     private String nombre;
     private String apellido;
     private String telefono;
     private String email;
-    private boolean genero; // Podría ser un booleano, una cadena, u otro tipo dependiendo de tus necesidades
+    private boolean genero; 
 
-    // Constructor
     public Persona(int id, String nombre, String apellido, String telefono, String email, boolean genero) {
         this.id = id;
         this.nombre = nombre;
@@ -20,7 +18,6 @@ public abstract class Persona {
         this.genero = genero;
     }
 
-    // Métodos getters y setters
     public int getId() {
         return id;
     }

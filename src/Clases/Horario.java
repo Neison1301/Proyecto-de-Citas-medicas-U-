@@ -76,17 +76,14 @@ public class Horario implements CRUD<Horario> {
 
     @Override
     public ArrayList<Horario> leer() {
-        // Implement logic to read from file and return list of Horario objects
-        return null; // Replace null with actual implementation
+        return null;
     }
 
     @Override
     public void actualizar(int id, HashMap<String, Object> nuevosValores) {
-        // Implement logic to update Horario object
     }
 
     @Override
     public void eliminar(int id) {
-        // Implement logic to delete Horario object
     }
 }

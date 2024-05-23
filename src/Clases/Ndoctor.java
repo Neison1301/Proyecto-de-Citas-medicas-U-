@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
-public class Ndoctor extends Persona implements CRUD<Ndoctor> {
+public class Ndoctor extends Persona implements CRUD<Ndoctor>, Boleta {
 
     private static final String ARCHIVO_DOCTORES = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\Documents\\NetBeansProjects\\CitasMedicas-master\\src\\Almacenamiento\\RegistroDoctor.txt";
 
@@ -144,5 +144,10 @@ public class Ndoctor extends Persona implements CRUD<Ndoctor> {
 
     private void manejarError(String mensaje, IOException e) {
         JOptionPane.showMessageDialog(null, mensaje + e.getMessage());
+    }
+
+    @Override
+    public void generarReporte() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

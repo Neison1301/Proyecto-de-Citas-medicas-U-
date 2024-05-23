@@ -9,4 +9,5 @@ public class Consultorio {
         this.ubicacion = ubicacion;
         this.horario = horario;
     }
+    
 }

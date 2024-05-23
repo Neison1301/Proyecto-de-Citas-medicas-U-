@@ -392,8 +392,7 @@ public class Pacientes extends javax.swing.JFrame {
             int filaSeleccionada = tbPacientes.getSelectedRow();
             if (filaSeleccionada != -1) { // Verificar si se seleccionó una fila
                 // Obtener los datos de la fila seleccionada
-                int idPaciente = (int) tbPacientes.getValueAt(filaSeleccionada, 0);
-                String nombrePaciente = (String) tbPacientes.getValueAt(filaSeleccionada, 1);
+                int idPaciente = Integer.parseInt(tbPacientes.getValueAt(filaSeleccionada, 0).toString());
                 // Otras columnas si las hubiera
 
                 // Crear un objeto NPacientes para obtener la información completa del paciente
