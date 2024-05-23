@@ -11,7 +11,7 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
 
     private static final String ARCHIVO_CITAS = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\Documents\\NetBeansProjects\\CitasMedicas-master\\src\\Almacenamiento\\CitasMedi.txt";
     private static int ultimoId = 0;
-    public int id;
+    public int id = 1;
     private NPacientes paciente;
     private Ndoctor doctor;
     public String motivo;
@@ -81,6 +81,8 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
             String datosCita = String.format("%d, %s, %s, %s, %s, %s, %s%n", id, fecha, hora, paciente.getNombre(), doctor.getNombre(), paciente.getId(), motivo);
             writer.write(datosCita);
             JOptionPane.showMessageDialog(null, "Cita creada con éxito.");
+            writer.write(String.valueOf(id));
+            id++;
         } catch (IOException e) {
             manejarError("Error al escribir en el archivo: ", e);
         }
@@ -99,14 +101,13 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
                     hora = parts[2];
                     String pacienteNombre = parts[3];
                     String doctorNombre = parts[4];
-                    String pacienteId = parts[5];
+                    int pacienteDni = Integer.parseInt(parts[5]);
                     motivo = parts[6];
 
-                    // Para simplificar, creamos nuevas instancias de paciente y doctor con solo nombres e ids.
-                    NPacientes pacienter = new NPacientes(id, id, id, hora, line, line, line, true);
-                    Ndoctor doctorr = new Ndoctor(id, hora, line, line, line, true, pacienteId, ultimoId);
+                    paciente = new NPacientes(pacienteDni, 0, 0, pacienteNombre, null, null, null, false);
+                    doctor = new Ndoctor(0, doctorNombre, null, null, null, false, null, 0);
 
-                    CitasMedicas cita = new CitasMedicas(id, fecha, hora, pacienter, doctorr, motivo);
+                    CitasMedicas cita = new CitasMedicas(id, fecha, hora, paciente, doctor, motivo);
                     citas.add(cita);
                 }
             }
@@ -144,11 +145,11 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
 
     @Override
     public void eliminar(int id) {
-        ArrayList<CitasMedicas> citas = leer();
+         ArrayList<CitasMedicas> citas = leer();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_CITAS))) {
             for (CitasMedicas cita : citas) {
                 if (cita.getId() != id) {
-                    writer.write(String.format("%d, %s, %s, %s, %s, %s, %s%n", cita.getId(), cita.getFecha(), cita.getHora(), cita.getPaciente().getNombre(), cita.getDoctor().getNombre(), cita.getPaciente().getId(), cita.getMotivo()));
+                    writer.write(String.format("%d, %s, %s, %s, %s, %s, %s%n", cita.getId(), cita.getFecha(), cita.getHora(), cita.getPaciente().getNombre(), cita.getDoctor().getNombre(), cita.getPaciente().getDni(), cita.getMotivo()));
                 }
             }
             JOptionPane.showMessageDialog(null, "Cita eliminada con éxito.");
@@ -163,7 +164,8 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
         ArrayList<CitasMedicas> citas = leer();
 
         for (CitasMedicas cita : citas) {
-            modelo.addRow(new Object[]{cita.getId(), cita.getFecha(), cita.getHora(), cita.getPaciente().getNombre(), cita.getDoctor().getNombre(), cita.getMotivo()});
+            modelo.addRow(new Object[]{cita.getId(), cita.getMotivo(), cita.getFecha(), cita.getHora(),
+                cita.getPaciente().getNombre(), cita.getDoctor().getNombre()});
         }
     }
 

@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class Inicio extends javax.swing.JFrame {
 
-    Menu menu = new Menu();
+    MenuPrincipal menu = new MenuPrincipal();
     InicioSesion inicioSesion = new InicioSesion();
 
     public Inicio() {

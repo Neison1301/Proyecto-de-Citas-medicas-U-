@@ -37,4 +37,3 @@
 37, 22 de Junio, 09:30 am, 09:30 am, 09:30 am, 37, Evaluación de síntomas gastrointestinales
 38, 23 de Junio, 13:00 pm, 13:00 pm, 13:00 pm, 38, Consulta por problemas de tiroides
 39, 24 de Junio, 15:45 pm, 15:45 pm, 15:45 pm, 39, Control de diabetes
-40, 25 de Junio, 10:15 am, 10:15 am, 10:15 am, 40, Evaluación de dolores musculares

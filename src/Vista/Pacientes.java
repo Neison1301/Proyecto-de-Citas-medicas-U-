@@ -167,25 +167,25 @@ public class Pacientes extends javax.swing.JFrame {
 
         tbPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "id ", "Paciente"
+                "id ", "Paciente", "Telefono"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -203,10 +203,13 @@ public class Pacientes extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbPacientes);
         if (tbPacientes.getColumnModel().getColumnCount() > 0) {
-            tbPacientes.getColumnModel().getColumn(0).setMinWidth(20);
-            tbPacientes.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tbPacientes.getColumnModel().getColumn(0).setMaxWidth(20);
+            tbPacientes.getColumnModel().getColumn(0).setMinWidth(25);
+            tbPacientes.getColumnModel().getColumn(0).setPreferredWidth(25);
+            tbPacientes.getColumnModel().getColumn(0).setMaxWidth(25);
             tbPacientes.getColumnModel().getColumn(1).setResizable(false);
+            tbPacientes.getColumnModel().getColumn(2).setMinWidth(75);
+            tbPacientes.getColumnModel().getColumn(2).setPreferredWidth(75);
+            tbPacientes.getColumnModel().getColumn(2).setMaxWidth(75);
         }
 
         menu3.add(jScrollPane1);
@@ -379,7 +382,7 @@ public class Pacientes extends javax.swing.JFrame {
         this.dispose();    }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        Menu menu = new Menu();
+        MenuPrincipal menu = new MenuPrincipal();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked

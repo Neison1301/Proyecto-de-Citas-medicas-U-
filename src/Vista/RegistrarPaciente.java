@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class RegistrarPaciente extends javax.swing.JFrame {
 
-    Menu menu = new Menu();
+    MenuPrincipal menu = new MenuPrincipal();
     NPacientes nPacientes = new NPacientes(0, 0, 0, null, null, null, null, false);
 
     public RegistrarPaciente() {

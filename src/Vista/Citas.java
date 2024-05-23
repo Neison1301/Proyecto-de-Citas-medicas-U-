@@ -35,7 +35,7 @@ public class Citas extends javax.swing.JFrame {
         tbCitas = new javax.swing.JTable();
         menu4 = new Label.Menu();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        txACita = new javax.swing.JScrollPane();
         menu5 = new Label.Menu();
         jlEliminarCita = new javax.swing.JLabel();
         menu6 = new Label.Menu();
@@ -224,7 +224,7 @@ public class Citas extends javax.swing.JFrame {
         jLabel3.setText("Informacion de la cita:");
 
         menu4.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        menu4.setLayer(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu4.setLayer(txACita, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout menu4Layout = new javax.swing.GroupLayout(menu4);
         menu4.setLayout(menu4Layout);
@@ -233,7 +233,7 @@ public class Citas extends javax.swing.JFrame {
             .addGroup(menu4Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(menu4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txACita, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -243,7 +243,7 @@ public class Citas extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txACita, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -370,7 +370,7 @@ public class Citas extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel12MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        Menu menu = new Menu();
+        MenuPrincipal menu = new MenuPrincipal();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
@@ -398,9 +398,18 @@ public class Citas extends javax.swing.JFrame {
             CitasMedicas citaSeleccionada = citasMedicas.obtenerCitaPorId(fila);
 
             if (citaSeleccionada != null) {
-                // Crear un formulario para editar la cita y pasar la cita seleccionada
-                RegistrarCitas formularioEditarCita = new RegistrarCitas();
-                formularioEditarCita.setVisible(true);
+                // Crear un mensaje personalizado con la información de la cita para editar
+                String mensaje = String.format("Fecha: %s\nHora: %s\nPaciente: %s\nDoctor: %s\nMotivo: %s",
+                        citaSeleccionada.getFecha(), citaSeleccionada.getHora(), citaSeleccionada.getPaciente(),
+                        citaSeleccionada.getDoctor(), citaSeleccionada.getMotivo());
+
+                // Mostrar un JOptionPane para editar la cita
+                String nuevoMensaje = JOptionPane.showInputDialog(this, mensaje, "Editar Cita", JOptionPane.PLAIN_MESSAGE);
+                if (nuevoMensaje != null) {
+                    // Aquí deberías tener algún código para actualizar la cita con los nuevos datos
+                    // Luego, actualiza la tabla de citas
+                    citasMedicas.mostrarCitas(tbCitas);
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "No se pudo encontrar la cita seleccionada.");
             }
@@ -414,7 +423,8 @@ public class Citas extends javax.swing.JFrame {
             int filaSeleccionada = tbCitas.getSelectedRow();
             if (filaSeleccionada != -1) { // Verificar si se seleccionó una fila
                 // Obtener los datos de la fila seleccionada
-                int idCita = (int) tbCitas.getValueAt(filaSeleccionada, 0);
+                int idCita = Integer.parseInt(tbCitas.getValueAt(filaSeleccionada, 0).toString());
+                // Otras columnas si las hubiera
                 // Otras columnas si las hubiera
 
                 // Crear un objeto NCitas para obtener la información completa de la cita
@@ -425,10 +435,10 @@ public class Citas extends javax.swing.JFrame {
                     String informacionCita = String.format("ID: %d\nFecha: %s\nHora: %s\nPaciente: %s\nDoctor: %s\n",
                             cita.getId(), cita.getFecha(), cita.getHora(), cita.getPaciente(), cita.getDoctor());
                     // Crear un JTextArea con un tamaño específico
-                    JTextArea textArea = new JTextArea(13, 30); // 13 filas y 30 columnas
-                    textArea.setText(informacionCita);
+                    JTextArea txArea = new JTextArea(13, 30); // 13 filas y 30 columnas
+                    txArea.setText(informacionCita);
                     // Crear un JScrollPane para agregar el JTextArea
-                    JScrollPane scrollPane = new JScrollPane(textArea);
+                    JScrollPane scrollPane = new JScrollPane(txArea);
                     // Mostrar el JScrollPane en un JOptionPane
                     JOptionPane.showMessageDialog(null, scrollPane, "Información de la Cita", JOptionPane.PLAIN_MESSAGE);
                 } else {
@@ -484,7 +494,6 @@ public class Citas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel jbEditarCita;
     private javax.swing.JLabel jlEliminarCita;
@@ -495,5 +504,6 @@ public class Citas extends javax.swing.JFrame {
     private Label.Menu menu5;
     private Label.Menu menu6;
     private javax.swing.JTable tbCitas;
+    private javax.swing.JScrollPane txACita;
     // End of variables declaration//GEN-END:variables
 }

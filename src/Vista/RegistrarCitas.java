@@ -4,59 +4,14 @@ import Clases.CitasMedicas;
 import Clases.NPacientes;
 import Clases.Ndoctor;
 import Label.Menu;
-import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 public class RegistrarCitas extends javax.swing.JFrame {
 
-    CitasMedicas citasMedicas = new CitasMedicas(0, null, null, null, null, null);
-
-    private boolean modoEdicion = false;
-    private int idCitaEditar;
-
-    public void setModoEdicion(boolean modoEdicion) {
-        this.modoEdicion = modoEdicion;
-    }
-
-    // Método para activar el modo edición y mostrar los datos de la cita a editar
-    public void activarModoEdicion(int idCita, String fecha, String hora, String paciente, String doctor, int dni, String motivo) {
-        modoEdicion = true;
-        idCitaEditar = idCita;
-        mostrarDatos(fecha, hora, paciente, doctor, dni, motivo);
-    }
-
-    // Método para desactivar el modo edición y limpiar los campos del formulario
-    public void desactivarModoEdicion() {
-        modoEdicion = false;
-        idCitaEditar = -1; // Restablecer el id de la cita a editar
-        limpiarCampos();
-    }
-
-    // Método para mostrar los datos de la cita en los campos del formulario
-    public void mostrarDatos(String fecha, String hora, String paciente, String doctor, int dni, String motivo) {
-        // Mostrar los datos en los campos correspondientes del formulario
-        tfFechaCita.setText(fecha);
-        tfHoraCita.setText(hora);
-        tfPaciente.setText(paciente);
-        tfDoctor.setText(doctor);
-        tfDni.setText(String.valueOf(dni));
-        tfMotivo.setText(motivo);
-    }
-
-    // Método para limpiar los campos del formulario
-    public void limpiarCampos() {
-        tfFechaCita.setText("");
-        tfHoraCita.setText("");
-        tfPaciente.setText("");
-        tfDoctor.setText("");
-        tfDni.setText("");
-        tfMotivo.setText("");
-    }
-
     public RegistrarCitas() {
         initComponents();
+
     }
-    Menu menu = new Menu();
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -318,35 +273,19 @@ public class RegistrarCitas extends javax.swing.JFrame {
         dni = Integer.parseInt(tfDni.getText());
         motivo = tfMotivo.getText();
 
-        if (modoEdicion) {
-            HashMap<String, Object> nuevosValores = new HashMap<>();
-            nuevosValores.put("fecha", fecha);
-            nuevosValores.put("hora", hora);
-            nuevosValores.put("paciente", paciente);
-            nuevosValores.put("doctor", doctor);
-            nuevosValores.put("dni", dni);
-            nuevosValores.put("motivo", motivo);
+        NPacientes pacienteObj = new NPacientes(dni, 0, 0, paciente, null, null, null, false);
+        Ndoctor doctorObj = new Ndoctor(dni, null, null, null, null, false, doctor, 0);
+        CitasMedicas citasMedicas = new CitasMedicas(0, fecha, hora, pacienteObj, doctorObj, motivo);
+        citasMedicas.crear(citasMedicas);
 
-            citasMedicas.actualizar(idCitaEditar, nuevosValores);
-
-            desactivarModoEdicion();
-
-            JOptionPane.showMessageDialog(null, "La cita se ha actualizado correctamente");
-        } else {
-            NPacientes pacienteObj = new NPacientes(dni, 0, 0, paciente, null, null, null, false);
-            Ndoctor doctorObj = new Ndoctor(dni, null, null, null, null, false, doctor, 0);
-            citasMedicas.crear(new CitasMedicas(0, fecha, hora, pacienteObj, doctorObj, motivo));
-
-            JOptionPane.showMessageDialog(null, "La cita se ha registrado correctamente");
-        }
-
-        limpiarCampos();
+        JOptionPane.showMessageDialog(null, "La cita se ha registrado correctamente");
 
     }//GEN-LAST:event_jbregistrar1ActionPerformed
 
     private void BtnRegresarInicio2jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarInicio2jButton1ActionPerformed
-        Citas citas = new Citas();
-        citas.setVisible(true);
+
+        MenuPrincipal mp = new MenuPrincipal();
+        mp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnRegresarInicio2jButton1ActionPerformed
 

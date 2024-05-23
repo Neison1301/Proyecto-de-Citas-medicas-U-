@@ -1,2 +1,30 @@
-
-78785, utkyut, ukryukry, 857857, ukrurk, Masculino, kuruk
+1, Juan, Pérez, 123456789, juan.perez@example.com, Masculino, Medicina General, 1
+2, María, Rodríguez, 234567890, maria.rodriguez@example.com, Femenino, Cardiología, 1
+3, Carlos, Martínez, 345678901, carlos.martinez@example.com, Masculino, Ortopedia, 1
+4, Laura, García, 456789012, laura.garcia@example.com, Femenino, Endocrinología, 1
+5, Javier, Hernández, 567890123, javier.hernandez@example.com, Masculino, Infectología, 1
+6, Ana, López, 678901234, ana.lopez@example.com, Femenino, Cirugía General, 1
+7, Roberto, Pérez, 789012345, roberto.perez@example.com, Masculino, Endocrinología, 1
+8, Daniela, Sánchez, 890123456, daniela.sanchez@example.com, Femenino, Cardiología, 1
+9, Luis, Gómez, 901234567, luis.gomez@example.com, Masculino, Medicina Interna, 1
+10, Fernanda, Díaz, 012345678, fernanda.diaz@example.com, Femenino, Pediatría, 1
+11, Jorge, Rodríguez, 123456789, jorge.rodriguez@example.com, Masculino, Alergología, 1
+12, Patricia, Pérez, 234567890, patricia.perez@example.com, Femenino, Neurología, 1
+13, Eduardo, Soto, 345678901, eduardo.soto@example.com, Masculino, Oncología, 1
+14, Adriana, Vásquez, 456789012, adriana.vasquez@example.com, Femenino, Gastroenterología, 1
+15, Miguel, Torres, 567890123, miguel.torres@example.com, Masculino, Cardiología, 1
+16, Catalina, Ramírez, 678901234, catalina.ramirez@example.com, Femenino, Ginecología, 1
+17, Ricardo, Ruiz, 789012345, ricardo.ruiz@example.com, Masculino, Nutrición, 1
+18, Beatriz, García, 890123456, beatriz.garcia@example.com, Femenino, Reumatología, 1
+19, José, Moreno, 901234567, jose.moreno@example.com, Masculino, Neumología, 1
+20, Mariela, Gutiérrez, 012345678, mariela.gutierrez@example.com, Femenino, Infectología, 1
+21, Andrés, Jiménez, 123456789, andres.jimenez@example.com, Masculino, Endocrinología, 1
+22, Gloria, Castro, 234567890, gloria.castro@example.com, Femenino, Endocrinología, 1
+23, Francisco, Flores, 345678901, francisco.flores@example.com, Masculino, Oncología, 1
+24, Carmen, Ortiz, 456789012, carmen.ortiz@example.com, Femenino, Cardiología, 1
+25, Alejandro, Núñez, 567890123, alejandro.nunez@example.com, Masculino, Dermatología, 1
+26, Isabel, Cruz, 678901234, isabel.cruz@example.com, Femenino, Ortopedia, 1
+27, Fernando, Medina, 789012345, fernando.medina@example.com, Masculino, Medicina General, 1
+28, Claudia, Morales, 890123456, claudia.morales@example.com, Femenino, Medicina Interna, 1
+29, Julio, Vega, 901234567, julio.vega@example.com, Masculino, Gastroenterología, 1
+30, Cecilia, Herrera, 012345678, cecilia.herrera@example.com, Femenino, Reumatología, 1

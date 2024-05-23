@@ -143,8 +143,9 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
 
         // Recorrer la lista de pacientes y agregar cada uno a la tabla
         for (NPacientes paciente : pacientes) {
-            modelo.addRow(new Object[]{paciente.getDni(), paciente.getNombre(), paciente.getApellido(), paciente.getTelefono(), paciente.getEmail(), paciente.getEdad()});
-        }
+            modelo.addRow(new Object[]{paciente.getId(), paciente.getNombre() + paciente.getApellido(),
+                paciente.getTelefono()});
+        } 
     }
 
 }

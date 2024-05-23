@@ -8,10 +8,10 @@ import javax.swing.JOptionPane;
 
 public class RegistrarDoctor extends javax.swing.JFrame {
 
-    Menu menu = new Menu();
+    MenuPrincipal menu = new MenuPrincipal();
     Ndoctor ndoctor = new Ndoctor(0, null, null, null, null, false, null, 0);
 
-    public RegistrarDoctor(Menu menu) {
+    public RegistrarDoctor(MenuPrincipal menu) {
         initComponents();
         this.menu = menu;
 
@@ -370,7 +370,7 @@ public class RegistrarDoctor extends javax.swing.JFrame {
     /* Create and display the form */
     java.awt.EventQueue.invokeLater(new Runnable() {
         public void run() {
-            Menu menu = new Menu();
+            MenuPrincipal menu = new MenuPrincipal();
             new RegistrarDoctor(menu).setVisible(true);
 
         }
