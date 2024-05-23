@@ -216,7 +216,7 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
                 return cita;
             }
         }
-        return null; // Retorna null si no se encuentra la cita con el ID especificado
+        return null; // Retorna nad  si no se encuentra la cita con el id especificado
     }
 
 }

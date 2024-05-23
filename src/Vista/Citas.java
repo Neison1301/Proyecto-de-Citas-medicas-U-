@@ -2,8 +2,6 @@ package Vista;
 
 import Clases.CitasMedicas;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 public class Citas extends javax.swing.JFrame {
 

@@ -13,11 +13,23 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
 
     private int dni;
     private int edad;
+    //relacion de agregacion entre esta clase y recetass medidcas;
+    private ArrayList<RecetaMedica> recetasMedicas;
 
     public NPacientes(int dni, int edad, int id, String nombre, String apellido, String telefono, String email, boolean genero) {
         super(id, nombre, apellido, telefono, email, genero);
         this.dni = dni;
         this.edad = edad;
+        this.recetasMedicas = new ArrayList<>();
+
+    }
+
+    public ArrayList<RecetaMedica> getRecetasMedicas() {
+        return recetasMedicas;
+    }
+
+    public void setRecetasMedicas(ArrayList<RecetaMedica> recetasMedicas) {
+        this.recetasMedicas = recetasMedicas;
     }
 
     public int getDni() {
@@ -95,11 +107,10 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
     @Override
     public void actualizar(int id, HashMap<String, Object> nuevosValores) {
         ArrayList<NPacientes> pacientes = leer();
-        eliminar(id); // Eliminar el paciente existente con el ID dado
-
+        eliminar(id);
         // Crear el paciente con los nuevos valores proporcionados
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_PACIENTES, true))) {
-            // Obtener los nuevos valores del HashMap
+
             dni = (int) nuevosValores.get("dni");
             edad = (int) nuevosValores.get("edad");
             String nombre = (String) nuevosValores.get("nombre");
@@ -108,7 +119,7 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
             String email = (String) nuevosValores.get("email");
             boolean genero = (boolean) nuevosValores.get("genero");
 
-            // Escribir la información del paciente actualizado en el archivo
+            
             writer.write(String.format("%d, %d, %d, %s, %s, %s, %s, %s%n", id, dni, edad, nombre, apellido, telefono, email, genero ? "Masculino" : "Femenino"));
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al escribir en el archivo: " + e.getMessage());
@@ -122,7 +133,7 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
                 return paciente;
             }
         }
-        return null; // Retorna null si no se encuentra ningún paciente con el ID especificado
+        return null; 
     }
 
     public int obtenerId() {
@@ -133,19 +144,19 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
                 nuevoId = paciente.getId();
             }
         }
-        return nuevoId + 1; // Incrementa el último ID en uno para obtener un nuevo ID único
+        return nuevoId + 1; 
     }
 
     public void mostrarPacientes(JTable tabla) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-        modelo.setRowCount(0); // Limpiar la tabla antes de agregar los nuevos datos
-        ArrayList<NPacientes> pacientes = leer(); // Suponiendo que tienes un método leerPacientes() que devuelve una lista de NPacientes
-
+        modelo.setRowCount(0); 
+        ArrayList<NPacientes> pacientes = leer(); 
+        
         // Recorrer la lista de pacientes y agregar cada uno a la tabla
         for (NPacientes paciente : pacientes) {
             modelo.addRow(new Object[]{paciente.getId(), paciente.getNombre() + paciente.getApellido(),
                 paciente.getTelefono()});
-        } 
+        }
     }
 
 }

@@ -395,24 +395,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void tbCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCitasMouseClicked
         
-        if (evt.getClickCount() == 2) { // Verificar si se hizo doble clic
+        if (evt.getClickCount() == 2) { //  doble clic
             int filaSeleccionada = tbCitas.getSelectedRow();
-            if (filaSeleccionada != -1) { // Verificar si se seleccionó una fila
-                // Obtener el ID de la cita seleccionada
+            if (filaSeleccionada != -1) {
                 int idCita = Integer.parseInt(tbCitas.getValueAt(filaSeleccionada, 0).toString());
 
-                // Obtener la cita correspondiente al ID seleccionado
                 CitasMedicas cita = citasMedicas.obtenerCitaPorId(idCita);
 
-                // Verificar si se encontró la cita
                 if (cita != null) {
-                    // Mostrar la información de la cita en el JTextArea
                     String informacionCita = String.format("ID: %d\nFecha: %s\nHora: %s\nPaciente: %s\nDoctor: %s\nMotivo: %s\n",
                             cita.getId(), cita.getFecha(), cita.getHora(), cita.getPaciente().getNombre(),
                             cita.getDoctor().getNombre(), cita.getMotivo());
                     txaCitas.setText(informacionCita);
                 } else {
-                    // Si no se encuentra la cita, mostrar un mensaje de error
+                    // Si no hay la cita,error
                     txaCitas.setText("No se encontró información de la cita");
                 }
             }

@@ -388,16 +388,12 @@ public class Pacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void tbPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPacientesMouseClicked
-        if (evt.getClickCount() == 2) { // Verificar si se hizo doble clic
+        if (evt.getClickCount() == 2) { //doble clic
             int filaSeleccionada = tbPacientes.getSelectedRow();
-            if (filaSeleccionada != -1) { // Verificar si se seleccionó una fila
-                // Obtener los datos de la fila seleccionada
+            if (filaSeleccionada != -1) {
                 int idPaciente = Integer.parseInt(tbPacientes.getValueAt(filaSeleccionada, 0).toString());
-                // Otras columnas si las hubiera
 
-                // Crear un objeto NPacientes para obtener la información completa del paciente
-                NPacientes paciente = nPacientes.obtenerId(idPaciente); // Implementa este método en tu clase NPacientes
-                        // Mostrar la información del paciente en el JTextArea
+                NPacientes paciente = nPacientes.obtenerId(idPaciente);
                 if (paciente != null) {
                     String informacionPaciente = String.format("ID: %d\nNombre: %s\nDNI: %d\nEdad: %d\nTeléfono: %s\nEmail: %s\nGénero: %s\n",
                             paciente.getId(), paciente.getNombre(), paciente.getDni(), paciente.getEdad(),
