@@ -1,9 +1,18 @@
 package Clases;
 
-public interface Reporte {
+public abstract class Reporte implements Boleta {
 
-    void generarReporte();
+    protected String titulo;
 
-    void mostrarInformacion();
+    public Reporte(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    @Override
+    public abstract void generarReporte();
 
 }

@@ -93,7 +93,7 @@
                                   <Component id="jSeparator63" min="-2" pref="164" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="tfCita" min="-2" pref="164" max="-2" attributes="0"/>
+                                  <Component id="tfFechaCita" min="-2" pref="164" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="tfHoraCita" min="-2" pref="164" max="-2" attributes="0"/>
                               </Group>
@@ -180,7 +180,7 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="tfCita" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tfFechaCita" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="tfHoraCita" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -270,7 +270,7 @@
                     <Property name="text" type="java.lang.String" value="Fecha de la Cita:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="tfCita">
+                <Component class="javax.swing.JTextField" name="tfFechaCita">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
@@ -326,7 +326,6 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnRegresarInicio2MouseClicked"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnRegresarInicio2jButton1ActionPerformed"/>
                   </Events>
                 </Component>

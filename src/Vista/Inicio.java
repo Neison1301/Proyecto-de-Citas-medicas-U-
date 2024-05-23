@@ -26,7 +26,6 @@ public class Inicio extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         contraseña = new javax.swing.JPasswordField();
         BtnAccederMenu = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -99,9 +98,6 @@ public class Inicio extends javax.swing.JFrame {
         BtnAccederMenu.setBounds(20, 250, 270, 31);
 
         jpInicio.add(menu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 310, 350));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/FondoDoctorr (2).jpg"))); // NOI18N
-        jpInicio.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         getContentPane().add(jpInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 540));
 
@@ -201,7 +197,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JTextPane Jusuario;
     private javax.swing.JPasswordField contraseña;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jpInicio;

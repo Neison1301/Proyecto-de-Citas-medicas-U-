@@ -7,76 +7,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class CitasMedicas extends Cita implements CRUD, AtencionMedica {
-
-    private String ARCHIVO_CITAS = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\Documents\\NetBeansProjects\\CitasMedicas-master\\src\\Almacenamiento\\CitasMedi.txt";
-    private int ultimoId = 0;
+public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMedica {
+    private static final String ARCHIVO_CITAS = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\Documents\\NetBeansProjects\\CitasMedicas-master\\src\\Almacenamiento\\CitasMedi.txt";
+    private static int ultimoId = 0;
     private int id;
-    private int dni;
-    private String paciente;
-    private String doctor;
+    private NPacientes paciente;
+    private Ndoctor doctor;
     private String motivo;
 
-    public String getARCHIVO_CITAS() {
-        return ARCHIVO_CITAS;
-    }
-
-    public void setARCHIVO_CITAS(String ARCHIVO_CITAS) {
-        this.ARCHIVO_CITAS = ARCHIVO_CITAS;
-    }
-
-    public int getUltimoId() {
-        return ultimoId;
-    }
-
-    public void setUltimoId(int ultimoId) {
-        this.ultimoId = ultimoId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getDni() {
-        return dni;
-    }
-
-    public void setDni(int dni) {
-        this.dni = dni;
-    }
-
-    public String getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(String paciente) {
-        this.paciente = paciente;
-    }
-
-    public String getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(String doctor) {
-        this.doctor = doctor;
-    }
-
-    public String getMotivo() {
-        return motivo;
-    }
-
-    public void setMotivo(String motivo) {
-        this.motivo = motivo;
-    }
-
-    public CitasMedicas(int id, int dni, String paciente, String doctor, String motivo, String fecha, String hora) {
+    public CitasMedicas(int id, String fecha, String hora, NPacientes paciente, Ndoctor doctor, String motivo) {
         super(fecha, hora);
         this.id = id;
-        this.dni = dni;
         this.paciente = paciente;
         this.doctor = doctor;
         this.motivo = motivo;
@@ -85,10 +26,59 @@ public class CitasMedicas extends Cita implements CRUD, AtencionMedica {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public static int getUltimoId() {
+        return ultimoId;
+    }
+
+    public static void setUltimoId(int ultimoId) {
+        CitasMedicas.ultimoId = ultimoId;
+    }
+
+    public NPacientes getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(NPacientes paciente) {
+        this.paciente = paciente;
+    }
+
+    public Ndoctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Ndoctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+
+    public String getMotivo() {
+        return motivo;
+    }
+
     @Override
-    public void crear() {
+    public void crear(CitasMedicas cita) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_CITAS, true))) {
-            String datosCita = String.format("%d, %d, %s, %s, %s, %s, %s%n", id, dni, paciente, doctor, motivo, fecha, hora);
+            String datosCita = String.format("%d, %s, %s, %s, %s, %s, %s%n", id, fecha, hora, paciente.getNombre(), doctor.getNombre(), paciente.getId(), motivo);
             writer.write(datosCita);
             JOptionPane.showMessageDialog(null, "Cita creada con éxito.");
         } catch (IOException e) {
@@ -97,40 +87,56 @@ public class CitasMedicas extends Cita implements CRUD, AtencionMedica {
     }
 
     @Override
-    public ArrayList<Object[]> leer() {
-        ArrayList<Object[]> datos = new ArrayList<>();
+    public ArrayList<CitasMedicas> leer() {
+        ArrayList<CitasMedicas> citas = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(ARCHIVO_CITAS))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(", ");
                 if (parts.length >= 7) {
-                    Object[] fila = {parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6]};
-                    datos.add(fila);
+                    int id = Integer.parseInt(parts[0]);
+                    String fecha = parts[1];
+                    String hora = parts[2];
+                    String pacienteNombre = parts[3];
+                    String doctorNombre = parts[4];
+                    String pacienteId = parts[5];
+                    String motivo = parts[6];
+
+                    // Para simplificar, creamos nuevas instancias de paciente y doctor con solo nombres e ids.
+                    NPaciente paciente = new NPaciente(pacienteNombre, pacienteId, "");
+                    Ndoctor doctor = new Ndoctor(doctorNombre, "", "");
+
+                    CitasMedicas cita = new CitasMedicas(id, fecha, hora, paciente, doctor, motivo);
+                    citas.add(cita);
                 }
             }
         } catch (IOException e) {
             manejarError("Error al leer el archivo: ", e);
         }
-        return datos;
+        return citas;
     }
 
     @Override
-    public void actualizar(HashMap<String, Object> nuevosValores) {
-        ArrayList<Object[]> datos = leer(); // Corrección aquí
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_CITAS))) {
-            for (Object[] fila : datos) {
-                int citaId = Integer.parseInt(fila[0].toString());
-                if (citaId == id) {
-                    for (String key : nuevosValores.keySet()) {
-                        int index = getIndexFromKey(key);
-                        if (index != -1) {
-                            fila[index] = nuevosValores.get(key);
+    public void actualizar(int id, HashMap<String, Object> nuevosValores) {
+        File archivoTemporal = new File(ARCHIVO_CITAS + ".tmp");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(ARCHIVO_CITAS)); BufferedWriter writer = new BufferedWriter(new FileWriter(archivoTemporal))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] partes = linea.split(", ");
+                if (partes.length >= 7 && Integer.parseInt(partes[0]) == id) {
+                    for (String clave : nuevosValores.keySet()) {
+                        int indice = getIndexFromKey(clave);
+                        if (indice != -1) {
+                            partes[indice] = nuevosValores.get(clave).toString();
                         }
                     }
+                    writer.write(String.join(", ", partes) + "\n");
+                } else {
+                    writer.write(linea + "\n");
                 }
-                writer.write(String.format("%s, %s, %s, %s, %s, %s, %s%n", fila));
             }
-            JOptionPane.showMessageDialog(null, "Cita actualizada con éxito.");
+            archivoTemporal.renameTo(new File(ARCHIVO_CITAS));
         } catch (IOException e) {
             manejarError("Error al actualizar el archivo: ", e);
         }
@@ -138,11 +144,11 @@ public class CitasMedicas extends Cita implements CRUD, AtencionMedica {
 
     @Override
     public void eliminar(int id) {
-        ArrayList<Object[]> datos = leer();
+        ArrayList<CitasMedicas> citas = leer();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_CITAS))) {
-            for (Object[] fila : datos) {
-                if (Integer.parseInt(fila[0].toString()) != id) {
-                    writer.write(String.format("%s, %s, %s, %s, %s, %s, %s%n", fila));
+            for (CitasMedicas cita : citas) {
+                if (cita.getId() != id) {
+                    writer.write(String.format("%d, %s, %s, %s, %s, %s, %s%n", cita.getId(), cita.getFecha(), cita.getHora(), cita.getPaciente().getNombre(), cita.getDoctor().getNombre(), cita.getPaciente().getId(), cita.getMotivo()));
                 }
             }
             JOptionPane.showMessageDialog(null, "Cita eliminada con éxito.");
@@ -154,51 +160,42 @@ public class CitasMedicas extends Cita implements CRUD, AtencionMedica {
     public void mostrarCitas(JTable tabla) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         modelo.setRowCount(0);
-        ArrayList<Object[]> datos = leer();
+        ArrayList<CitasMedicas> citas = leer();
 
-        for (Object[] cita : datos) {
-            modelo.addRow(new Object[]{cita[0], cita[6]});
+        for (CitasMedicas cita : citas) {
+            modelo.addRow(new Object[]{cita.getId(), cita.getFecha(), cita.getHora(), cita.getPaciente().getNombre(), cita.getDoctor().getNombre(), cita.getMotivo()});
         }
     }
 
     @Override
     public void detallesCita() {
-        System.out.println("Cita Médica - ID: " + id + ", Fecha: " + fecha + ", Hora: " + hora + ", Paciente: " + paciente + ", Doctor: " + doctor);
-    }
-
-    private int getIndexFromKey(String key) {
-        return switch (key) {
-            case "id" ->
-                0;
-            case "fecha" ->
-                1;
-            case "hora" ->
-                2;
-            case "paciente" ->
-                3;
-            case "doctor" ->
-                4;
-            case "dni" ->
-                5;
-            case "motivo" ->
-                6;
-            default ->
-                -1;
-        };
+        System.out.println("Cita Médica - ID: " + id + ", Fecha: " + fecha + ", Hora: " + hora + ", Paciente: " + paciente.getNombre() + ", Doctor: " + doctor.getNombre());
     }
 
     @Override
     public void agendarCita(CitasMedicas cita) {
-        cita.crear();
+        crear(cita);
     }
 
     @Override
-    public void cancelarCita(CitasMedicas cita) {
+    public void cancelarCita(int id) {
         eliminar(id);
+    }
+
+    private int getIndexFromKey(String key) {
+        return switch (key) {
+            case "id" -> 0;
+            case "fecha" -> 1;
+            case "hora" -> 2;
+            case "paciente" -> 3;
+            case "doctor" -> 4;
+            case "dni" -> 5;
+            case "motivo" -> 6;
+            default -> -1;
+        };
     }
 
     private void manejarError(String mensaje, IOException e) {
         JOptionPane.showMessageDialog(null, mensaje + e.getMessage());
     }
-
 }

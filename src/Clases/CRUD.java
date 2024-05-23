@@ -3,10 +3,13 @@ package Clases;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public interface CRUD {
+public interface CRUD<T> {
 
-    void crear();
-    ArrayList<Object[]> leer();
-    void actualizar(HashMap<String, Object> nuevosValores);
+    void crear(T entidad);
+
+    ArrayList<T> leer();
+
+    void actualizar(int id, HashMap<String, Object> nuevosValores);
+
     void eliminar(int id);
 }

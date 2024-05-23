@@ -1,10 +1,53 @@
 package Vista;
 
 import Clases.CitasMedicas;
-import java.awt.HeadlessException;
+import Label.Menu;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 public class RegistrarCitas extends javax.swing.JFrame {
+
+    private boolean modoEdicion = false;
+    private int idCitaEditar;
+
+    public void setModoEdicion(boolean modoEdicion) {
+        this.modoEdicion = modoEdicion;
+    }
+
+    // Método para activar el modo edición y mostrar los datos de la cita a editar
+    public void activarModoEdicion(int idCita, String fecha, String hora, String paciente, String doctor, int dni, String motivo) {
+        modoEdicion = true;
+        idCitaEditar = idCita;
+        mostrarDatos(fecha, hora, paciente, doctor, dni, motivo);
+    }
+
+    // Método para desactivar el modo edición y limpiar los campos del formulario
+    public void desactivarModoEdicion() {
+        modoEdicion = false;
+        idCitaEditar = -1; // Restablecer el id de la cita a editar
+        limpiarCampos();
+    }
+
+    // Método para mostrar los datos de la cita en los campos del formulario
+    public void mostrarDatos(String fecha, String hora, String paciente, String doctor, int dni, String motivo) {
+        // Mostrar los datos en los campos correspondientes del formulario
+        tfFechaCita.setText(fecha);
+        tfHoraCita.setText(hora);
+        tfPaciente.setText(paciente);
+        tfDoctor.setText(doctor);
+        tfDni.setText(String.valueOf(dni));
+        tfMotivo.setText(motivo);
+    }
+
+    // Método para limpiar los campos del formulario
+    public void limpiarCampos() {
+        tfFechaCita.setText("");
+        tfHoraCita.setText("");
+        tfPaciente.setText("");
+        tfDoctor.setText("");
+        tfDni.setText("");
+        tfMotivo.setText("");
+    }
 
     public RegistrarCitas() {
         initComponents();
@@ -26,7 +69,7 @@ public class RegistrarCitas extends javax.swing.JFrame {
         tfDoctor = new javax.swing.JTextField();
         jSeparator60 = new javax.swing.JSeparator();
         LblEspecialidad1 = new javax.swing.JLabel();
-        tfCita = new javax.swing.JTextField();
+        tfFechaCita = new javax.swing.JTextField();
         jSeparator61 = new javax.swing.JSeparator();
         LblTelefono1 = new javax.swing.JLabel();
         tfHoraCita = new javax.swing.JTextField();
@@ -75,7 +118,7 @@ public class RegistrarCitas extends javax.swing.JFrame {
         LblEspecialidad1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         LblEspecialidad1.setText("Fecha de la Cita:");
 
-        tfCita.setBorder(null);
+        tfFechaCita.setBorder(null);
 
         jSeparator61.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -96,11 +139,6 @@ public class RegistrarCitas extends javax.swing.JFrame {
         BtnRegresarInicio2.setForeground(new java.awt.Color(255, 255, 255));
         BtnRegresarInicio2.setText("Volver");
         BtnRegresarInicio2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnRegresarInicio2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnRegresarInicio2MouseClicked(evt);
-            }
-        });
         BtnRegresarInicio2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnRegresarInicio2jButton1ActionPerformed(evt);
@@ -151,7 +189,7 @@ public class RegistrarCitas extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jSeparator63, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel13Layout.createSequentialGroup()
-                        .addComponent(tfCita, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfFechaCita, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(tfHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(LlbNombres2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -221,7 +259,7 @@ public class RegistrarCitas extends javax.swing.JFrame {
                             .addComponent(LblTelefono1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tfCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfFechaCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,43 +299,52 @@ public class RegistrarCitas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbregistrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbregistrar1ActionPerformed
-
         String fecha, hora, paciente, doctor, motivo;
         int dni;
+        fecha = tfFechaCita.getText();
+        hora = tfHoraCita.getText();
+        paciente = tfPaciente.getText();
+        doctor = tfDoctor.getText();
+        dni = Integer.parseInt(tfDni.getText());
+        motivo = tfMotivo.getText();
 
-        try {
-        // Obtener los datos ingresados por el usuario
-        int dni = Integer.parseInt(tfDni.getText());
-        String paciente = tfPaciente.getText();
-        String doctor = tfDoctor.getText();
-        String motivo = tfMotivo.getText();
-        String fecha = tfCita.getText();
-        String hora = tfHoraCita.getText();
-        String observaciones = tfObservaciones.getText();
+        if (modoEdicion) {
+            HashMap<String, Object> nuevosValores = new HashMap<>();
+            nuevosValores.put("fecha", fecha);
+            nuevosValores.put("hora", hora);
+            nuevosValores.put("paciente", paciente);
+            nuevosValores.put("doctor", doctor);
+            nuevosValores.put("dni", dni);
+            nuevosValores.put("motivo", motivo);
+            // Actualizar la cita con los nuevos datos
+            CitasMedicas citasMedicas = new CitasMedicas(idCitaEditar, fecha, hora, paciente, doctor, dni, motivo);
+            citasMedicas.actualizar(0,nuevosValores);
+            // Desactivar el modo edición y limpiar los campos del formulario
+            desactivarModoEdicion();
 
-        // Crear una nueva instancia de CitasMedicas
-        CitasMedicas cita = new CitasMedicas(dni, paciente, doctor, motivo, fecha, hora, observaciones);
+            // Mostrar un mensaje de éxito
+            JOptionPane.showMessageDialog(null, "La cita se ha actualizado correctamente");
+            Citas citas = new Citas();
+            citas.setVisible(true);
+            this.dispose();
+        } else {
+            // Si no estamos en modo de edición, creamos una nueva cita
+            CitasMedicas nuevaCita = new CitasMedicas(0, fecha, hora, paciente, doctor, dni, motivo);
+            nuevaCita.agendarCita(nuevaCita);
+            JOptionPane.showMessageDialog(null, "La cita se ha registrado correctamente");
+            Citas citas = new Citas();
+            citas.setVisible(true);
+            this.dispose();
 
-        // Llamar al método para agendar la cita
-        cita.agendarCita(cita);
-
-        // Mostrar un mensaje de éxito
-        JOptionPane.showMessageDialog(null, "La cita se ha registrado correctamente");
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Error: Por favor ingrese un número válido para el DNI");
-    }
-
+        }
 
     }//GEN-LAST:event_jbregistrar1ActionPerformed
 
     private void BtnRegresarInicio2jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarInicio2jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnRegresarInicio2jButton1ActionPerformed
-
-    private void BtnRegresarInicio2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegresarInicio2MouseClicked
-        menu.setVisible(true);
+        Citas citas = new Citas();
+        citas.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_BtnRegresarInicio2MouseClicked
+    }//GEN-LAST:event_BtnRegresarInicio2jButton1ActionPerformed
 
     private void tfHoraCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfHoraCitaActionPerformed
         // TODO add your handling code here:
@@ -307,9 +354,6 @@ public class RegistrarCitas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfMotivoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -341,7 +385,6 @@ public class RegistrarCitas extends javax.swing.JFrame {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnRegresarInicio2;
     private javax.swing.JLabel LblEspecialidad1;
@@ -362,11 +405,12 @@ public class RegistrarCitas extends javax.swing.JFrame {
     private javax.swing.JLabel lblRegistrarDoctor1;
     private Label.Menu menu2;
     private Label.Menu menu3;
-    private javax.swing.JTextField tfCita;
     private javax.swing.JTextField tfDni;
     private javax.swing.JTextField tfDoctor;
+    private javax.swing.JTextField tfFechaCita;
     private javax.swing.JTextField tfHoraCita;
     private javax.swing.JTextField tfMotivo;
     private javax.swing.JTextField tfPaciente;
     // End of variables declaration//GEN-END:variables
+
 }

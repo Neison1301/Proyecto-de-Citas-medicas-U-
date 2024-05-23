@@ -1,13 +1,16 @@
 package Vista;
 
 import Clases.NPacientes;
-import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 public class RegistrarPaciente extends javax.swing.JFrame {
 
+<<<<<<< OURS
     Menu menu = new Menu();
-    NPacientes nPacientes = new NPacientes(100);
+    NPacientes nPacientes = new NPacientes(0, 0, 0, null, null, null, null, false);
+=======
+    NPacientes nPacientes = new NPacientes(new int[100], new String[100], new String[100], new String[100], new String[100], new int[100], new boolean[100]);
+>>>>>>> THEIRS
 
     public RegistrarPaciente() {
         initComponents();
@@ -116,11 +119,6 @@ public class RegistrarPaciente extends javax.swing.JFrame {
         BtnRegresarInicio1.setForeground(new java.awt.Color(255, 255, 255));
         BtnRegresarInicio1.setText("Volver");
         BtnRegresarInicio1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnRegresarInicio1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnRegresarInicio1MouseClicked(evt);
-            }
-        });
         BtnRegresarInicio1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnRegresarInicio1jButton1ActionPerformed(evt);
@@ -143,11 +141,6 @@ public class RegistrarPaciente extends javax.swing.JFrame {
         jbregistrar.setForeground(new java.awt.Color(255, 255, 255));
         jbregistrar.setText("Registrar");
         jbregistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbregistrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbregistrarMouseClicked(evt);
-            }
-        });
         jbregistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbregistrarActionPerformed(evt);
@@ -327,28 +320,43 @@ public class RegistrarPaciente extends javax.swing.JFrame {
 
     private void jbregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbregistrarActionPerformed
 
-        int id;
-        String nombre, apellido, telefono, correo;
-        int edad;
+<<<<<<< OURS
+        String nombre, apellido, telefono, email;
+        int edad,dni;
         boolean genero;
+=======
+        // Obtener los datos del formulario
+        int id = Integer.parseInt(tfDni.getText());
+        String nombre = tfNombre.getText();
+        String apellido = tfapellidos.getText();
+        String telefono = tfTelefono.getText();
+        String email = tfCorreo.getText();
+        int edad = Integer.parseInt(tfedad.getText());
+        boolean genero = cbGenero.getSelectedItem().toString().equals("Masculino"); 
+        
+        nPacientes.agregarPaciente(id, nombre, apellido, telefono, email, edad, genero);
+        
+        nPacientes.escribirDatosEnArchivo("RegistroPaciente.txt");
+>>>>>>> THEIRS
 
-        if (tfDni.getText().isEmpty() || tfNombre.getText().isEmpty() || tfapellidos.getText().isEmpty()
-                || tfTelefono.getText().isEmpty() || tfCorreo.getText().isEmpty() || tfedad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
-            return;
-        }
+        JOptionPane.showMessageDialog(null, "Paciente registrado exitosamente.");
 
+<<<<<<< OURS
         try {
-            id = Integer.parseInt(tfDni.getText());
+            dni = Integer.parseInt(tfDni.getText());
             nombre = tfNombre.getText();
             apellido = tfapellidos.getText();
             telefono = tfTelefono.getText();
-            correo = tfCorreo.getText();
+            email = tfCorreo.getText();
             edad = Integer.parseInt(tfedad.getText());
             genero = cbGenero.getSelectedItem().toString().equals("Masculino");
+=======
+        Pacientes paciente = new Pacientes();
+>>>>>>> THEIRS
 
-            nPacientes.agregarPaciente(id, nombre, apellido, telefono, correo, edad, genero);
-            nPacientes.crear(nPacientes.getRegistroPaciente());
+<<<<<<< OURS
+            nPacientes.establecerInformacionPaciente(0, dni, edad, nombre, apellido, telefono, email, genero);
+            nPacientes.crear();
             JOptionPane.showMessageDialog(null, "Paciente registrado exitosamente.");
             this.dispose();
         } catch (NumberFormatException e) {
@@ -356,11 +364,25 @@ public class RegistrarPaciente extends javax.swing.JFrame {
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Error al registrar el paciente: " + e.getMessage());
         }
+=======
+        paciente.setVisible(true);
+>>>>>>> THEIRS
 
+        this.dispose();
     }//GEN-LAST:event_jbregistrarActionPerformed
-
+    /*private void limpiarCampos() {
+        tfDni.setText("");
+        tfNombre.setText("");
+        tfapellidos.setText("");
+        tfTelefono.setText("");
+        tfCorreo.setText("");
+        tfedad.setText("");
+        cbGenero.setSelectedIndex(0); 
+    }*/
     private void BtnRegresarInicio1jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarInicio1jButton1ActionPerformed
-        menu.setVisible(true);
+        Pacientes paciente = new Pacientes();
+
+        paciente.setVisible(true);
 
         this.dispose();
     }//GEN-LAST:event_BtnRegresarInicio1jButton1ActionPerformed
@@ -381,15 +403,6 @@ public class RegistrarPaciente extends javax.swing.JFrame {
     private void tfDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfDniActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfDniActionPerformed
-
-    private void BtnRegresarInicio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegresarInicio1MouseClicked
-
-
-    }//GEN-LAST:event_BtnRegresarInicio1MouseClicked
-
-    private void jbregistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbregistrarMouseClicked
-
-    }//GEN-LAST:event_jbregistrarMouseClicked
 
     private void tfTelefono1jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTelefono1jTextField4ActionPerformed
         // TODO add your handling code here:

@@ -111,15 +111,6 @@ public class NPacientes extends Persona implements Reporte, CRUD {
     }
 
     @Override
-    public void actualizar(HashMap<String, Object> nuevosValores) {
-        int id = (int) nuevosValores.get("id");
-        eliminar(id); // Eliminar el paciente existente
-        // Crear el paciente con los nuevos valores
-        crear();
-
-    }
-
-    @Override
     public void eliminar(int id) {
         ArrayList<Object[]> pacientes = leer(); // Pasar archivo como parámetro
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
@@ -147,8 +138,17 @@ public class NPacientes extends Persona implements Reporte, CRUD {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Maneja la excepción apropiadamente en tu aplicación
+            JOptionPane.showMessageDialog(null, "Error al escribir en el archivo: ");
         }
-        return null; // Retorna null si no se encuentra el paciente
+        return null;
+    }
+
+    @Override
+    public void actualizar(int id, HashMap<String, Object> nuevosValores) {
+        id = (int) nuevosValores.get("id");
+        eliminar(id); // Eliminar el paciente existente
+        // Crear el paciente con los nuevos valores
+        crear();
+
     }
 }
