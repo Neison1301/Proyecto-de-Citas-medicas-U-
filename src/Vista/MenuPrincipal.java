@@ -10,7 +10,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public MenuPrincipal() {
         initComponents();
         citasMedicas.mostrarCitas(tbCitas);
-        jpMenu.requestFocus(); 
+        jpMenu.requestFocus();
 
     }
 
@@ -36,6 +36,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menu5 = new Label.Menu();
         menu6 = new Label.Menu();
         menu7 = new Label.Menu();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txaCitas = new javax.swing.JTextArea();
         menu8 = new Label.Menu();
         lblRegistrarPacientes = new javax.swing.JLabel();
         menu9 = new Label.Menu();
@@ -83,6 +85,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tbCitas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbCitasMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tbCitas);
@@ -220,6 +227,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menu6.setBackground(new java.awt.Color(255, 255, 255));
 
         menu7.setBackground(new java.awt.Color(255, 255, 255));
+
+        txaCitas.setColumns(20);
+        txaCitas.setRows(5);
+        jScrollPane2.setViewportView(txaCitas);
+
+        menu7.add(jScrollPane2);
+        jScrollPane2.setBounds(20, 20, 170, 130);
 
         menu8.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -378,9 +392,34 @@ public class MenuPrincipal extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_jpMenuKeyPressed
-  
-    
-public static void main(String args[]) {
+
+    private void tbCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCitasMouseClicked
+
+        if (evt.getClickCount() == 2) { // Verificar si se hizo doble clic
+            int filaSeleccionada = tbCitas.getSelectedRow();
+            if (filaSeleccionada != -1) { // Verificar si se seleccionó una fila
+                // Obtener el ID de la cita seleccionada
+                int idCita = (int) tbCitas.getValueAt(filaSeleccionada, 0);
+
+                // Obtener la cita correspondiente al ID seleccionado
+                CitasMedicas cita = citasMedicas.obtenerCitaPorId(idCita);
+
+                // Verificar si se encontró la cita
+                if (cita != null) {
+                    // Mostrar la información de la cita en el JTextArea
+                    String informacionCita = String.format("ID: %d\nFecha: %s\nHora: %s\nPaciente: %s\nDoctor: %s\nMotivo: %s\n",
+                            cita.getId(), cita.getFecha(), cita.getHora(), cita.getPaciente().getNombre(),
+                            cita.getDoctor().getNombre(), cita.getMotivo());
+                    txaCitas.setText(informacionCita);
+                } else {
+                    // Si no se encuentra la cita, mostrar un mensaje de error
+                    txaCitas.setText("No se encontró información de la cita");
+                }
+            }
+        }
+    }//GEN-LAST:event_tbCitasMouseClicked
+
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -425,6 +464,7 @@ public static void main(String args[]) {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel jpMenu;
     private javax.swing.JLabel lblRegistrarPacientes;
@@ -439,5 +479,6 @@ public static void main(String args[]) {
     private Label.Menu menu9;
     private javax.swing.JTable tbCitas;
     private javax.swing.JLabel tfCantidadDoctores;
+    private javax.swing.JTextArea txaCitas;
     // End of variables declaration//GEN-END:variables
 }
