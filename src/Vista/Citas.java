@@ -1,6 +1,8 @@
 package Vista;
 
 import Clases.CitasMedicas;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class Citas extends javax.swing.JFrame {
@@ -9,7 +11,7 @@ public class Citas extends javax.swing.JFrame {
 
     public Citas() {
         initComponents();
-
+        mostrarFechaYHoraActual();
         citasMedicas.mostrarCitas(tbCitas);
 
     }
@@ -28,6 +30,8 @@ public class Citas extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         menu2 = new Label.Menu();
+        txtfecha = new javax.swing.JTextField();
+        txthra = new javax.swing.JTextField();
         menu3 = new Label.Menu();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbCitas = new javax.swing.JTable();
@@ -154,15 +158,38 @@ public class Citas extends javax.swing.JFrame {
 
         menu2.setBackground(new java.awt.Color(255, 255, 255));
 
+        txtfecha.setEditable(false);
+        txtfecha.setBackground(new java.awt.Color(255, 255, 255));
+        txtfecha.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtfecha.setBorder(null);
+
+        txthra.setEditable(false);
+        txthra.setBackground(new java.awt.Color(255, 255, 255));
+        txthra.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txthra.setBorder(null);
+
+        menu2.setLayer(txtfecha, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu2.setLayer(txthra, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout menu2Layout = new javax.swing.GroupLayout(menu2);
         menu2.setLayout(menu2Layout);
         menu2Layout.setHorizontalGroup(
             menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 384, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menu2Layout.createSequentialGroup()
+                .addContainerGap(267, Short.MAX_VALUE)
+                .addGroup(menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txthra, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
         menu2Layout.setVerticalGroup(
             menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 102, Short.MAX_VALUE)
+            .addGroup(menu2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txthra, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         menu3.setBackground(new java.awt.Color(255, 255, 255));
@@ -396,16 +423,16 @@ public class Citas extends javax.swing.JFrame {
         int fila = tbCitas.getSelectedRow();
         if (fila >= 0) {
             int idCita = (int) tbCitas.getValueAt(fila, 0);
-            
+
             CitasMedicas citaSeleccionada = citasMedicas.obtenerCitaPorId(fila);
-            
+
             if (citaSeleccionada != null) {
                 String mensaje = String.format("Fecha: %s\nHora: %s\nPaciente: %s\nDoctor: %s\nMotivo: %s",
                         citaSeleccionada.getFecha(), citaSeleccionada.getHora(), citaSeleccionada.getPaciente(),
                         citaSeleccionada.getDoctor(), citaSeleccionada.getMotivo());
 
                 String nuevoMensaje = JOptionPane.showInputDialog(this, mensaje, "Editar Cita", JOptionPane.PLAIN_MESSAGE);
-               
+
                 if (nuevoMensaje != null) {
                     citasMedicas.mostrarCitas(tbCitas);
                 }
@@ -418,13 +445,13 @@ public class Citas extends javax.swing.JFrame {
     }//GEN-LAST:event_jbEditarCitaMouseClicked
 
     private void tbCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCitasMouseClicked
-        if (evt.getClickCount() == 2) { 
+        if (evt.getClickCount() == 2) {
             int filaSeleccionada = tbCitas.getSelectedRow();
             if (filaSeleccionada != -1) { // Verificar si se seleccionó una fila
                 //TRAER LOS DATOS 
                 int idCita = Integer.parseInt(tbCitas.getValueAt(filaSeleccionada, 0).toString());
 
-                CitasMedicas cita = citasMedicas.obtenerCitaPorId(idCita); 
+                CitasMedicas cita = citasMedicas.obtenerCitaPorId(idCita);
 
                 if (cita != null) {
                     String informacionCita = String.format("ID: %d\nFecha: %s\nHora: %s\nPaciente: %s\nDoctor: %s\n",
@@ -438,6 +465,19 @@ public class Citas extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tbCitasMouseClicked
+    private void mostrarFechaYHoraActual() {
+        // Obtener la fecha y hora actual
+        Date fechaHora = new Date();
+        // Formatear la fecha
+        SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaFormateada = sdfFecha.format(fechaHora);
+        // Formatear la hora
+        SimpleDateFormat sdfHora = new SimpleDateFormat("HH:mm:ss");
+        String horaFormateada = sdfHora.format(fechaHora);
+        // Mostrar la fecha y hora en los JTextField
+        txtfecha.setText(fechaFormateada);
+        txthra.setText(horaFormateada);
+    }
 
     /**
      * @param args the command line arguments
@@ -497,5 +537,7 @@ public class Citas extends javax.swing.JFrame {
     private Label.Menu menu6;
     private javax.swing.JTable tbCitas;
     private javax.swing.JTextArea txArea;
+    private javax.swing.JTextField txtfecha;
+    private javax.swing.JTextField txthra;
     // End of variables declaration//GEN-END:variables
 }

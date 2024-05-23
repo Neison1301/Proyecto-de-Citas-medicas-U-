@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Horario implements CRUD<Horario> {
+
     private String archivo = "C:\\Users\\NEISON\\Downloads\\CitasMedicas-master\\src\\Almacenamiento\\Horario.txt";
 
     private String dia;
@@ -64,7 +65,6 @@ public class Horario implements CRUD<Horario> {
     }
 
 
-    
     @Override
     public void crear(Horario entidad) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo, true))) {

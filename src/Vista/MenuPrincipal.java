@@ -2,18 +2,20 @@ package Vista;
 
 import Clases.CitasMedicas;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MenuPrincipal extends javax.swing.JFrame {
-    
+
     CitasMedicas citasMedicas = new CitasMedicas(0, null, null, null, null, null);
-    
+
     public MenuPrincipal() {
         initComponents();
         citasMedicas.mostrarCitas(tbCitas);
         jpMenu.requestFocus();
-        
+        mostrarFechaYHoraActual();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -31,6 +33,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         menu3 = new Label.Menu();
+        txtfecha = new javax.swing.JTextField();
+        txthora = new javax.swing.JTextField();
         menu4 = new Label.Menu();
         jLabel14 = new javax.swing.JLabel();
         menu5 = new Label.Menu();
@@ -209,6 +213,22 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         menu3.setBackground(new java.awt.Color(255, 255, 255));
 
+        txtfecha.setEditable(false);
+        txtfecha.setBackground(new java.awt.Color(255, 255, 255));
+        txtfecha.setColumns(1);
+        txtfecha.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtfecha.setBorder(null);
+        menu3.add(txtfecha);
+        txtfecha.setBounds(260, 20, 120, 30);
+
+        txthora.setEditable(false);
+        txthora.setBackground(new java.awt.Color(255, 255, 255));
+        txthora.setColumns(1);
+        txthora.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txthora.setBorder(null);
+        menu3.add(txthora);
+        txthora.setBounds(260, 50, 120, 30);
+
         menu4.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel14.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
@@ -350,10 +370,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void lblRegistrarPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarPacientesMouseClicked
         RegistrarPaciente registrarse = new RegistrarPaciente();
         registrarse.setVisible(true);
-        
+
         this.dispose();
     }//GEN-LAST:event_lblRegistrarPacientesMouseClicked
-    
+
 
     private void tfCantidadDoctoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfCantidadDoctoresMouseClicked
         RegistrarDoctor registrarDoctor = new RegistrarDoctor(this);
@@ -394,7 +414,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jpMenuKeyPressed
 
     private void tbCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCitasMouseClicked
-        
+
         if (evt.getClickCount() == 2) { //  doble clic
             int filaSeleccionada = tbCitas.getSelectedRow();
             if (filaSeleccionada != -1) {
@@ -414,7 +434,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tbCitasMouseClicked
-    
+    private void mostrarFechaYHoraActual() {
+        // Obtener la fecha y hora actual
+        Date fechaHora = new Date();
+        // Formatear la fecha
+        SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaFormateada = sdfFecha.format(fechaHora);
+        // Formatear la hora
+        SimpleDateFormat sdfHora = new SimpleDateFormat("HH:mm:ss");
+        String horaFormateada = sdfHora.format(fechaHora);
+        // Mostrar la fecha y hora en los JTextField
+        txtfecha.setText(fechaFormateada);
+        txthora.setText(horaFormateada);
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -476,5 +509,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable tbCitas;
     private javax.swing.JLabel tfCantidadDoctores;
     private javax.swing.JTextArea txaCitas;
+    private javax.swing.JTextField txtfecha;
+    private javax.swing.JTextField txthora;
     // End of variables declaration//GEN-END:variables
 }

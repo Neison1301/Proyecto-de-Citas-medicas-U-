@@ -1,6 +1,8 @@
 package Vista;
 
 import Clases.NPacientes;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Pacientes extends javax.swing.JFrame {
 
@@ -9,6 +11,8 @@ public class Pacientes extends javax.swing.JFrame {
     public Pacientes() {
         initComponents();
         nPacientes.mostrarPacientes(tbPacientes);
+        mostrarFechaYHoraActual();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -25,6 +29,8 @@ public class Pacientes extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         menu2 = new Label.Menu();
+        txtfecha = new javax.swing.JTextField();
+        txthora = new javax.swing.JTextField();
         menu3 = new Label.Menu();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbPacientes = new javax.swing.JTable();
@@ -152,15 +158,40 @@ public class Pacientes extends javax.swing.JFrame {
 
         menu2.setBackground(new java.awt.Color(255, 255, 255));
 
+        txtfecha.setEditable(false);
+        txtfecha.setBackground(new java.awt.Color(255, 255, 255));
+        txtfecha.setColumns(1);
+        txtfecha.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtfecha.setBorder(null);
+
+        txthora.setEditable(false);
+        txthora.setBackground(new java.awt.Color(255, 255, 255));
+        txthora.setColumns(1);
+        txthora.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txthora.setBorder(null);
+
+        menu2.setLayer(txtfecha, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu2.setLayer(txthora, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout menu2Layout = new javax.swing.GroupLayout(menu2);
         menu2.setLayout(menu2Layout);
         menu2Layout.setHorizontalGroup(
             menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menu2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txthora, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         menu2Layout.setVerticalGroup(
             menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 114, Short.MAX_VALUE)
+            .addGroup(menu2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(txthora, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         menu3.setBackground(new java.awt.Color(255, 255, 255));
@@ -404,6 +435,19 @@ public class Pacientes extends javax.swing.JFrame {
                 }
             }
         }    }//GEN-LAST:event_tbPacientesMouseClicked
+    private void mostrarFechaYHoraActual() {
+        // Obtener la fecha y hora actual
+        Date fechaHora = new Date();
+        // Formatear la fecha
+        SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaFormateada = sdfFecha.format(fechaHora);
+        // Formatear la hora
+        SimpleDateFormat sdfHora = new SimpleDateFormat("HH:mm:ss");
+        String horaFormateada = sdfHora.format(fechaHora);
+        // Mostrar la fecha y hora en los JTextField
+        txtfecha.setText(fechaFormateada);
+        txthora.setText(horaFormateada);
+    }
 
     /**
      * @param args the command line arguments
@@ -464,5 +508,7 @@ public class Pacientes extends javax.swing.JFrame {
     private Label.Menu menu6;
     private Label.Menu menu7;
     private javax.swing.JTable tbPacientes;
+    private javax.swing.JTextField txtfecha;
+    private javax.swing.JTextField txthora;
     // End of variables declaration//GEN-END:variables
 }
