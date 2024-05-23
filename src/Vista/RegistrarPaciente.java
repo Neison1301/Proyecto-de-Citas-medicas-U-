@@ -1,16 +1,13 @@
 package Vista;
 
 import Clases.NPacientes;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 public class RegistrarPaciente extends javax.swing.JFrame {
 
-<<<<<<< OURS
     Menu menu = new Menu();
     NPacientes nPacientes = new NPacientes(0, 0, 0, null, null, null, null, false);
-=======
-    NPacientes nPacientes = new NPacientes(new int[100], new String[100], new String[100], new String[100], new String[100], new int[100], new boolean[100]);
->>>>>>> THEIRS
 
     public RegistrarPaciente() {
         initComponents();
@@ -319,29 +316,16 @@ public class RegistrarPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbregistrarActionPerformed
-
-<<<<<<< OURS
+        int dni, edad;
         String nombre, apellido, telefono, email;
-        int edad,dni;
         boolean genero;
-=======
-        // Obtener los datos del formulario
-        int id = Integer.parseInt(tfDni.getText());
-        String nombre = tfNombre.getText();
-        String apellido = tfapellidos.getText();
-        String telefono = tfTelefono.getText();
-        String email = tfCorreo.getText();
-        int edad = Integer.parseInt(tfedad.getText());
-        boolean genero = cbGenero.getSelectedItem().toString().equals("Masculino"); 
-        
-        nPacientes.agregarPaciente(id, nombre, apellido, telefono, email, edad, genero);
-        
-        nPacientes.escribirDatosEnArchivo("RegistroPaciente.txt");
->>>>>>> THEIRS
 
-        JOptionPane.showMessageDialog(null, "Paciente registrado exitosamente.");
+        if (tfDni.getText().isEmpty() || tfNombre.getText().isEmpty() || tfapellidos.getText().isEmpty()
+                || tfTelefono.getText().isEmpty() || tfCorreo.getText().isEmpty() || tfedad.getText().isEmpty() || cbGenero.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+            return;
+        }
 
-<<<<<<< OURS
         try {
             dni = Integer.parseInt(tfDni.getText());
             nombre = tfNombre.getText();
@@ -350,23 +334,22 @@ public class RegistrarPaciente extends javax.swing.JFrame {
             email = tfCorreo.getText();
             edad = Integer.parseInt(tfedad.getText());
             genero = cbGenero.getSelectedItem().toString().equals("Masculino");
-=======
-        Pacientes paciente = new Pacientes();
->>>>>>> THEIRS
 
-<<<<<<< OURS
-            nPacientes.establecerInformacionPaciente(0, dni, edad, nombre, apellido, telefono, email, genero);
-            nPacientes.crear();
+            nPacientes.agregarPaciente(dni, edad, nombre, apellido, telefono, email, genero); // Llamar al método agregarPaciente
+
             JOptionPane.showMessageDialog(null, "Paciente registrado exitosamente.");
-            this.dispose();
+
+            // Luego de agregar el paciente, puedes escribir los datos en el archivo si es necesario
+            // nPacientes.escribirDatosEnArchivo("RegistroPaciente.txt");
+            // Además, no estoy seguro de qué es Pacientes, puede que sea otra clase que necesites manejar de manera diferente.
+            this.dispose(); // Cerrar esta ventana
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para el DNI o la edad.");
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Error al registrar el paciente: " + e.getMessage());
         }
-=======
-        paciente.setVisible(true);
->>>>>>> THEIRS
+        Pacientes pacientes = new Pacientes();
+        pacientes.setVisible(true);
 
         this.dispose();
     }//GEN-LAST:event_jbregistrarActionPerformed
@@ -437,10 +420,8 @@ public class RegistrarPaciente extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegistrarPaciente().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new RegistrarPaciente().setVisible(true);
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

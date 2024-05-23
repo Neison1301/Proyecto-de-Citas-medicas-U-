@@ -1,11 +1,15 @@
 package Vista;
 
 import Clases.CitasMedicas;
+import Clases.NPacientes;
+import Clases.Ndoctor;
 import Label.Menu;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 public class RegistrarCitas extends javax.swing.JFrame {
+
+    CitasMedicas citasMedicas = new CitasMedicas(0, null, null, null, null, null);
 
     private boolean modoEdicion = false;
     private int idCitaEditar;
@@ -299,6 +303,12 @@ public class RegistrarCitas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbregistrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbregistrar1ActionPerformed
+        if (tfFechaCita.getText().isEmpty() || tfHoraCita.getText().isEmpty() || tfPaciente.getText().isEmpty()
+                || tfDoctor.getText().isEmpty() || tfDni.getText().isEmpty() || tfMotivo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+            return;
+        }
+
         String fecha, hora, paciente, doctor, motivo;
         int dni;
         fecha = tfFechaCita.getText();
@@ -316,27 +326,21 @@ public class RegistrarCitas extends javax.swing.JFrame {
             nuevosValores.put("doctor", doctor);
             nuevosValores.put("dni", dni);
             nuevosValores.put("motivo", motivo);
-            // Actualizar la cita con los nuevos datos
-            CitasMedicas citasMedicas = new CitasMedicas(idCitaEditar, fecha, hora, paciente, doctor, dni, motivo);
-            citasMedicas.actualizar(0,nuevosValores);
-            // Desactivar el modo edición y limpiar los campos del formulario
+
+            citasMedicas.actualizar(idCitaEditar, nuevosValores);
+
             desactivarModoEdicion();
 
-            // Mostrar un mensaje de éxito
             JOptionPane.showMessageDialog(null, "La cita se ha actualizado correctamente");
-            Citas citas = new Citas();
-            citas.setVisible(true);
-            this.dispose();
         } else {
-            // Si no estamos en modo de edición, creamos una nueva cita
-            CitasMedicas nuevaCita = new CitasMedicas(0, fecha, hora, paciente, doctor, dni, motivo);
-            nuevaCita.agendarCita(nuevaCita);
-            JOptionPane.showMessageDialog(null, "La cita se ha registrado correctamente");
-            Citas citas = new Citas();
-            citas.setVisible(true);
-            this.dispose();
+            NPacientes pacienteObj = new NPacientes(dni, 0, 0, paciente, null, null, null, false);
+            Ndoctor doctorObj = new Ndoctor(dni, null, null, null, null, false, doctor, 0);
+            citasMedicas.crear(new CitasMedicas(0, fecha, hora, pacienteObj, doctorObj, motivo));
 
+            JOptionPane.showMessageDialog(null, "La cita se ha registrado correctamente");
         }
+
+        limpiarCampos();
 
     }//GEN-LAST:event_jbregistrar1ActionPerformed
 

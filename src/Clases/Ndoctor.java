@@ -7,26 +7,15 @@ import javax.swing.JOptionPane;
 
 public class Ndoctor extends Persona implements CRUD<Ndoctor> {
 
-    private static final String ARCHIVO_DOCTORES = "ruta/al/archivo/doctores.txt";
-    private int id;
+    private static final String ARCHIVO_DOCTORES = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\Documents\\NetBeansProjects\\CitasMedicas-master\\src\\Almacenamiento\\RegistroDoctor.txt";
+
     private String especialidad;
     private int cantidadActual;
 
     public Ndoctor(int id, String nombre, String apellido, String telefono, String email, boolean genero, String especialidad, int cantidadActual) {
         super(id, nombre, apellido, telefono, email, genero);
-        this.id = id;
         this.especialidad = especialidad;
         this.cantidadActual = cantidadActual;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getEspecialidad() {
@@ -45,21 +34,15 @@ public class Ndoctor extends Persona implements CRUD<Ndoctor> {
         this.cantidadActual = cantidadActual;
     }
 
-    public void establecerInformaciondoctor(int id, String nombre, String apellido, String telefono, String email, boolean genero, String especialidad, int cantidadActual) {
-        setId(id);
-        setNombre(nombre);
-        setApellido(apellido);
-        setTelefono(telefono);
-        setEmail(email);
-        setGenero(genero);
-        setEspecialidad(especialidad);
-        setCantidadActual(cantidadActual);
+    public void agregarDoctor(int id, String nombre, String apellido, String telefono, String email, boolean genero, String especialidad, int cantidadActual) {
+        Ndoctor nuevoDoctor = new Ndoctor(id, nombre, apellido, telefono, email, genero, especialidad, cantidadActual);
+        crear(nuevoDoctor);
     }
 
     @Override
     public void crear(Ndoctor doctor) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_DOCTORES, true))) {
-            String datosDoctor = String.format("%d, %s, %s, %s, %s, %s, %d%n", doctor.getId(), doctor.getNombre(), doctor.getApellido(), doctor.getTelefono(), doctor.getEmail(),
+            String datosDoctor = String.format("%d, %s, %s, %s, %s, %s, %s, %d%n", doctor.getId(), doctor.getNombre(), doctor.getApellido(), doctor.getTelefono(), doctor.getEmail(),
                     doctor.isGenero() ? "Masculino" : "Femenino", doctor.getEspecialidad(), doctor.getCantidadActual());
             writer.write(datosDoctor);
             JOptionPane.showMessageDialog(null, "Doctor creado con éxito.");
@@ -75,15 +58,15 @@ public class Ndoctor extends Persona implements CRUD<Ndoctor> {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(", ");
-                if (parts.length >= 7) {
-                    id = Integer.parseInt(parts[0]);
+                if (parts.length >= 8) {
+                     id = Integer.parseInt(parts[0]);
                     String nombre = parts[1];
                     String apellido = parts[2];
                     String telefono = parts[3];
                     String email = parts[4];
                     boolean genero = parts[5].equals("Masculino");
-                    especialidad = parts[6];
-                    cantidadActual = Integer.parseInt(parts[7]);
+                     especialidad = parts[6];
+                     cantidadActual = Integer.parseInt(parts[7]);
                     Ndoctor doctor = new Ndoctor(id, nombre, apellido, telefono, email, genero, especialidad, cantidadActual);
                     doctores.add(doctor);
                 }
@@ -126,7 +109,7 @@ public class Ndoctor extends Persona implements CRUD<Ndoctor> {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_DOCTORES))) {
             for (Ndoctor doctor : doctores) {
                 if (doctor.getId() != id) {
-                    writer.write(String.format("%d, %s, %s, %s, %s, %s, %d%n", doctor.getId(), doctor.getNombre(), doctor.getApellido(), doctor.getTelefono(), doctor.getEmail(),
+                    writer.write(String.format("%d, %s, %s, %s, %s, %s, %s, %d%n", doctor.getId(), doctor.getNombre(), doctor.getApellido(), doctor.getTelefono(), doctor.getEmail(),
                             doctor.isGenero() ? "Masculino" : "Femenino", doctor.getEspecialidad(), doctor.getCantidadActual()));
                 }
             }

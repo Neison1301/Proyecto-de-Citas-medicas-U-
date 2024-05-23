@@ -1,9 +1,14 @@
 package Vista;
 
+import Clases.NPacientes;
+
 public class Pacientes extends javax.swing.JFrame {
+
+    NPacientes nPacientes = new NPacientes(0, 0, 0, null, null, null, null, false);
 
     public Pacientes() {
         initComponents();
+        nPacientes.mostrarPacientes(tbPacientes);
     }
 
     @SuppressWarnings("unchecked")
@@ -22,11 +27,11 @@ public class Pacientes extends javax.swing.JFrame {
         menu2 = new Label.Menu();
         menu3 = new Label.Menu();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbPacientes = new javax.swing.JTable();
         menu4 = new Label.Menu();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
         menu5 = new Label.Menu();
         jLabel5 = new javax.swing.JLabel();
         menu6 = new Label.Menu();
@@ -160,7 +165,7 @@ public class Pacientes extends javax.swing.JFrame {
 
         menu3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -191,12 +196,17 @@ public class Pacientes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(20);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(20);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(20);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        tbPacientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbPacientesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbPacientes);
+        if (tbPacientes.getColumnModel().getColumnCount() > 0) {
+            tbPacientes.getColumnModel().getColumn(0).setMinWidth(20);
+            tbPacientes.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tbPacientes.getColumnModel().getColumn(0).setMaxWidth(20);
+            tbPacientes.getColumnModel().getColumn(1).setResizable(false);
         }
 
         menu3.add(jScrollPane1);
@@ -207,12 +217,12 @@ public class Pacientes extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
         jLabel3.setText("Datos del Paciente:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jScrollPane3.setViewportView(jTextArea2);
 
         menu4.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        menu4.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu4.setLayer(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout menu4Layout = new javax.swing.GroupLayout(menu4);
         menu4.setLayout(menu4Layout);
@@ -220,21 +230,19 @@ public class Pacientes extends javax.swing.JFrame {
             menu4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menu4Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addContainerGap(59, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menu4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(menu4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         menu4Layout.setVerticalGroup(
             menu4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menu4Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         menu5.setBackground(new java.awt.Color(255, 255, 255));
@@ -367,7 +375,7 @@ public class Pacientes extends javax.swing.JFrame {
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
         Citas citas = new Citas();
-        citas.setVisible(true);     
+        citas.setVisible(true);
         this.dispose();    }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
@@ -375,6 +383,29 @@ public class Pacientes extends javax.swing.JFrame {
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void tbPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPacientesMouseClicked
+        if (evt.getClickCount() == 2) { // Verificar si se hizo doble clic
+            int filaSeleccionada = tbPacientes.getSelectedRow();
+            if (filaSeleccionada != -1) { // Verificar si se seleccionó una fila
+                // Obtener los datos de la fila seleccionada
+                int idPaciente = (int) tbPacientes.getValueAt(filaSeleccionada, 0);
+                String nombrePaciente = (String) tbPacientes.getValueAt(filaSeleccionada, 1);
+                // Otras columnas si las hubiera
+
+                // Crear un objeto NPacientes para obtener la información completa del paciente
+                NPacientes paciente = nPacientes.obtenerId(idPaciente); // Implementa este método en tu clase NPacientes
+                        // Mostrar la información del paciente en el JTextArea
+                if (paciente != null) {
+                    String informacionPaciente = String.format("ID: %d\nNombre: %s\nDNI: %d\nEdad: %d\nTeléfono: %s\nEmail: %s\nGénero: %s\n",
+                            paciente.getId(), paciente.getNombre(), paciente.getDni(), paciente.getEdad(),
+                            paciente.getTelefono(), paciente.getEmail(), paciente.isGenero() ? "Masculino" : "Femenino");
+                    jTextArea2.setText(informacionPaciente);
+                } else {
+                    jTextArea2.setText("No se encontró información del paciente");
+                }
+            }
+        }    }//GEN-LAST:event_tbPacientesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -423,10 +454,9 @@ public class Pacientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
     private Label.Menu menu1;
     private Label.Menu menu2;
@@ -435,5 +465,6 @@ public class Pacientes extends javax.swing.JFrame {
     private Label.Menu menu5;
     private Label.Menu menu6;
     private Label.Menu menu7;
+    private javax.swing.JTable tbPacientes;
     // End of variables declaration//GEN-END:variables
 }

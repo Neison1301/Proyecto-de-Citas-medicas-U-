@@ -1,17 +1,16 @@
 package Clases;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
-public class NPacientes extends Persona implements Reporte, CRUD {
+public class NPacientes extends Persona implements CRUD<NPacientes> {
 
-    private String archivo = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\Documents\\NetBeansProjects\\CitasMedicas-master\\src\\Almacenamiento\\RegistroPaciente.txt";
+    private static final String ARCHIVO_PACIENTES = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\Documents\\NetBeansProjects\\CitasMedicas-master\\src\\Almacenamiento\\RegistroPaciente.txt";
+
     private int dni;
     private int edad;
 
@@ -37,38 +36,25 @@ public class NPacientes extends Persona implements Reporte, CRUD {
         this.edad = edad;
     }
 
-    public String getArchivo() {
-        return archivo;
-    }
-
-    public void setArchivo(String archivo) {
-        this.archivo = archivo;
-    }
-
-    public void establecerInformacionPaciente(int id, int dni, String nombre, String apellido, String telefono, String email, boolean genero) {
-        setId(id);
-        setNombre(nombre);
-        setApellido(apellido);
-        setTelefono(telefono);
-        setEmail(email);
-        setGenero(genero);
-        setDni(dni);
+    public void agregarPaciente(int dni, int edad, String nombre, String apellido, String telefono, String email, boolean genero) {
+        NPacientes nuevoPaciente = new NPacientes(dni, edad, obtenerId(), nombre, apellido, telefono, email, genero);
+        crear(nuevoPaciente);
     }
 
     @Override
-    public void crear() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo, true))) {
-            writer.write(String.format("%d, %d, %d, %s, %s, %s, %s, %s%n", id, getDni(), getEdad(), getNombre(), getApellido(),
-                    getTelefono(), getEmail(), isGenero() ? "Masculino" : "Femenino"));
+    public void crear(NPacientes paciente) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_PACIENTES, true))) {
+            writer.write(String.format("%d, %d, %d, %s, %s, %s, %s, %s%n", paciente.getId(), paciente.getDni(), paciente.getEdad(), paciente.getNombre(), paciente.getApellido(),
+                    paciente.getTelefono(), paciente.getEmail(), paciente.isGenero() ? "Masculino" : "Femenino"));
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al escribir en el archivo: " + e.getMessage());
         }
     }
 
     @Override
-    public ArrayList<Object[]> leer() {
-        ArrayList<Object[]> pacientes = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+    public ArrayList<NPacientes> leer() {
+        ArrayList<NPacientes> pacientes = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(ARCHIVO_PACIENTES))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(", ");
@@ -81,43 +67,24 @@ public class NPacientes extends Persona implements Reporte, CRUD {
                     String telefono = parts[5];
                     String email = parts[6];
                     boolean genero = parts[7].equals("Masculino");
-                    Object[] paciente = {id, dni, edad, nombre, apellido, telefono, email, genero};
+                    NPacientes paciente = new NPacientes(dni, edad, id, nombre, apellido, telefono, email, genero);
                     pacientes.add(paciente);
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Maneja la excepción apropiadamente en tu aplicación
+            JOptionPane.showMessageDialog(null, "Error al leer el archivo: " + e.getMessage());
         }
         return pacientes;
     }
 
     @Override
-    public void mostrarInformacion() {
-        ArrayList<Object[]> pacientes = leer();
-        for (Object[] paciente : pacientes) {
-            // Aquí puedes imprimir la información del paciente en la consola o hacer cualquier otro tipo de manipulación
-            System.out.println("ID: " + paciente[0] + ", DNI: " + paciente[1] + ", Nombre: " + paciente[3]);
-        }
-    }
-
-    @Override
-    public void generarReporte() {
-        ArrayList<Object[]> pacientes = leer();
-        System.out.println("Reporte de pacientes:");
-        for (Object[] paciente : pacientes) {
-            System.out.println("ID: " + paciente[0] + ", DNI: " + paciente[1] + ", Nombre: " + paciente[3]);
-        }
-
-    }
-
-    @Override
     public void eliminar(int id) {
-        ArrayList<Object[]> pacientes = leer(); // Pasar archivo como parámetro
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
-            for (Object[] paciente : pacientes) {
-                int pacienteId = (int) paciente[0];
-                if (pacienteId != id) {
-                    writer.write(String.format("%d, %d, %d, %s, %s, %s, %s, %s%n", paciente[0], paciente[1], paciente[2], paciente[3], paciente[4], paciente[5], paciente[6], paciente[7]));
+        ArrayList<NPacientes> pacientes = leer();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_PACIENTES))) {
+            for (NPacientes paciente : pacientes) {
+                if (paciente.getId() != id) {
+                    writer.write(String.format("%d, %d, %d, %s, %s, %s, %s, %s%n", paciente.getId(), paciente.getDni(), paciente.getEdad(), paciente.getNombre(), paciente.getApellido(),
+                            paciente.getTelefono(), paciente.getEmail(), paciente.isGenero() ? "Masculino" : "Femenino"));
                 }
             }
         } catch (IOException e) {
@@ -125,30 +92,59 @@ public class NPacientes extends Persona implements Reporte, CRUD {
         }
     }
 
-    public String buscarNombrePorDNI(int dni) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(", ");
-                if (parts.length >= 8) {
-                    int pacienteDNI = Integer.parseInt(parts[1]);
-                    if (pacienteDNI == dni) {
-                        return parts[3]; // Retorna el nombre del paciente
-                    }
-                }
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al escribir en el archivo: ");
-        }
-        return null;
-    }
-
     @Override
     public void actualizar(int id, HashMap<String, Object> nuevosValores) {
-        id = (int) nuevosValores.get("id");
-        eliminar(id); // Eliminar el paciente existente
-        // Crear el paciente con los nuevos valores
-        crear();
+        ArrayList<NPacientes> pacientes = leer();
+        eliminar(id); // Eliminar el paciente existente con el ID dado
 
+        // Crear el paciente con los nuevos valores proporcionados
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_PACIENTES, true))) {
+            // Obtener los nuevos valores del HashMap
+            dni = (int) nuevosValores.get("dni");
+            edad = (int) nuevosValores.get("edad");
+            String nombre = (String) nuevosValores.get("nombre");
+            String apellido = (String) nuevosValores.get("apellido");
+            String telefono = (String) nuevosValores.get("telefono");
+            String email = (String) nuevosValores.get("email");
+            boolean genero = (boolean) nuevosValores.get("genero");
+
+            // Escribir la información del paciente actualizado en el archivo
+            writer.write(String.format("%d, %d, %d, %s, %s, %s, %s, %s%n", id, dni, edad, nombre, apellido, telefono, email, genero ? "Masculino" : "Femenino"));
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al escribir en el archivo: " + e.getMessage());
+        }
     }
+
+    public NPacientes obtenerId(int id) {
+        ArrayList<NPacientes> pacientes = leer();
+        for (NPacientes paciente : pacientes) {
+            if (paciente.getId() == id) {
+                return paciente;
+            }
+        }
+        return null; // Retorna null si no se encuentra ningún paciente con el ID especificado
+    }
+
+    public int obtenerId() {
+        int nuevoId = 0;
+        ArrayList<NPacientes> pacientes = leer();
+        for (NPacientes paciente : pacientes) {
+            if (paciente.getId() > nuevoId) {
+                nuevoId = paciente.getId();
+            }
+        }
+        return nuevoId + 1; // Incrementa el último ID en uno para obtener un nuevo ID único
+    }
+
+    public void mostrarPacientes(JTable tabla) {
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        modelo.setRowCount(0); // Limpiar la tabla antes de agregar los nuevos datos
+        ArrayList<NPacientes> pacientes = leer(); // Suponiendo que tienes un método leerPacientes() que devuelve una lista de NPacientes
+
+        // Recorrer la lista de pacientes y agregar cada uno a la tabla
+        for (NPacientes paciente : pacientes) {
+            modelo.addRow(new Object[]{paciente.getDni(), paciente.getNombre(), paciente.getApellido(), paciente.getTelefono(), paciente.getEmail(), paciente.getEdad()});
+        }
+    }
+
 }

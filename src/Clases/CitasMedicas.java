@@ -8,12 +8,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMedica {
+
     private static final String ARCHIVO_CITAS = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\Documents\\NetBeansProjects\\CitasMedicas-master\\src\\Almacenamiento\\CitasMedi.txt";
     private static int ultimoId = 0;
-    private int id;
+    public int id;
     private NPacientes paciente;
     private Ndoctor doctor;
-    private String motivo;
+    public String motivo;
 
     public CitasMedicas(int id, String fecha, String hora, NPacientes paciente, Ndoctor doctor, String motivo) {
         super(fecha, hora);
@@ -70,7 +71,6 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
         this.hora = hora;
     }
 
-
     public String getMotivo() {
         return motivo;
     }
@@ -94,19 +94,19 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(", ");
                 if (parts.length >= 7) {
-                    int id = Integer.parseInt(parts[0]);
-                    String fecha = parts[1];
-                    String hora = parts[2];
+                    id = Integer.parseInt(parts[0]);
+                    fecha = parts[1];
+                    hora = parts[2];
                     String pacienteNombre = parts[3];
                     String doctorNombre = parts[4];
                     String pacienteId = parts[5];
-                    String motivo = parts[6];
+                    motivo = parts[6];
 
                     // Para simplificar, creamos nuevas instancias de paciente y doctor con solo nombres e ids.
-                    NPaciente paciente = new NPaciente(pacienteNombre, pacienteId, "");
-                    Ndoctor doctor = new Ndoctor(doctorNombre, "", "");
+                    NPacientes pacienter = new NPacientes(id, id, id, hora, line, line, line, true);
+                    Ndoctor doctorr = new Ndoctor(id, hora, line, line, line, true, pacienteId, ultimoId);
 
-                    CitasMedicas cita = new CitasMedicas(id, fecha, hora, paciente, doctor, motivo);
+                    CitasMedicas cita = new CitasMedicas(id, fecha, hora, pacienter, doctorr, motivo);
                     citas.add(cita);
                 }
             }
@@ -184,18 +184,37 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
 
     private int getIndexFromKey(String key) {
         return switch (key) {
-            case "id" -> 0;
-            case "fecha" -> 1;
-            case "hora" -> 2;
-            case "paciente" -> 3;
-            case "doctor" -> 4;
-            case "dni" -> 5;
-            case "motivo" -> 6;
-            default -> -1;
+            case "id" ->
+                0;
+            case "fecha" ->
+                1;
+            case "hora" ->
+                2;
+            case "paciente" ->
+                3;
+            case "doctor" ->
+                4;
+            case "dni" ->
+                5;
+            case "motivo" ->
+                6;
+            default ->
+                -1;
         };
     }
 
     private void manejarError(String mensaje, IOException e) {
         JOptionPane.showMessageDialog(null, mensaje + e.getMessage());
     }
+
+    public CitasMedicas obtenerCitaPorId(int id) {
+        ArrayList<CitasMedicas> citas = leer();
+        for (CitasMedicas cita : citas) {
+            if (cita.getId() == id) {
+                return cita;
+            }
+        }
+        return null; // Retorna null si no se encuentra la cita con el ID especificado
+    }
+
 }
