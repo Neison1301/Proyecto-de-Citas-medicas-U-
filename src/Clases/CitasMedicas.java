@@ -145,7 +145,7 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
 
     @Override
     public void eliminar(int id) {
-         ArrayList<CitasMedicas> citas = leer();
+        ArrayList<CitasMedicas> citas = leer();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_CITAS))) {
             for (CitasMedicas cita : citas) {
                 if (cita.getId() != id) {
@@ -164,8 +164,7 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
         ArrayList<CitasMedicas> citas = leer();
 
         for (CitasMedicas cita : citas) {
-            modelo.addRow(new Object[]{cita.getId(), cita.getMotivo(), cita.getFecha(), cita.getHora(),
-                cita.getPaciente().getNombre(), cita.getDoctor().getNombre()});
+            modelo.addRow(new Object[]{cita.getId(), cita.getMotivo(), cita.getFecha()});
         }
     }
 

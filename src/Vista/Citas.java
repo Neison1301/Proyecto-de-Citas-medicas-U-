@@ -196,28 +196,28 @@ public class Citas extends javax.swing.JFrame {
 
         tbCitas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Id", "Motivos"
+                "Id", "Motivos", "Fecha"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -239,6 +239,9 @@ public class Citas extends javax.swing.JFrame {
             tbCitas.getColumnModel().getColumn(0).setPreferredWidth(30);
             tbCitas.getColumnModel().getColumn(0).setMaxWidth(30);
             tbCitas.getColumnModel().getColumn(1).setResizable(false);
+            tbCitas.getColumnModel().getColumn(2).setMinWidth(100);
+            tbCitas.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tbCitas.getColumnModel().getColumn(2).setMaxWidth(100);
         }
 
         menu3.add(jScrollPane1);

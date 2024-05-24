@@ -3,7 +3,6 @@ package Vista;
 import Clases.CitasMedicas;
 import Clases.NPacientes;
 import Clases.Ndoctor;
-import Label.Menu;
 import javax.swing.JOptionPane;
 
 public class RegistrarCitas extends javax.swing.JFrame {

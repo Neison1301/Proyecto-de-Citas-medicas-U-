@@ -424,8 +424,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
                 if (cita != null) {
                     String informacionCita = String.format("ID: %d\nFecha: %s\nHora: %s\nPaciente: %s\nDoctor: %s\nMotivo: %s\n",
-                            cita.getId(), cita.getFecha(), cita.getHora(), cita.getPaciente().getNombre(),
-                            cita.getDoctor().getNombre(), cita.getMotivo());
+                        cita.getId(), cita.getFecha(), cita.getHora(), cita.getPaciente().getNombre(),
+                        cita.getDoctor().getNombre(), cita.getMotivo());
                     txaCitas.setText(informacionCita);
                 } else {
                     // Si no hay la cita,error
