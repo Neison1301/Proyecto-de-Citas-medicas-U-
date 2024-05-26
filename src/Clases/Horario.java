@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Horario implements CRUD<Horario> {
+public class Horario  implements CRUD<Horario> {
 
     private String archivo = "C:\\Users\\NEISON\\Downloads\\CitasMedicas-master\\src\\Almacenamiento\\Horario.txt";
 

@@ -158,5 +158,4 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
                 paciente.getTelefono()});
         }
     }
-
 }

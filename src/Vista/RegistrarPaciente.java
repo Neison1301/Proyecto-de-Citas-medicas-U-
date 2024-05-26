@@ -363,9 +363,8 @@ public class RegistrarPaciente extends javax.swing.JFrame {
         cbGenero.setSelectedIndex(0); 
     }*/
     private void BtnRegresarInicio1jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarInicio1jButton1ActionPerformed
-        Pacientes paciente = new Pacientes();
 
-        paciente.setVisible(true);
+        menu.setVisible(true);
 
         this.dispose();
     }//GEN-LAST:event_BtnRegresarInicio1jButton1ActionPerformed

@@ -1,7 +1,7 @@
 package Clases;
 
 import java.util.ArrayList;
-//relacion de composicion
+
 public class RecetaMedica extends Medicamento {
 
     private String nombrePaciente;

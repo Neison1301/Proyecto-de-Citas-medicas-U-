@@ -14,5 +14,4 @@ public abstract class Reporte implements Boleta {
 
     @Override
     public abstract void generarReporte();
-
 }

@@ -51,7 +51,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jpMenu.setBackground(new java.awt.Color(173, 216, 230));
+        jpMenu.setBackground(new java.awt.Color(70, 170, 200));
         jpMenu.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jpMenuKeyPressed(evt);
@@ -109,6 +109,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         menu1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         jLabel10.setText("      CITAS");
         jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
