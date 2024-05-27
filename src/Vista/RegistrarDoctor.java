@@ -1,10 +1,8 @@
-
 package Vista;
 
 import Clases.Ndoctor;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
-
 
 public class RegistrarDoctor extends javax.swing.JFrame {
 
@@ -307,7 +305,6 @@ public class RegistrarDoctor extends javax.swing.JFrame {
         }
 
         try {
-            // Obtener los datos del nuevo doctor de los campos de entrada de la interfaz de usuario
             dni = Integer.parseInt(tfDni1.getText());
             nombre = tfNombre1.getText();
             apellido = tfapellidos1.getText();
@@ -316,18 +313,15 @@ public class RegistrarDoctor extends javax.swing.JFrame {
             genero = cbGenero1.getSelectedItem().toString().equals("Masculino");
             especialidad = tfEspecialidad1.getText();
 
-            // Llamar al método agregarDoctor de la instancia de Ndoctor
             ndoctor.agregarDoctor(dni, nombre, apellido, telefono, correo, genero, especialidad, 1);
             // Escribir los datos del doctor en el archivo de registro
             ndoctor.crear(ndoctor);
 
             JOptionPane.showMessageDialog(null, "Doctor registrado exitosamente.");
 
-            // Abrir la ventana de pacientes (si es necesario)
             Pacientes paciente = new Pacientes();
             paciente.setVisible(true);
 
-            // Cerrar la ventana actual (si es necesario)
             this.dispose();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para el DNI.");
@@ -337,7 +331,6 @@ public class RegistrarDoctor extends javax.swing.JFrame {
         }    }//GEN-LAST:event_jbregistrar1ActionPerformed
 
     private void cbGenero1jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenero1jComboBox1ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_cbGenero1jComboBox1ActionPerformed
 
     /**

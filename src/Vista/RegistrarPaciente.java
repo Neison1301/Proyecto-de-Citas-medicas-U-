@@ -339,10 +339,7 @@ public class RegistrarPaciente extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(null, "Paciente registrado exitosamente.");
 
-            // Luego de agregar el paciente, puedes escribir los datos en el archivo si es necesario
-            // nPacientes.escribirDatosEnArchivo("RegistroPaciente.txt");
-            // Además, no estoy seguro de qué es Pacientes, puede que sea otra clase que necesites manejar de manera diferente.
-            this.dispose(); // Cerrar esta ventana
+            this.dispose();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para el DNI o la edad.");
         } catch (HeadlessException e) {
@@ -353,19 +350,10 @@ public class RegistrarPaciente extends javax.swing.JFrame {
 
         this.dispose();
     }//GEN-LAST:event_jbregistrarActionPerformed
-    /*private void limpiarCampos() {
-        tfDni.setText("");
-        tfNombre.setText("");
-        tfapellidos.setText("");
-        tfTelefono.setText("");
-        tfCorreo.setText("");
-        tfedad.setText("");
-        cbGenero.setSelectedIndex(0); 
-    }*/
+
     private void BtnRegresarInicio1jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarInicio1jButton1ActionPerformed
 
         menu.setVisible(true);
-
         this.dispose();
     }//GEN-LAST:event_BtnRegresarInicio1jButton1ActionPerformed
 
