@@ -1,13 +1,15 @@
 package Vista;
 
-import Clases.InicioSesion;
+
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import modelo.UsuarioDTO;
+import modeloDAO.UsuarioDAO;
 
 public class Inicio extends javax.swing.JFrame {
 
     MenuPrincipal menu = new MenuPrincipal();
-    InicioSesion inicioSesion = new InicioSesion();
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     public Inicio() {
         initComponents();
@@ -145,19 +147,25 @@ public class Inicio extends javax.swing.JFrame {
         String usuario = Jusuario.getText().trim();
         String contra = new String(contraseña.getPassword()).trim();
 
-        if (inicioSesion == null) {
-            inicioSesion = new InicioSesion();
-        }
+        
+        
+        UsuarioDTO usuarioDTO = usuarioDAO.validar(usuario, contra);
 
-        if (inicioSesion.ingresar(usuario, contra)) {
+        if (usuarioDTO != null) {
+            // Iniciar sesión exitosa, abrir el menú principal
             menu.setVisible(true);
             dispose();
         } else {
+            
+            // Limpiar campos
             Jusuario.setText("");
             contraseña.setText("");
             JOptionPane.showMessageDialog(this, "Error: Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
             Jusuario.requestFocus();
         }
+        
+      
+
     }
 
     /**

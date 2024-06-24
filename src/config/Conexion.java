@@ -3,22 +3,41 @@ package config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
+import java.sql.SQLException;
 
 public class Conexion {
 
-    Connection conector = null;
+    private Connection conector;
+ 
+    
     String usuario = "root", contraseña = "12345", cadena = "jdbc:mysql://localhost:3306/POO";
+
+    public Connection getConector() {
+        return conector;
+    }
+
+    public void setConector(Connection conector) {
+        this.conector = conector;
+    }
 
     public Connection establecerConexion() {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conector = DriverManager.getConnection(cadena, usuario, contraseña);
-            JOptionPane.showMessageDialog(null, "Se conecto a la base de datos.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "error" + e.toString());
         }
         return conector;
+    }
 
+    public void cerrarConexion(Connection con) {
+        try {
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error de conexión", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
