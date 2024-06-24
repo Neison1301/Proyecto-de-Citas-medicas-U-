@@ -6,11 +6,11 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import milInterfaces.AtencionMedica;
 
 public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMedica {
 
     private static final String ARCHIVO_CITAS = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\Documents\\NetBeansProjects\\CitasMedicas-master\\src\\Almacenamiento\\CitasMedi.txt";
-    private static int ultimoId = 0;
     public int id = 1;
     private NPacientes paciente;
     private Ndoctor doctor;
@@ -22,21 +22,10 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
         this.paciente = paciente;
         this.doctor = doctor;
         this.motivo = motivo;
-        if (id > ultimoId) {
-            ultimoId = id;
-        }
     }
 
     public int getId() {
         return id;
-    }
-
-    public static int getUltimoId() {
-        return ultimoId;
-    }
-
-    public static void setUltimoId(int ultimoId) {
-        CitasMedicas.ultimoId = ultimoId;
     }
 
     public NPacientes getPaciente() {
@@ -78,11 +67,10 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
     @Override
     public void crear(CitasMedicas cita) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_CITAS, true))) {
-            String datosCita = String.format("%d, %s, %s, %s, %s, %s, %s%n", id, fecha, hora, paciente.getNombre(), doctor.getNombre(), paciente.getId(), motivo);
-            writer.write(datosCita);
+            int nuevoId = obtenerId(); // Obtener un nuevo ID único
+            cita.id = nuevoId;
+            writer.write(String.format("%d, %s, %s, %s, %s, %d, %s%n", cita.id, cita.getFecha(), cita.getHora(), cita.getPaciente().getNombre(), cita.getDoctor().getNombre(), cita.getPaciente().getDni(), cita.getMotivo()));
             JOptionPane.showMessageDialog(null, "Cita creada con éxito.");
-            writer.write(String.valueOf(id));
-            id++;
         } catch (IOException e) {
             manejarError("Error al escribir en el archivo: ", e);
         }
@@ -216,5 +204,16 @@ public class CitasMedicas extends Cita implements CRUD<CitasMedicas>, AtencionMe
             }
         }
         return null; // Retorna nad  si no se encuentra la cita con el id especificado
+    }
+
+    public int obtenerId() {
+        int nuevoId = 0;
+        ArrayList<CitasMedicas> citas = leer();
+        for (CitasMedicas cita : citas) {
+            if (cita.getId() > nuevoId) {
+                nuevoId = cita.getId();
+            }
+        }
+        return nuevoId + 1;
     }
 }

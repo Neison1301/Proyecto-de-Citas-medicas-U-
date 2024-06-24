@@ -37,3 +37,5 @@
 37, 22 de Junio, 09:30 am, Rodrigo Andrés López Soto, Rodrigo López, 950789012, Evaluación de síntomas gastrointestinales
 38, 23 de Junio, 13:00 pm, Gabriela Patricia Sánchez Flores, Gabriela García, 950890123, Consulta por problemas de tiroides
 39, 24 de Junio, 15:45 pm, Adrián Felipe Ortiz Guzmán, Adrián Moreno, 950901234, Control de diabetes
+40, 24 de Junio, 15:45 pm, Adrián Felipe Ortiz Guzmán, Adrián Moreno, 0, Control de diabetes
+41, 24 de Junio, 15:45 pm, Adrián Felipe Ortiz Guzmán, Adrián Moreno, 0, Control de diabetes

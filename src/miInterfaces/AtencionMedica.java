@@ -1,4 +1,6 @@
-package Clases;
+package milInterfaces;
+
+import Clases.CitasMedicas;
 
 public interface AtencionMedica {
     

@@ -38,3 +38,4 @@
 38, 75084890, 41, Gabriela Patricia, Sánchez Flores, 950890123, gabriela.sanchezflores@gmail.com, Femenino
 39, 75084901, 25, Adrián Felipe, Ortiz Guzmán, 950901234, adrian.ortizguzman@gmail.com, Masculino
 40, 75085012, 37, Verónica Andrea, Vega Ramírez, 950012345, veronica.vegaramirez@gmail.com, Femenino
+41, 75081107, 20, oscar, soto, 928770189, nafidnonkfldkl, Masculino

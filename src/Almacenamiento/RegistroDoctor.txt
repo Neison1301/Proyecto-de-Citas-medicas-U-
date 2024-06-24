@@ -27,4 +27,5 @@
 27, Fernando, Medina, 789012345, fernando.medina@example.com, Masculino, Medicina General, 1
 28, Claudia, Morales, 890123456, claudia.morales@example.com, Femenino, Medicina Interna, 1
 29, Julio, Vega, 901234567, julio.vega@example.com, Masculino, Gastroenterología, 1
-30, Cecilia, Herrera, 012345678, cecilia.herrera@example.com, Femenino, Reumatología, 1
+30, Cecilia, Herrera, 012345678, cecilia.herrera@example.com, Femenino, Reumatología, 1434343, wgrregwreg, gererwg, 434343, fdvfgfd, Masculino, gewrerwg, 1
+0, null, null, null, null, Femenino, null, 0
