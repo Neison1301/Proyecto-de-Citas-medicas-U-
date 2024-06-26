@@ -1,4 +1,4 @@
-package Vista;
+package vistas.cliente;
 
 import Clases.NPacientes;
 import java.awt.HeadlessException;

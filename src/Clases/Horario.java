@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import miInterfaces.CRUD;
 
 public class Horario  implements CRUD<Horario> {
 
@@ -75,15 +75,18 @@ public class Horario  implements CRUD<Horario> {
     }
 
     @Override
-    public ArrayList<Horario> leer() {
+    public ArrayList<Horario> leer( ) {
         return null;
     }
 
-    @Override
-    public void actualizar(int id, HashMap<String, Object> nuevosValores) {
-    }
+
 
     @Override
     public void eliminar(int id) {
+    }
+
+    @Override
+    public void actualizar(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

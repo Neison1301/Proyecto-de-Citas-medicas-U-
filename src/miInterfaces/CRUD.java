@@ -1,7 +1,6 @@
-package Clases;
+package miInterfaces;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public interface CRUD<T> {
 
@@ -9,7 +8,7 @@ public interface CRUD<T> {
 
     ArrayList<T> leer();
 
-    void actualizar(int id, HashMap<String, Object> nuevosValores);
+    void actualizar(int id);
 
     void eliminar(int id);
 }

@@ -1,9 +1,10 @@
-package Vista;
+package vistas.tipoProducto;
 
 import Clases.Ndoctor;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
-
+import  vistas.cliente.MenuPrincipal;
+import vistas.cliente.Pacientes;
 public class RegistrarDoctor extends javax.swing.JFrame {
 
     MenuPrincipal menu = new MenuPrincipal();

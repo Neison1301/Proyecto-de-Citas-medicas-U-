@@ -1,10 +1,10 @@
-package Vista;
-
+package vistas.logueo;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-import modelo.UsuarioDTO;
+import modeloDTO.UsuarioDTO;
 import modeloDAO.UsuarioDAO;
+import vistas.cliente.MenuPrincipal;
 
 public class Inicio extends javax.swing.JFrame {
 

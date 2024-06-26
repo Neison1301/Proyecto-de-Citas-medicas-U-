@@ -1,13 +1,19 @@
-package Vista;
+package vistas.producto;
 
-import Clases.CitasMedicas;
+import modeloDAO.CitasMedicasDAO;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modeloDTO.CitasMedicasDTO;
+import vistas.cliente.MenuPrincipal;
+import vistas.cliente.Pacientes;
+import vistas.logueo.Inicio;
 
 public class Citas extends javax.swing.JFrame {
 
-    CitasMedicas citasMedicas = new CitasMedicas(0, null, null, null, null, null);
+    CitasMedicasDAO citasMedicas = new CitasMedicasDAO();
 
     public Citas() {
         initComponents();
@@ -440,48 +446,44 @@ public class Citas extends javax.swing.JFrame {
     }//GEN-LAST:event_jlEliminarCitaMouseClicked
 
     private void jbEditarCitaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbEditarCitaMouseClicked
-        int fila = tbCitas.getSelectedRow();
-        if (fila >= 0) {
-            int idCita = (int) tbCitas.getValueAt(fila, 0);
 
-            CitasMedicas citaSeleccionada = citasMedicas.obtenerCitaPorId(fila);
+        int filaSeleccionada = tbCitas.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una cita para editar.");
+            return;
+        }
 
-            if (citaSeleccionada != null) {
-                String mensaje = String.format("Fecha: %s\nHora: %s\nPaciente: %s\nDoctor: %s\nMotivo: %s",
-                        citaSeleccionada.getFecha(), citaSeleccionada.getHora(), citaSeleccionada.getPaciente(),
-                        citaSeleccionada.getDoctor(), citaSeleccionada.getMotivo());
+        int id = (int) tbCitas.getValueAt(filaSeleccionada, 0);
 
-                String nuevoMensaje = JOptionPane.showInputDialog(this, mensaje, "Editar Cita", JOptionPane.PLAIN_MESSAGE);
+        CitasMedicasDAO citasMedicasDAO = new CitasMedicasDAO();
 
-                if (nuevoMensaje != null) {
-                    citasMedicas.mostrarCitas(tbCitas);
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo encontrar la cita seleccionada.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona una cita para editar.");
+        citasMedicasDAO.actualizar(id);
+
+        ArrayList<CitasMedicasDTO> citasActualizadas = citasMedicasDAO.leer();
+
+        // Actualizar la tabla con los datos actualizados
+        DefaultTableModel modelo = (DefaultTableModel) tbCitas.getModel();
+        modelo.setRowCount(0); // Limpiar la tabla antes de llenarla de nuevo
+
+        for (CitasMedicasDTO cita : citasActualizadas) {
+            Object[] fila = {
+                cita.getId(),
+                cita.getMotivo(),
+                cita.getFecha(),
+                cita.getPaciente(),
+                cita.getDoctor(),
+                cita.getDni()
+            };
+            modelo.addRow(fila);
         }
     }//GEN-LAST:event_jbEditarCitaMouseClicked
 
     private void tbCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCitasMouseClicked
-        if (evt.getClickCount() == 2) {
+        if (evt.getClickCount() == 2) { // Doble clic
             int filaSeleccionada = tbCitas.getSelectedRow();
-            if (filaSeleccionada != -1) { // Verificar si se seleccionó una fila
-                //TRAER LOS DATOS 
-                int idCita = Integer.parseInt(tbCitas.getValueAt(filaSeleccionada, 0).toString());
-
-                CitasMedicas cita = citasMedicas.obtenerCitaPorId(idCita);
-
-                if (cita != null) {
-                    String informacionCita = String.format("ID: %d\nFecha: %s\nHora: %s\nPaciente: %s\nDoctor: %s\n",
-                            cita.getId(), cita.getFecha(), cita.getHora(), cita.getPaciente(), cita.getDoctor());
-
-                    txArea.setText(informacionCita);
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se encontró información de la cita", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+            if (filaSeleccionada != -1) {
+                int idCita = (int) tbCitas.getValueAt(filaSeleccionada, 0); // Suponiendo que la columna 0 contiene el Id
+                citasMedicas.mostrarDetalleCita(idCita, txArea);// Método para mostrar los detalles de la cita
             }
         }
     }//GEN-LAST:event_tbCitasMouseClicked

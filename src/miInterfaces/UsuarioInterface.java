@@ -1,6 +1,6 @@
 package miInterfaces;
 
-import modelo.UsuarioDTO;
+import modeloDTO.UsuarioDTO;
 
 public interface UsuarioInterface {
 

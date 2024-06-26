@@ -1,9 +1,10 @@
-package Vista;
+package vistas.producto;
 
-import Clases.CitasMedicas;
-import Clases.NPacientes;
-import Clases.Ndoctor;
+import modeloDAO.CitasMedicasDAO;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import modeloDTO.CitasMedicasDTO;
+import vistas.cliente.MenuPrincipal;
 
 public class RegistrarCitas extends javax.swing.JFrame {
 
@@ -27,10 +28,7 @@ public class RegistrarCitas extends javax.swing.JFrame {
         tfDoctor = new javax.swing.JTextField();
         jSeparator60 = new javax.swing.JSeparator();
         LblEspecialidad1 = new javax.swing.JLabel();
-        tfFechaCita = new javax.swing.JTextField();
         jSeparator61 = new javax.swing.JSeparator();
-        LblTelefono1 = new javax.swing.JLabel();
-        tfHoraCita = new javax.swing.JTextField();
         jSeparator62 = new javax.swing.JSeparator();
         BtnRegresarInicio2 = new javax.swing.JButton();
         jbregistrar1 = new javax.swing.JButton();
@@ -40,7 +38,7 @@ public class RegistrarCitas extends javax.swing.JFrame {
         jSeparator64 = new javax.swing.JSeparator();
         LblEspecialidad2 = new javax.swing.JLabel();
         tfMotivo = new javax.swing.JTextField();
-        jSeparator63 = new javax.swing.JSeparator();
+        tfFechaCita = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -76,19 +74,7 @@ public class RegistrarCitas extends javax.swing.JFrame {
         LblEspecialidad1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         LblEspecialidad1.setText("Fecha de la Cita:");
 
-        tfFechaCita.setBorder(null);
-
         jSeparator61.setForeground(new java.awt.Color(0, 0, 0));
-
-        LblTelefono1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        LblTelefono1.setText("Hora de la Cita");
-
-        tfHoraCita.setBorder(null);
-        tfHoraCita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfHoraCitaActionPerformed(evt);
-            }
-        });
 
         jSeparator62.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -134,7 +120,7 @@ public class RegistrarCitas extends javax.swing.JFrame {
             }
         });
 
-        jSeparator63.setForeground(new java.awt.Color(0, 0, 0));
+        tfFechaCita.setDateFormatString("yyyy/MM/dd HH:mm:ss");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -142,17 +128,10 @@ public class RegistrarCitas extends javax.swing.JFrame {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jSeparator63, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel13Layout.createSequentialGroup()
-                        .addComponent(tfFechaCita, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tfHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(LlbNombres2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel13Layout.createSequentialGroup()
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfFechaCita, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(tfPaciente)
@@ -163,8 +142,7 @@ public class RegistrarCitas extends javax.swing.JFrame {
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jSeparator60, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(LlbApellidos1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LblTelefono1)))
+                                    .addComponent(tfDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jSeparator61, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
@@ -178,7 +156,8 @@ public class RegistrarCitas extends javax.swing.JFrame {
                             .addComponent(LblEspecialidad2)
                             .addComponent(jSeparator62, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(LlbNombres2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(menu3, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -212,17 +191,11 @@ public class RegistrarCitas extends javax.swing.JFrame {
                                 .addComponent(jSeparator59, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jSeparator60, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(LblEspecialidad1)
-                            .addComponent(LblTelefono1))
+                        .addComponent(LblEspecialidad1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tfFechaCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfFechaCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator61, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator63, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSeparator61, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(LblEspecialidad2)
                         .addGap(7, 7, 7)
@@ -257,28 +230,35 @@ public class RegistrarCitas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbregistrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbregistrar1ActionPerformed
-        if (tfFechaCita.getText().isEmpty() || tfHoraCita.getText().isEmpty() || tfPaciente.getText().isEmpty()
+        if (tfFechaCita.getDate() == null || tfPaciente.getText().isEmpty()
                 || tfDoctor.getText().isEmpty() || tfDni.getText().isEmpty() || tfMotivo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
-            return;
+            tfFechaCita.setDate(null);
+            tfPaciente.setText("");
+            tfDoctor.setText("");
+            tfDni.setText("");
+            tfMotivo.setText("");
+        } else {
+
+            java.util.Date fechaUtil = tfFechaCita.getDate(); 
+            String pacienteNombre = tfPaciente.getText();
+            String doctorNombre = tfDoctor.getText();
+            int dni = Integer.parseInt(tfDni.getText());
+            String motivo = tfMotivo.getText();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String fechaMySQL = sdf.format(fechaUtil);
+
+            CitasMedicasDTO cita = new CitasMedicasDTO(0, fechaMySQL, pacienteNombre, doctorNombre, dni, motivo);
+
+            CitasMedicasDAO citasMedicasDAO = new CitasMedicasDAO();
+            citasMedicasDAO.crear(cita);
+
+            JOptionPane.showMessageDialog(null, "La cita se ha registrado correctamente");
+            MenuPrincipal mp = new MenuPrincipal();
+            mp.setVisible(true);
+            this.dispose();
         }
-
-        String fecha, hora, paciente, doctor, motivo;
-        int dni;
-        fecha = tfFechaCita.getText();
-        hora = tfHoraCita.getText();
-        paciente = tfPaciente.getText();
-        doctor = tfDoctor.getText();
-        dni = Integer.parseInt(tfDni.getText());
-        motivo = tfMotivo.getText();
-
-        NPacientes pacienteObj = new NPacientes(dni, 0, 0, paciente, null, null, null, false);
-        Ndoctor doctorObj = new Ndoctor(dni, null, null, null, null, false, doctor, 0);
-        CitasMedicas citasMedicas = new CitasMedicas(0, fecha, hora, pacienteObj, doctorObj, motivo);
-        citasMedicas.crear(citasMedicas);
-
-        JOptionPane.showMessageDialog(null, "La cita se ha registrado correctamente");
-
     }//GEN-LAST:event_jbregistrar1ActionPerformed
 
     private void BtnRegresarInicio2jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarInicio2jButton1ActionPerformed
@@ -287,10 +267,6 @@ public class RegistrarCitas extends javax.swing.JFrame {
         mp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnRegresarInicio2jButton1ActionPerformed
-
-    private void tfHoraCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfHoraCitaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfHoraCitaActionPerformed
 
     private void tfMotivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfMotivoActionPerformed
         // TODO add your handling code here:
@@ -331,7 +307,6 @@ public class RegistrarCitas extends javax.swing.JFrame {
     private javax.swing.JButton BtnRegresarInicio2;
     private javax.swing.JLabel LblEspecialidad1;
     private javax.swing.JLabel LblEspecialidad2;
-    private javax.swing.JLabel LblTelefono1;
     private javax.swing.JLabel LlbApellidos1;
     private javax.swing.JLabel LlbNombres1;
     private javax.swing.JLabel LlbNombres2;
@@ -341,7 +316,6 @@ public class RegistrarCitas extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator60;
     private javax.swing.JSeparator jSeparator61;
     private javax.swing.JSeparator jSeparator62;
-    private javax.swing.JSeparator jSeparator63;
     private javax.swing.JSeparator jSeparator64;
     private javax.swing.JButton jbregistrar1;
     private javax.swing.JLabel lblRegistrarDoctor1;
@@ -349,8 +323,7 @@ public class RegistrarCitas extends javax.swing.JFrame {
     private Label.Menu menu3;
     private javax.swing.JTextField tfDni;
     private javax.swing.JTextField tfDoctor;
-    private javax.swing.JTextField tfFechaCita;
-    private javax.swing.JTextField tfHoraCita;
+    private com.toedter.calendar.JDateChooser tfFechaCita;
     private javax.swing.JTextField tfMotivo;
     private javax.swing.JTextField tfPaciente;
     // End of variables declaration//GEN-END:variables

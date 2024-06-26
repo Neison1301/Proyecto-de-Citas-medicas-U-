@@ -1,10 +1,10 @@
-package milInterfaces;
+package miInterfaces;
 
-import Clases.CitasMedicas;
+import modeloDTO.CitasMedicasDTO;
 
 public interface AtencionMedica {
     
-    void agendarCita(CitasMedicas cita);
+    void agendarCita(CitasMedicasDTO cita);
     void cancelarCita(int id);
     void detallesCita();
 }

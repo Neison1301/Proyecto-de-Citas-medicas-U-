@@ -1,13 +1,17 @@
-package Vista;
+package vistas.cliente;
 
-import Clases.CitasMedicas;
+import modeloDAO.CitasMedicasDAO;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import  vistas.logueo.Inicio;
+import vistas.producto.Citas;
+import vistas.producto.RegistrarCitas;
+import vistas.tipoProducto.RegistrarDoctor;
 
 public class MenuPrincipal extends javax.swing.JFrame {
 
-    CitasMedicas citasMedicas = new CitasMedicas(0, null, null, null, null, null);
+    CitasMedicasDAO citasMedicas = new CitasMedicasDAO();
 
     public MenuPrincipal() {
         initComponents();
@@ -415,25 +419,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jpMenuKeyPressed
 
     private void tbCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCitasMouseClicked
-
-        if (evt.getClickCount() == 2) { //  doble clic
+        if (evt.getClickCount() == 2) { // Doble clic
             int filaSeleccionada = tbCitas.getSelectedRow();
             if (filaSeleccionada != -1) {
-                int idCita = Integer.parseInt(tbCitas.getValueAt(filaSeleccionada, 0).toString());
-
-                CitasMedicas cita = citasMedicas.obtenerCitaPorId(idCita);
-
-                if (cita != null) {
-                    String informacionCita = String.format("ID: %d\nFecha: %s\nHora: %s\nPaciente: %s\nDoctor: %s\nMotivo: %s\n",
-                        cita.getId(), cita.getFecha(), cita.getHora(), cita.getPaciente().getNombre(),
-                        cita.getDoctor().getNombre(), cita.getMotivo());
-                    txaCitas.setText(informacionCita);
-                } else {
-                    // Si no hay la cita,error
-                    txaCitas.setText("No se encontró información de la cita");
-                }
+                int idCita = (int) tbCitas.getValueAt(filaSeleccionada, 0); // Suponiendo que la columna 0 contiene el Id
+                citasMedicas.mostrarDetalleCita(idCita, txaCitas);// Método para mostrar los detalles de la cita
             }
-        }
+        }   
     }//GEN-LAST:event_tbCitasMouseClicked
     private void mostrarFechaYHoraActual() {
         // Obtener la fecha y hora actual

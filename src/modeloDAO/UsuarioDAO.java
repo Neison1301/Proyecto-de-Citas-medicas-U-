@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import miInterfaces.UsuarioInterface;
-import modelo.UsuarioDTO;
+import modeloDTO.UsuarioDTO;
 
 public class UsuarioDAO implements UsuarioInterface {
 

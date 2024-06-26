@@ -1,4 +1,4 @@
-package modelo;
+package modeloDTO;
 
 public class UsuarioDTO {
 

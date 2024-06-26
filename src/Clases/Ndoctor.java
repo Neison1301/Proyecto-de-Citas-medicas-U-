@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import miInterfaces.Boleta;
+import miInterfaces.CRUD;
 
 public class Ndoctor extends Persona implements CRUD<Ndoctor>, Boleta {
 
@@ -77,7 +79,7 @@ public class Ndoctor extends Persona implements CRUD<Ndoctor>, Boleta {
         return doctores;
     }
 
-    @Override
+   
     public void actualizar(int id, HashMap<String, Object> nuevosValores) {
         File archivoTemporal = new File(ARCHIVO_DOCTORES + ".tmp");
 
@@ -148,6 +150,11 @@ public class Ndoctor extends Persona implements CRUD<Ndoctor>, Boleta {
 
     @Override
     public void generarReporte() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void actualizar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import miInterfaces.CRUD;
 
 public class NPacientes extends Persona implements CRUD<NPacientes> {
 
@@ -64,7 +65,7 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
     }
 
     @Override
-    public ArrayList<NPacientes> leer() {
+    public ArrayList<NPacientes>  leer() {
         ArrayList<NPacientes> pacientes = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(ARCHIVO_PACIENTES))) {
             String line;
@@ -104,7 +105,7 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
         }
     }
 
-    @Override
+    
     public void actualizar(int id, HashMap<String, Object> nuevosValores) {
         ArrayList<NPacientes> pacientes = leer();
         eliminar(id);
@@ -157,5 +158,10 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
             modelo.addRow(new Object[]{paciente.getId(), paciente.getNombre() + paciente.getApellido(),
                 paciente.getTelefono()});
         }
+    }
+
+    @Override
+    public void actualizar(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -1,5 +1,7 @@
 package Clases;
 
+import miInterfaces.Boleta;
+
 public abstract class Reporte implements Boleta {
 
     protected String titulo;

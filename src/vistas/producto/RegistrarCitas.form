@@ -87,19 +87,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="jSeparator63" min="-2" pref="164" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="tfFechaCita" min="-2" pref="164" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="tfHoraCita" min="-2" pref="164" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="LlbNombres2" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="tfFechaCita" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="tfPaciente" alignment="0" max="32767" attributes="0"/>
@@ -112,7 +103,6 @@
                                               <Component id="jSeparator60" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
                                               <Component id="LlbApellidos1" alignment="0" min="-2" pref="75" max="-2" attributes="0"/>
                                               <Component id="tfDoctor" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
-                                              <Component id="LblTelefono1" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Component id="jSeparator61" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
@@ -133,6 +123,7 @@
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
+                              <Component id="LlbNombres2" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="menu3" min="-2" pref="420" max="-2" attributes="0"/>
@@ -174,20 +165,11 @@
                                       <Component id="jSeparator60" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="LblEspecialidad1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="LblTelefono1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="LblEspecialidad1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="tfFechaCita" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="tfHoraCita" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="tfFechaCita" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jSeparator61" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jSeparator63" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jSeparator61" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="LblEspecialidad2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
@@ -270,37 +252,12 @@
                     <Property name="text" type="java.lang.String" value="Fecha de la Cita:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="tfFechaCita">
-                  <Properties>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="null"/>
-                    </Property>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator61">
                   <Properties>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="0" green="0" red="0" type="rgb"/>
                     </Property>
                   </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="LblTelefono1">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Georgia" size="14" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Hora de la Cita"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="tfHoraCita">
-                  <Properties>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="null"/>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfHoraCitaActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator62">
                   <Properties>
@@ -403,11 +360,9 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfMotivoActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JSeparator" name="jSeparator63">
+                <Component class="com.toedter.calendar.JDateChooser" name="tfFechaCita">
                   <Properties>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="0" green="0" red="0" type="rgb"/>
-                    </Property>
+                    <Property name="dateFormatString" type="java.lang.String" value="yyyy/MM/dd HH:mm:ss"/>
                   </Properties>
                 </Component>
               </SubComponents>

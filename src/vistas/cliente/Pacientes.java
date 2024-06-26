@@ -1,10 +1,13 @@
-package Vista;
+package vistas.cliente;
 
 import Clases.NPacientes;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import  vistas.logueo.Inicio;
+import vistas.producto.Citas;
 
-public class Pacientes extends javax.swing.JFrame {
+
+        public class Pacientes extends javax.swing.JFrame {
 
     NPacientes nPacientes = new NPacientes(0, 0, 0, null, null, null, null, false);
 
