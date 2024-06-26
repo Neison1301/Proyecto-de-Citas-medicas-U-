@@ -8,7 +8,7 @@ import vistas.cliente.Pacientes;
 public class RegistrarDoctor extends javax.swing.JFrame {
 
     MenuPrincipal menu = new MenuPrincipal();
-    Ndoctor ndoctor = new Ndoctor(0, null, null, null, null, false, null, 0);
+    Ndoctor ndoctor = new Ndoctor(0, null, null, 0, null, false, null, 0);
 
     public RegistrarDoctor(MenuPrincipal menu) {
         initComponents();

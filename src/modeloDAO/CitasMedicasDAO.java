@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modeloDTO.CitasMedicasDTO;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,8 +19,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class CitasMedicasDAO implements CRUD<CitasMedicasDTO>, AtencionMedica {
-
-    private static final String ARCHIVO_CITAS = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\Documents\\NetBeansProjects\\CitasMedicas-master\\src\\Almacenamiento\\CitasMedi.txt";
 
     private Conexion conexion;
 
@@ -52,7 +49,7 @@ public class CitasMedicasDAO implements CRUD<CitasMedicasDTO>, AtencionMedica {
     }
 
     @Override
-    public ArrayList<CitasMedicasDTO> leer() {
+    public ArrayList<CitasMedicasDTO> leer(int ids) {
         ArrayList<CitasMedicasDTO> citas = new ArrayList<>();
 
         String sql = "SELECT Id, Fecha, NPaciente, NDoctor, DniPaciente, Motivo FROM CitasMedicas";
@@ -160,9 +157,9 @@ public class CitasMedicasDAO implements CRUD<CitasMedicasDTO>, AtencionMedica {
     public void mostrarCitas(JTable tabla) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         modelo.setRowCount(0);
-
+        int ids = 0;
         CitasMedicasDAO citasMedicasDAO = new CitasMedicasDAO();
-        ArrayList<CitasMedicasDTO> citas = citasMedicasDAO.leer();
+        ArrayList<CitasMedicasDTO> citas = citasMedicasDAO.leer(ids);
 
         if (citas != null) {
             System.out.println("Cantidad de citas recuperadas: " + citas.size());  // Mensaje de diagnóstico
@@ -179,51 +176,8 @@ public class CitasMedicasDAO implements CRUD<CitasMedicasDTO>, AtencionMedica {
         eliminar(id);
     }
 
-    private int getIndexFromKey(String key) {
-        return switch (key) {
-            case "id" ->
-                0;
-            case "fecha" ->
-                1;
-            case "hora" ->
-                2;
-            case "paciente" ->
-                3;
-            case "doctor" ->
-                4;
-            case "dni" ->
-                5;
-            case "motivo" ->
-                6;
-            default ->
-                -1;
-        };
-    }
-
     private void manejarError(String mensaje, IOException e) {
         JOptionPane.showMessageDialog(null, mensaje + e.getMessage());
-    }
-
-    public CitasMedicasDTO obtenerCitaPorId() {
-        int id = 0;
-        ArrayList<CitasMedicasDTO> citas = leer();
-        for (CitasMedicasDTO cita : citas) {
-            if (cita.getDni() == id) {
-                return cita;
-            }
-        }
-        return null; // Retorna null si no se encuentra la cita con el id especificado
-    }
-
-    public int obtenerId() {
-        int nuevoId = 0;
-        ArrayList<CitasMedicasDTO> citas = leer();
-        for (CitasMedicasDTO cita : citas) {
-            if (cita.getDni() > nuevoId) {
-                nuevoId = cita.getDni();
-            }
-        }
-        return nuevoId + 1;
     }
 
     @Override
@@ -236,8 +190,9 @@ public class CitasMedicasDAO implements CRUD<CitasMedicasDTO>, AtencionMedica {
     }
 
     public void mostrarDetalleCita(int id, JTextArea textArea) {
+        int ids = 0;
         CitasMedicasDAO dao = new CitasMedicasDAO();
-        ArrayList<CitasMedicasDTO> citas = dao.leer();
+        ArrayList<CitasMedicasDTO> citas = dao.leer(ids);
 
         for (CitasMedicasDTO cita : citas) {
             if (cita.getId() == id) {

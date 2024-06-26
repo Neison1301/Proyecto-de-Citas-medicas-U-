@@ -75,7 +75,7 @@ public class Horario  implements CRUD<Horario> {
     }
 
     @Override
-    public ArrayList<Horario> leer( ) {
+    public ArrayList<Horario> leer( int ids) {
         return null;
     }
 

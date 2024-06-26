@@ -1,4 +1,4 @@
-package Clases;
+package miAbstract;
 
 import miInterfaces.Boleta;
 

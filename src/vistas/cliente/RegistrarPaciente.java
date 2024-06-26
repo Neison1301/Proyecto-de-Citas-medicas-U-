@@ -1,13 +1,16 @@
 package vistas.cliente;
 
 import Clases.NPacientes;
+import config.Conexion;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
+import modeloDAO.PacientesDAO;
+import modeloDTO.PacientesDTO;
 
 public class RegistrarPaciente extends javax.swing.JFrame {
 
     MenuPrincipal menu = new MenuPrincipal();
-    NPacientes nPacientes = new NPacientes(0, 0, 0, null, null, null, null, false);
+    NPacientes nPacientes = new NPacientes(0, 0, null, 0, null, null, 0, null, false);
 
     public RegistrarPaciente() {
         initComponents();
@@ -316,8 +319,8 @@ public class RegistrarPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbregistrarActionPerformed
-        int dni, edad;
-        String nombre, apellido, telefono, email;
+        int dni, edad, telefono;
+        String nombre, apellido, email;
         boolean genero;
 
         if (tfDni.getText().isEmpty() || tfNombre.getText().isEmpty() || tfapellidos.getText().isEmpty()
@@ -330,21 +333,27 @@ public class RegistrarPaciente extends javax.swing.JFrame {
             dni = Integer.parseInt(tfDni.getText());
             nombre = tfNombre.getText();
             apellido = tfapellidos.getText();
-            telefono = tfTelefono.getText();
+            telefono = Integer.parseInt(tfTelefono.getText());
             email = tfCorreo.getText();
             edad = Integer.parseInt(tfedad.getText());
             genero = cbGenero.getSelectedItem().toString().equals("Masculino");
 
-            nPacientes.agregarPaciente(dni, edad, nombre, apellido, telefono, email, genero); // Llamar al método agregarPaciente
+            PacientesDTO nuevoPaciente = new PacientesDTO(0, dni, edad, nombre, apellido, telefono, email, genero);
+
+            Conexion conexion = new Conexion(); // Crear una instancia de la clase Conexion
+            PacientesDAO nPacientesDAO = new PacientesDAO(conexion, 0, nombre, apellido, telefono, email, genero);
+
+            nPacientesDAO.crear(nuevoPaciente);
 
             JOptionPane.showMessageDialog(null, "Paciente registrado exitosamente.");
 
             this.dispose();
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para el DNI o la edad.");
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para el DNI, teléfono o la edad.");
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Error al registrar el paciente: " + e.getMessage());
         }
+
         Pacientes pacientes = new Pacientes();
         pacientes.setVisible(true);
 

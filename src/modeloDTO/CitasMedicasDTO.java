@@ -1,6 +1,6 @@
 package modeloDTO;
 
-import Clases.Cita;
+import miAbstract.Cita;
 
 public class CitasMedicasDTO extends Cita {
 

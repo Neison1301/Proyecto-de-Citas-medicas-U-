@@ -1,5 +1,6 @@
 package Clases;
 
+import miAbstract.Persona;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ public class Ndoctor extends Persona implements CRUD<Ndoctor>, Boleta {
     private String especialidad;
     private int cantidadActual;
 
-    public Ndoctor(int id, String nombre, String apellido, String telefono, String email, boolean genero, String especialidad, int cantidadActual) {
+    public Ndoctor(int id, String nombre, String apellido, int telefono, String email, boolean genero, String especialidad, int cantidadActual) {
         super(id, nombre, apellido, telefono, email, genero);
         this.especialidad = especialidad;
         this.cantidadActual = cantidadActual;
@@ -37,7 +38,7 @@ public class Ndoctor extends Persona implements CRUD<Ndoctor>, Boleta {
     }
 
     public void agregarDoctor(int id, String nombre, String apellido, String telefono, String email, boolean genero, String especialidad, int cantidadActual) {
-        Ndoctor nuevoDoctor = new Ndoctor(id, nombre, apellido, telefono, email, genero, especialidad, cantidadActual);
+        Ndoctor nuevoDoctor = new Ndoctor(id, nombre, apellido, id, email, genero, especialidad, cantidadActual);
         crear(nuevoDoctor);
     }
 
@@ -54,7 +55,7 @@ public class Ndoctor extends Persona implements CRUD<Ndoctor>, Boleta {
     }
 
     @Override
-    public ArrayList<Ndoctor> leer() {
+    public ArrayList<Ndoctor> leer(int ids ) {
         ArrayList<Ndoctor> doctores = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(ARCHIVO_DOCTORES))) {
             String line;
@@ -69,7 +70,7 @@ public class Ndoctor extends Persona implements CRUD<Ndoctor>, Boleta {
                     boolean genero = parts[5].equals("Masculino");
                      especialidad = parts[6];
                      cantidadActual = Integer.parseInt(parts[7]);
-                    Ndoctor doctor = new Ndoctor(id, nombre, apellido, telefono, email, genero, especialidad, cantidadActual);
+                    Ndoctor doctor = new Ndoctor(id, nombre, apellido, id, email, genero, especialidad, cantidadActual);
                     doctores.add(doctor);
                 }
             }
@@ -107,7 +108,7 @@ public class Ndoctor extends Persona implements CRUD<Ndoctor>, Boleta {
 
     @Override
     public void eliminar(int id) {
-        ArrayList<Ndoctor> doctores = leer();
+        ArrayList<Ndoctor> doctores = leer(id);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_DOCTORES))) {
             for (Ndoctor doctor : doctores) {
                 if (doctor.getId() != id) {

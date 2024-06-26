@@ -387,9 +387,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tfCantidadDoctoresMouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        Inicio inciarSesion = new Inicio();
-        inciarSesion.setVisible(true);
-        this.dispose();
+       Inicio inicio = new Inicio();
+       inicio.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked

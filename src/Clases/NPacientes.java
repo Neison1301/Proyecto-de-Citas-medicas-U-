@@ -1,5 +1,6 @@
 package Clases;
 
+import miAbstract.Persona;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,12 +18,11 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
     //relacion de agregacion entre esta clase y recetass medidcas;
     private ArrayList<RecetaMedica> recetasMedicas;
 
-    public NPacientes(int dni, int edad, int id, String nombre, String apellido, String telefono, String email, boolean genero) {
+    public NPacientes(int dni, int edad, ArrayList<RecetaMedica> recetasMedicas, int id, String nombre, String apellido, int telefono, String email, boolean genero) {
         super(id, nombre, apellido, telefono, email, genero);
         this.dni = dni;
         this.edad = edad;
-        this.recetasMedicas = new ArrayList<>();
-
+        this.recetasMedicas = recetasMedicas;
     }
 
     public ArrayList<RecetaMedica> getRecetasMedicas() {
@@ -49,8 +49,8 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
         this.edad = edad;
     }
 
-    public void agregarPaciente(int dni, int edad, String nombre, String apellido, String telefono, String email, boolean genero) {
-        NPacientes nuevoPaciente = new NPacientes(dni, edad, obtenerId(), nombre, apellido, telefono, email, genero);
+    public void agregarPaciente(int dni, int edad, String nombre, String apellido, int telefono, String email, boolean genero) {
+        NPacientes nuevoPaciente = new NPacientes(dni, edad, recetasMedicas, id, nombre, apellido, telefono, email, genero);
         crear(nuevoPaciente);
     }
 
@@ -65,7 +65,7 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
     }
 
     @Override
-    public ArrayList<NPacientes>  leer() {
+    public ArrayList<NPacientes> leer(int ids) {
         ArrayList<NPacientes> pacientes = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(ARCHIVO_PACIENTES))) {
             String line;
@@ -80,7 +80,7 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
                     String telefono = parts[5];
                     String email = parts[6];
                     boolean genero = parts[7].equals("Masculino");
-                    NPacientes paciente = new NPacientes(dni, edad, id, nombre, apellido, telefono, email, genero);
+                    NPacientes paciente = new NPacientes(dni, edad, recetasMedicas, id, nombre, apellido, dni, email, genero);
                     pacientes.add(paciente);
                 }
             }
@@ -92,7 +92,7 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
 
     @Override
     public void eliminar(int id) {
-        ArrayList<NPacientes> pacientes = leer();
+        ArrayList<NPacientes> pacientes = leer(id);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_PACIENTES))) {
             for (NPacientes paciente : pacientes) {
                 if (paciente.getId() != id) {
@@ -105,9 +105,8 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
         }
     }
 
-    
     public void actualizar(int id, HashMap<String, Object> nuevosValores) {
-        ArrayList<NPacientes> pacientes = leer();
+        ArrayList<NPacientes> pacientes = leer(id);
         eliminar(id);
         // Crear el paciente con los nuevos valores proporcionados
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_PACIENTES, true))) {
@@ -120,7 +119,6 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
             String email = (String) nuevosValores.get("email");
             boolean genero = (boolean) nuevosValores.get("genero");
 
-            
             writer.write(String.format("%d, %d, %d, %s, %s, %s, %s, %s%n", id, dni, edad, nombre, apellido, telefono, email, genero ? "Masculino" : "Femenino"));
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al escribir en el archivo: " + e.getMessage());
@@ -128,31 +126,32 @@ public class NPacientes extends Persona implements CRUD<NPacientes> {
     }
 
     public NPacientes obtenerId(int id) {
-        ArrayList<NPacientes> pacientes = leer();
+        ArrayList<NPacientes> pacientes = leer(id);
         for (NPacientes paciente : pacientes) {
             if (paciente.getId() == id) {
                 return paciente;
             }
         }
-        return null; 
+        return null;
     }
 
     public int obtenerId() {
         int nuevoId = 0;
-        ArrayList<NPacientes> pacientes = leer();
+        ArrayList<NPacientes> pacientes = leer(id);
         for (NPacientes paciente : pacientes) {
             if (paciente.getId() > nuevoId) {
                 nuevoId = paciente.getId();
             }
         }
-        return nuevoId + 1; 
+        return nuevoId + 1;
     }
 
     public void mostrarPacientes(JTable tabla) {
+        int ids = 0;
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-        modelo.setRowCount(0); 
-        ArrayList<NPacientes> pacientes = leer(); 
-        
+        modelo.setRowCount(0);
+        ArrayList<NPacientes> pacientes = leer(id);
+
         // Recorrer la lista de pacientes y agregar cada uno a la tabla
         for (NPacientes paciente : pacientes) {
             modelo.addRow(new Object[]{paciente.getId(), paciente.getNombre() + paciente.getApellido(),

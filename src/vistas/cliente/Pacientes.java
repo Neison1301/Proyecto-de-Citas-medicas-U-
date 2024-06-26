@@ -1,21 +1,29 @@
 package vistas.cliente;
 
-import Clases.NPacientes;
+import config.Conexion;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import  vistas.logueo.Inicio;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import modeloDAO.PacientesDAO;
+import vistas.logueo.Inicio;
 import vistas.producto.Citas;
 
+public class Pacientes extends javax.swing.JFrame {
 
-        public class Pacientes extends javax.swing.JFrame {
+    Conexion conexion = new Conexion();
+    private PacientesDAO pacientesDAO;
+    PacientesDAO nPacientes = new PacientesDAO(conexion, 0, null, null, 0, null, true);
 
-    NPacientes nPacientes = new NPacientes(0, 0, 0, null, null, null, null, false);
-
+ 
     public Pacientes() {
         initComponents();
-        nPacientes.mostrarPacientes(tbPacientes);
+        this.pacientesDAO = new PacientesDAO(conexion, 0, null, null, 0, null, true);
+        nPacientes.mostrarCitas(tbPacientes, 0);
         mostrarFechaYHoraActual();
-
     }
 
     @SuppressWarnings("unchecked")
@@ -47,7 +55,9 @@ import vistas.producto.Citas;
         menu6 = new Label.Menu();
         jLabel6 = new javax.swing.JLabel();
         menu7 = new Label.Menu();
-        jTextField1 = new javax.swing.JTextField();
+        txtfiltrar = new javax.swing.JTextField();
+        menu8 = new Label.Menu();
+        lbEliminar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -140,6 +150,11 @@ import vistas.producto.Citas;
         txthora.setColumns(1);
         txthora.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txthora.setBorder(null);
+        txthora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txthoraActionPerformed(evt);
+            }
+        });
 
         menu2.setLayer(txtfecha, javax.swing.JLayeredPane.DEFAULT_LAYER);
         menu2.setLayer(txthora, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -294,13 +309,18 @@ import vistas.producto.Citas;
 
         menu7.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtfiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtfiltrarActionPerformed(evt);
+            }
+        });
+        txtfiltrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtfiltrarKeyPressed(evt);
             }
         });
 
-        menu7.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu7.setLayer(txtfiltrar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout menu7Layout = new javax.swing.GroupLayout(menu7);
         menu7.setLayout(menu7Layout);
@@ -308,15 +328,41 @@ import vistas.producto.Citas;
             menu7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menu7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .addComponent(txtfiltrar, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
                 .addContainerGap())
         );
         menu7Layout.setVerticalGroup(
             menu7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menu7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtfiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        menu8.setBackground(new java.awt.Color(255, 255, 255));
+
+        lbEliminar.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
+        lbEliminar.setText("Eliminar");
+        lbEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbEliminarMouseClicked(evt);
+            }
+        });
+
+        menu8.setLayer(lbEliminar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout menu8Layout = new javax.swing.GroupLayout(menu8);
+        menu8.setLayout(menu8Layout);
+        menu8Layout.setHorizontalGroup(
+            menu8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menu8Layout.createSequentialGroup()
+                .addContainerGap(65, Short.MAX_VALUE)
+                .addComponent(lbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
+        );
+        menu8Layout.setVerticalGroup(
+            menu8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -335,7 +381,8 @@ import vistas.producto.Citas;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(menu5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(menu6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(menu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menu8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -348,7 +395,9 @@ import vistas.producto.Citas;
                         .addComponent(menu2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(210, 210, 210)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(menu8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(menu5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(menu6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -374,10 +423,6 @@ import vistas.producto.Citas;
         this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
         Citas citas = new Citas();
         citas.setVisible(true);
@@ -394,18 +439,58 @@ import vistas.producto.Citas;
             int filaSeleccionada = tbPacientes.getSelectedRow();
             if (filaSeleccionada != -1) {
                 int idPaciente = Integer.parseInt(tbPacientes.getValueAt(filaSeleccionada, 0).toString());
-
-                NPacientes paciente = nPacientes.obtenerId(idPaciente);
-                if (paciente != null) {
-                    String informacionPaciente = String.format("ID: %d\nNombre: %s\nDNI: %d\nEdad: %d\nTeléfono: %s\nEmail: %s\nGénero: %s\n",
-                            paciente.getId(), paciente.getNombre(), paciente.getDni(), paciente.getEdad(),
-                            paciente.getTelefono(), paciente.getEmail(), paciente.isGenero() ? "Masculino" : "Femenino");
-                    jTextArea2.setText(informacionPaciente);
-                } else {
-                    jTextArea2.setText("No se encontró información del paciente");
-                }
+                nPacientes.mostrarDetalleCita(idPaciente, jTextArea2);
             }
+
         }    }//GEN-LAST:event_tbPacientesMouseClicked
+
+    private void lbEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbEliminarMouseClicked
+        int fila = tbPacientes.getSelectedRow();
+
+        if (fila >= 0) {
+            int idCita = (int) tbPacientes.getValueAt(fila, 0);
+            int confirmar = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que quieres eliminar este paciente?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            if (confirmar == JOptionPane.YES_OPTION) {
+                nPacientes.eliminar(idCita);
+                nPacientes.mostrarCitas(tbPacientes, 0); // Actualizar la tabla de citas
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona un paciente para eliminar.");
+        }
+    }//GEN-LAST:event_lbEliminarMouseClicked
+
+    private void txthoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txthoraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txthoraActionPerformed
+
+    private void txtfiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfiltrarActionPerformed
+
+
+    }//GEN-LAST:event_txtfiltrarActionPerformed
+
+    private void txtfiltrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfiltrarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            // Obtener el texto del campo de texto txtfiltrar
+            String dniTexto = txtfiltrar.getText().trim();
+
+            // Validar que el texto ingresado sea un número entero válido
+            if (!dniTexto.isEmpty()) {
+                try {
+                    int dni = Integer.parseInt(dniTexto);
+                    pacientesDAO.buscarPorDni(dni, tbPacientes);
+
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Ingrese un número válido para el DNI.");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese el DNI para buscar.");
+            }
+        }
+
+
+    }//GEN-LAST:event_txtfiltrarKeyPressed
     private void mostrarFechaYHoraActual() {
         // Obtener la fecha y hora actual
         Date fechaHora = new Date();
@@ -471,7 +556,7 @@ import vistas.producto.Citas;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lbEliminar;
     private Label.Menu menu1;
     private Label.Menu menu2;
     private Label.Menu menu3;
@@ -479,8 +564,10 @@ import vistas.producto.Citas;
     private Label.Menu menu5;
     private Label.Menu menu6;
     private Label.Menu menu7;
+    private Label.Menu menu8;
     private javax.swing.JTable tbPacientes;
     private javax.swing.JTextField txtfecha;
+    private javax.swing.JTextField txtfiltrar;
     private javax.swing.JTextField txthora;
     // End of variables declaration//GEN-END:variables
 }

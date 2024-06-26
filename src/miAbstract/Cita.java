@@ -1,4 +1,4 @@
-package Clases;
+package miAbstract;
 
 public abstract class Cita {
 

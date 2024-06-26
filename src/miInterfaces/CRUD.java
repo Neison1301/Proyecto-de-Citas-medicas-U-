@@ -6,7 +6,7 @@ public interface CRUD<T> {
 
     void crear(T entidad);
 
-    ArrayList<T> leer();
+    ArrayList<T> leer(int id);
 
     void actualizar(int id);
 

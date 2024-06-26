@@ -459,7 +459,7 @@ public class Citas extends javax.swing.JFrame {
 
         citasMedicasDAO.actualizar(id);
 
-        ArrayList<CitasMedicasDTO> citasActualizadas = citasMedicasDAO.leer();
+        ArrayList<CitasMedicasDTO> citasActualizadas = citasMedicasDAO.leer(id);
 
         // Actualizar la tabla con los datos actualizados
         DefaultTableModel modelo = (DefaultTableModel) tbCitas.getModel();
