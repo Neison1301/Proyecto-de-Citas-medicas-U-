@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import modeloDTO.EspecialidadMedicaDTO;
 
 public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
 
@@ -381,5 +382,51 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
 
         return idDoctor;
     }*/
+    public void asignarEspecialidad(int idDoctor, int idEspecialidad) {
+        String sql = "INSERT INTO Doctor_Especialidad (IdDoctor, IdEspecialidad) VALUES (?, ?)";
+
+        try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, idDoctor);
+            pstmt.setInt(2, idEspecialidad);
+            pstmt.execute();
+            JOptionPane.showMessageDialog(null, "Especialidad asignada correctamente.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al asignar especialidad: " + e.getMessage());
+        }
+    }
+
+    public ArrayList<EspecialidadMedicaDTO> obtenerEspecialidadesPorDoctor(int idDoctor) {
+        ArrayList<EspecialidadMedicaDTO> especialidades = new ArrayList<>();
+        String sql = "SELECT em.IdEspecialidad, em.NombreEspecialidad "
+                + "FROM EspecialidadesMedicas em "
+                + "JOIN Doctor_Especialidad de ON em.IdEspecialidad = de.IdEspecialidad "
+                + "WHERE de.IdDoctor = ?";
+
+        try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, idDoctor);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int idEspecialidad = rs.getInt("IdEspecialidad");
+                String nombreEspecialidad = rs.getString("NombreEspecialidad");
+                EspecialidadMedicaDTO especialidad = new EspecialidadMedicaDTO(idEspecialidad, nombreEspecialidad);
+                especialidades.add(especialidad);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener especialidades: " + e.getMessage());
+        }
+
+        return especialidades;
+    }
+
+    // Método para cargar especialidades en un combo box
+    public void cargarComboEspecialidades(JComboBox<String> comboBox) {
+        EspecialidadesMedicasDAO especialidadesMedicasDAO = new EspecialidadesMedicasDAO(conexion);
+        ArrayList<EspecialidadMedicaDTO> especialidades = especialidadesMedicasDAO.leer();
+        DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<>();
+        comboBox.setModel(comboModel);
+        for (EspecialidadMedicaDTO especialidad : especialidades) {
+            comboModel.addElement(especialidad.getNombreEspecialidad());
+        }
+    }
 
 }

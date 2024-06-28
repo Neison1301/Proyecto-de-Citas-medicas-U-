@@ -1,4 +1,3 @@
-
 package vistas.Doctor;
 
 import config.Conexion;
@@ -11,14 +10,16 @@ import modeloDTO.DoctorDTO;
 import modeloDAO.DoctorDAO;
 import vistas.cliente.MenuPrincipal;
 
-
 public class RegistrarDoctor extends javax.swing.JFrame {
 
     MenuPrincipal menu = new MenuPrincipal();
+    Conexion c = new Conexion();
+    DoctorDAO doctorDAO = new DoctorDAO(c);
 
     public RegistrarDoctor(MenuPrincipal menu) {
         initComponents();
         this.menu = menu;
+        doctorDAO.cargarComboEspecialidades(cbEspecialidad);
 
     }
 
@@ -40,7 +41,6 @@ public class RegistrarDoctor extends javax.swing.JFrame {
         tfapellidos1 = new javax.swing.JTextField();
         jSeparator60 = new javax.swing.JSeparator();
         LblEspecialidad1 = new javax.swing.JLabel();
-        tfEspecialidad = new javax.swing.JTextField();
         jSeparator61 = new javax.swing.JSeparator();
         LblTelefono1 = new javax.swing.JLabel();
         tfTelefono1 = new javax.swing.JTextField();
@@ -70,6 +70,7 @@ public class RegistrarDoctor extends javax.swing.JFrame {
         LlbNombres7 = new javax.swing.JLabel();
         tfestado = new javax.swing.JTextField();
         jSeparator69 = new javax.swing.JSeparator();
+        cbEspecialidad = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -117,8 +118,6 @@ public class RegistrarDoctor extends javax.swing.JFrame {
 
         LblEspecialidad1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         LblEspecialidad1.setText("Especialidad");
-
-        tfEspecialidad.setBorder(null);
 
         jSeparator61.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -248,14 +247,13 @@ public class RegistrarDoctor extends javax.swing.JFrame {
                             .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel13Layout.createSequentialGroup()
-                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(tfDni1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(tfDni1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
                                             .addComponent(lblDni1)
-                                            .addComponent(jSeparator54, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(LblEspecialidad1)
-                                                .addComponent(tfEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jSeparator61, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(jSeparator54, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                                            .addComponent(LblEspecialidad1)
+                                            .addComponent(jSeparator61, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                                            .addComponent(cbEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGap(76, 76, 76)
                                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(LlbNombres1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,11 +332,11 @@ public class RegistrarDoctor extends javax.swing.JFrame {
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(LblEspecialidad1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(cbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator61, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(LlbNombres3)
                         .addGap(6, 6, 6)
                         .addComponent(tfciudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -402,7 +400,7 @@ public class RegistrarDoctor extends javax.swing.JFrame {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnRegresarInicio2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbregistrar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         menu2.add(jPanel13);
@@ -447,7 +445,7 @@ public class RegistrarDoctor extends javax.swing.JFrame {
         BigDecimal salario;
 
         if (tfDni1.getText().isEmpty() || tfNombre1.getText().isEmpty() || tfapellidos1.getText().isEmpty()
-                || tfTelefono1.getText().isEmpty() || tfCorreo1.getText().isEmpty() || tfEspecialidad.getText().isEmpty()
+                || tfTelefono1.getText().isEmpty() || tfCorreo1.getText().isEmpty()
                 || tfdireccion.getText().isEmpty() || tfciudad.getText().isEmpty() || tfestado.getText().isEmpty()
                 || tfcodigopostal.getText().isEmpty() || jDateChooserFechadeContrato.getDate() == null || jformatedSalario.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
@@ -461,29 +459,31 @@ public class RegistrarDoctor extends javax.swing.JFrame {
             telefono = Integer.parseInt(tfTelefono1.getText());
             correo = tfCorreo1.getText();
             genero = cbGenero1.getSelectedItem().toString().equals("Masculino");
-            especialidad = tfEspecialidad.getText();
+            especialidad = cbEspecialidad.getSelectedItem().toString();
             direccion = tfdireccion.getText();
             ciudad = tfciudad.getText();
             estado = tfestado.getText();
             codigoPostal = tfcodigopostal.getText();
-            fechaContratacion = LocalDate.of(jDateChooserFechadeContrato.getCalendar().get(Calendar.YEAR), jDateChooserFechadeContrato.getCalendar().get(Calendar.MONTH) + 1, jDateChooserFechadeContrato.getCalendar().get(Calendar.DAY_OF_MONTH));
+            fechaContratacion = LocalDate.of(jDateChooserFechadeContrato.getCalendar().get(Calendar.YEAR),
+                    jDateChooserFechadeContrato.getCalendar().get(Calendar.MONTH) + 1,
+                    jDateChooserFechadeContrato.getCalendar().get(Calendar.DAY_OF_MONTH));
             salario = new BigDecimal(jformatedSalario.getText().replace(",", ""));
 
             // Crear una instancia de DoctorDTO
-            DoctorDTO nuevoDoctor = new DoctorDTO(0, dni, nombre, apellido, telefono, estado, genero, especialidad, direccion, ciudad, estado, codigoPostal, fechaContratacion, salario);
-            Conexion conexion = new Conexion();
-            DoctorDAO doctordao = new DoctorDAO(conexion);
-            doctordao.crear(nuevoDoctor);
+            DoctorDTO nuevoDoctor = new DoctorDTO(0, dni, nombre, apellido, telefono, correo, genero, especialidad, direccion,
+                    ciudad, estado, codigoPostal, fechaContratacion, salario);
 
-            // Mostrar la ventana de pacientes u otra ventana según sea necesario
-            MenuPrincipal menu1 = new MenuPrincipal();
-            menu1.setVisible(true);
+            // Utilizar el DAO para crear al nuevo doctor
+            doctorDAO.crear(nuevoDoctor);
+
+            // Mostrar la ventana del menú principal u otra ventana según sea necesario
+            menu.setVisible(true);
             this.dispose();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para el DNI o salario.");
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Error al registrar el doctor: " + e.getMessage());
-        
+
         }    }//GEN-LAST:event_jbregistrar1ActionPerformed
 
     private void cbGenero1jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenero1jComboBox1ActionPerformed
@@ -501,38 +501,38 @@ public class RegistrarDoctor extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (ClassNotFoundException ex) {
-        java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-        java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                MenuPrincipal menu = new MenuPrincipal();
+                new RegistrarDoctor(menu).setVisible(true);
+
+            }
+        });
     }
-    //</editor-fold>
-
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            MenuPrincipal menu = new MenuPrincipal();
-            new RegistrarDoctor(menu).setVisible(true);
-
-        }
-    });
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnRegresarInicio2;
@@ -548,6 +548,7 @@ public class RegistrarDoctor extends javax.swing.JFrame {
     private javax.swing.JLabel LlbNombres5;
     private javax.swing.JLabel LlbNombres6;
     private javax.swing.JLabel LlbNombres7;
+    private javax.swing.JComboBox<String> cbEspecialidad;
     private javax.swing.JComboBox<String> cbGenero1;
     private com.toedter.calendar.JDateChooser jDateChooserFechadeContrato;
     private javax.swing.JPanel jPanel13;
@@ -571,7 +572,6 @@ public class RegistrarDoctor extends javax.swing.JFrame {
     private Label.Menu menu2;
     private javax.swing.JTextField tfCorreo1;
     private javax.swing.JTextField tfDni1;
-    private javax.swing.JTextField tfEspecialidad;
     private javax.swing.JTextField tfNombre1;
     private javax.swing.JTextField tfTelefono1;
     private javax.swing.JTextField tfapellidos1;

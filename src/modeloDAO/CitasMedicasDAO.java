@@ -18,8 +18,6 @@ import javax.swing.table.DefaultTableModel;
 import modeloDTO.CitasMedicasDTO;
 import miInterfaces.AtencionMedica;
 import miInterfaces.CRUD;
-import modeloDTO.DoctorDTO;
-import modeloDTO.PacientesDTO;
 
 public class CitasMedicasDAO implements CRUD<CitasMedicasDTO>, AtencionMedica {
 
