@@ -1,11 +1,15 @@
+
 package vistas.servicio;
 
+import config.Conexion;
 import modeloDAO.CitasMedicasDAO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modeloDAO.DoctorDAO;
+import modeloDAO.PacientesDAO;
 import modeloDTO.CitasMedicasDTO;
 import vistas.Doctor.Doctor;
 import vistas.Horario.Horario;
@@ -13,9 +17,13 @@ import vistas.cliente.MenuPrincipal;
 import vistas.cliente.Pacientes;
 import vistas.logueo.Inicio;
 
+
 public class Citas extends javax.swing.JFrame {
 
     CitasMedicasDAO citasMedicas = new CitasMedicasDAO();
+    Conexion conexion = new Conexion();
+    DoctorDAO doctorDAO = new DoctorDAO(conexion);
+    PacientesDAO pacienteDAO = new PacientesDAO(conexion, 0, 0, null, null, 0, null, true);
 
     public Citas() {
         initComponents();
@@ -273,9 +281,9 @@ public class Citas extends javax.swing.JFrame {
             tbCitas.getColumnModel().getColumn(0).setPreferredWidth(30);
             tbCitas.getColumnModel().getColumn(0).setMaxWidth(30);
             tbCitas.getColumnModel().getColumn(1).setResizable(false);
-            tbCitas.getColumnModel().getColumn(2).setMinWidth(100);
-            tbCitas.getColumnModel().getColumn(2).setPreferredWidth(100);
-            tbCitas.getColumnModel().getColumn(2).setMaxWidth(100);
+            tbCitas.getColumnModel().getColumn(2).setMinWidth(120);
+            tbCitas.getColumnModel().getColumn(2).setPreferredWidth(120);
+            tbCitas.getColumnModel().getColumn(2).setMaxWidth(120);
         }
 
         menu3.add(jScrollPane1);
@@ -477,16 +485,27 @@ public class Citas extends javax.swing.JFrame {
         modelo.setRowCount(0); // Limpiar la tabla antes de llenarla de nuevo
 
         for (CitasMedicasDTO cita : citasActualizadas) {
+            // Obtener nombre del doctor de la cita actual
+            String nombreDoctor = doctorDAO.obtenerNombreDoctor(cita.getIdDoctor());
+
+            // Obtener nombre del paciente de la cita actual
+            String nombrePaciente = pacienteDAO.obtenerNombrePaciente(cita.getIdPaciente());
+
+            // Crear la fila con los datos actualizados
             Object[] fila = {
-                cita.getId(),
+                cita.getIdCita(),
+                nombrePaciente,
+                nombreDoctor,
+                cita.getFechaConsulta(),
                 cita.getMotivo(),
-                cita.getFecha(),
-                cita.getPaciente(),
-                cita.getDoctor(),
-                cita.getDni()
+                cita.getDiagnostico(),
+                cita.getTratamiento(),
+                cita.getEstado()
             };
             modelo.addRow(fila);
-        }
+            citasMedicasDAO.mostrarCitas(tbCitas);
+        }// Agregar fila al modelo de la tabla
+    
     }//GEN-LAST:event_jbEditarCitaMouseClicked
 
     private void tbCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCitasMouseClicked
@@ -511,49 +530,49 @@ public class Citas extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_lblHOrarioMouseClicked
     private void mostrarFechaYHoraActual() {
-        Date fechaHora = new Date();
-        SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaFormateada = sdfFecha.format(fechaHora);
-        SimpleDateFormat sdfHora = new SimpleDateFormat("HH:mm:ss");
-        String horaFormateada = sdfHora.format(fechaHora);
-        txtfecha.setText(fechaFormateada);
-        txthra.setText(horaFormateada);
-    }
+    Date fechaHora = new Date();
+    SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy");
+    String fechaFormateada = sdfFecha.format(fechaHora);
+    SimpleDateFormat sdfHora = new SimpleDateFormat("HH:mm:ss");
+    String horaFormateada = sdfHora.format(fechaHora);
+    txtfecha.setText(fechaFormateada);
+    txthra.setText(horaFormateada);
+}
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+     */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Citas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Citas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Citas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Citas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Citas().setVisible(true);
-            }
-        });
+    } catch (ClassNotFoundException ex) {
+        java.util.logging.Logger.getLogger(Citas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        java.util.logging.Logger.getLogger(Citas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        java.util.logging.Logger.getLogger(Citas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        java.util.logging.Logger.getLogger(Citas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
+    //</editor-fold>
+
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new Citas().setVisible(true);
+        }
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel10;

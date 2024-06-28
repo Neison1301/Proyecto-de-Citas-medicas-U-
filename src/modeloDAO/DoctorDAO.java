@@ -4,13 +4,14 @@ import miInterfaces.Boleta;
 import miInterfaces.CRUD;
 import modeloDTO.DoctorDTO;
 import config.Conexion;
+import java.math.BigDecimal;
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
 
@@ -22,8 +23,8 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
 
     @Override
     public void crear(DoctorDTO doctor) {
-        String sql = "INSERT INTO Doctores (DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Doctores (DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad, Direccion, Ciudad, Estado, CodigoPostal, FechaContratacion, Salario) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, doctor.getDni());
@@ -33,6 +34,12 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
             pstmt.setString(5, doctor.getEmail());
             pstmt.setString(6, doctor.isGenero() ? "Masculino" : "Femenino");
             pstmt.setString(7, doctor.getEspecialidad());
+            pstmt.setString(8, doctor.getDireccion());
+            pstmt.setString(9, doctor.getCiudad());
+            pstmt.setString(10, doctor.getEstado());
+            pstmt.setString(11, doctor.getCodigoPostal());
+            pstmt.setDate(12, java.sql.Date.valueOf(doctor.getFechaContratacion()));
+            pstmt.setBigDecimal(13, doctor.getSalario());
 
             pstmt.execute();
 
@@ -47,13 +54,12 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
     public ArrayList<DoctorDTO> leer(int dni) {
         ArrayList<DoctorDTO> doctores = new ArrayList<>();
 
-        String sql = "SELECT IdDoctor, DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad FROM Doctores";
+        String sql = "SELECT IdDoctor, DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad, Direccion, Ciudad, Estado, CodigoPostal, FechaContratacion, Salario FROM Doctores";
         if (dni != 0) {
-            sql += " WHERE IdDoctor = ?";
+            sql += " WHERE DniDoctor = ?";
         }
 
         try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             if (dni != 0) {
                 pstmt.setInt(1, dni);
             }
@@ -69,8 +75,14 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
                 String email = rs.getString("Email");
                 boolean genero = rs.getString("Genero").equalsIgnoreCase("Masculino");
                 String especialidad = rs.getString("Especialidad");
+                String direccion = rs.getString("Direccion");
+                String ciudad = rs.getString("Ciudad");
+                String estado = rs.getString("Estado");
+                String codigoPostal = rs.getString("CodigoPostal");
+                LocalDate fechaContratacion = rs.getDate("FechaContratacion").toLocalDate();
+                BigDecimal salario = rs.getBigDecimal("Salario");
 
-                DoctorDTO doctor = new DoctorDTO(doctorId,dniDoctor, nombre, apellido, telefono, email, genero, especialidad);
+                DoctorDTO doctor = new DoctorDTO(doctorId, dniDoctor, nombre, apellido, telefono, email, genero, especialidad, direccion, ciudad, estado, codigoPostal, fechaContratacion, salario);
                 doctores.add(doctor);
             }
 
@@ -83,11 +95,10 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
 
     @Override
     public void actualizar(int id) {
-        String sqlSelect = "SELECT DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad FROM Doctores WHERE IdDoctor = ?";
-        String sqlUpdate = "UPDATE Doctores SET DniDoctor = ?, NDoctor = ?, Apellido = ?, Telefono = ?, Email = ?, Genero = ?, Especialidad = ? WHERE IdDoctor = ?";
+        String sqlSelect = "SELECT DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad, Direccion, Ciudad, Estado, CodigoPostal, FechaContratacion, Salario FROM Doctores WHERE IdDoctor = ?";
+        String sqlUpdate = "UPDATE Doctores SET DniDoctor = ?, NDoctor = ?, Apellido = ?, Telefono = ?, Email = ?, Genero = ?, Especialidad = ?, Direccion = ?, Ciudad = ?, Estado = ?, CodigoPostal = ?, FechaContratacion = ?, Salario = ? WHERE IdDoctor = ?";
 
         try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmtSelect = conn.prepareStatement(sqlSelect); PreparedStatement pstmtUpdate = conn.prepareStatement(sqlUpdate)) {
-
             pstmtSelect.setInt(1, id);
 
             try (ResultSet rs = pstmtSelect.executeQuery()) {
@@ -95,16 +106,22 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
                     int dniActual = rs.getInt("DniDoctor");
                     String nombreActual = rs.getString("NDoctor");
                     String apellidoActual = rs.getString("Apellido");
-                    String telefonoActual = rs.getString("Telefono");
+                    int telefonoActual = rs.getInt("Telefono");
                     String emailActual = rs.getString("Email");
                     boolean generoActual = rs.getString("Genero").equalsIgnoreCase("Masculino");
                     String especialidadActual = rs.getString("Especialidad");
+                    String direccionActual = rs.getString("Direccion");
+                    String ciudadActual = rs.getString("Ciudad");
+                    String estadoActual = rs.getString("Estado");
+                    String codigoPostalActual = rs.getString("CodigoPostal");
+                    LocalDate fechaContratacionActual = rs.getDate("FechaContratacion").toLocalDate();
+                    BigDecimal salarioActual = rs.getBigDecimal("Salario");
 
                     // Mostrar JOptionPane para editar los datos
                     JTextField tfDni = new JTextField(String.valueOf(dniActual));
                     JTextField tfNombre = new JTextField(nombreActual);
                     JTextField tfApellido = new JTextField(apellidoActual);
-                    JTextField tfTelefono = new JTextField(telefonoActual);
+                    JTextField tfTelefono = new JTextField(String.valueOf(telefonoActual));
                     JTextField tfEmail = new JTextField(emailActual);
                     JRadioButton rbMasculino = new JRadioButton("Masculino");
                     JRadioButton rbFemenino = new JRadioButton("Femenino");
@@ -120,6 +137,12 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
                     generoPanel.add(rbMasculino);
                     generoPanel.add(rbFemenino);
                     JTextField tfEspecialidad = new JTextField(especialidadActual);
+                    JTextField tfDireccion = new JTextField(direccionActual);
+                    JTextField tfCiudad = new JTextField(ciudadActual);
+                    JTextField tfEstado = new JTextField(estadoActual);
+                    JTextField tfCodigoPostal = new JTextField(codigoPostalActual);
+                    JTextField tfFechaContratacion = new JTextField(fechaContratacionActual.toString());
+                    JTextField tfSalario = new JTextField(salarioActual.toString());
 
                     Object[] message = {
                         "Dni", tfDni,
@@ -128,7 +151,13 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
                         "Teléfono:", tfTelefono,
                         "Email:", tfEmail,
                         "Género:", generoPanel,
-                        "Especialidad:", tfEspecialidad
+                        "Especialidad:", tfEspecialidad,
+                        "Dirección:", tfDireccion,
+                        "Ciudad:", tfCiudad,
+                        "Estado:", tfEstado,
+                        "Código Postal:", tfCodigoPostal,
+                        "Fecha Contratación:", tfFechaContratacion,
+                        "Salario:", tfSalario
                     };
 
                     int option = JOptionPane.showConfirmDialog(null, message, "Editar Doctor", JOptionPane.OK_CANCEL_OPTION);
@@ -137,11 +166,17 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
                         pstmtUpdate.setInt(1, Integer.parseInt(tfDni.getText()));
                         pstmtUpdate.setString(2, tfNombre.getText());
                         pstmtUpdate.setString(3, tfApellido.getText());
-                        pstmtUpdate.setString(4, tfTelefono.getText());
+                        pstmtUpdate.setInt(4, Integer.parseInt(tfTelefono.getText()));
                         pstmtUpdate.setString(5, tfEmail.getText());
                         pstmtUpdate.setString(6, rbMasculino.isSelected() ? "Masculino" : "Femenino");
                         pstmtUpdate.setString(7, tfEspecialidad.getText());
-                        pstmtUpdate.setInt(8, id);
+                        pstmtUpdate.setString(8, tfDireccion.getText());
+                        pstmtUpdate.setString(9, tfCiudad.getText());
+                        pstmtUpdate.setString(10, tfEstado.getText());
+                        pstmtUpdate.setString(11, tfCodigoPostal.getText());
+                        pstmtUpdate.setDate(12, java.sql.Date.valueOf(tfFechaContratacion.getText()));
+                        pstmtUpdate.setBigDecimal(13, new BigDecimal(tfSalario.getText()));
+                        pstmtUpdate.setInt(14, id);
 
                         int rowsAffected = pstmtUpdate.executeUpdate();
 
@@ -183,7 +218,7 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
 
     @Override
     public void generarReporte() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void mostrarCitas(JTable tabla, int dni) {
@@ -207,7 +242,7 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
     }
 
     public void mostrarDetalleCita(int idDoctor, JTextArea textArea) {
-        String sql = "SELECT DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad FROM Doctores WHERE IdDoctor = ?";
+        String sql = "SELECT DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad, Direccion, Ciudad, Estado, CodigoPostal, FechaContratacion, Salario FROM Doctores WHERE IdDoctor = ?";
 
         try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -215,14 +250,20 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                String detalleDoctor = String.format("Dni: %s\nNombre: %s\nApellido: %s\nTeléfono: %s\nEmail: %s\nGénero: %s\nEspecialidad: %s\n",
+                String detalleDoctor = String.format("Dni: %s\nNombre: %s\nApellido: %s\nTeléfono: %s\nEmail: %s\nGénero: %s\nEspecialidad: %s\nDirección: %s\nCiudad: %s\nEstado: %s\nCódigo Postal: %s\nFecha Contratación: %s\nSalario: %s\n",
                         rs.getInt("DniDoctor"),
                         rs.getString("NDoctor"),
                         rs.getString("Apellido"),
                         rs.getString("Telefono"),
                         rs.getString("Email"),
                         rs.getString("Genero"),
-                        rs.getString("Especialidad"));
+                        rs.getString("Especialidad"),
+                        rs.getString("Direccion"),
+                        rs.getString("Ciudad"),
+                        rs.getString("Estado"),
+                        rs.getString("CodigoPostal"),
+                        rs.getDate("FechaContratacion"),
+                        rs.getBigDecimal("Salario"));
 
                 textArea.setText(detalleDoctor);
             } else {
@@ -246,7 +287,7 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                doctor = new DoctorDTO(0,0, null, null, 0, null, true, null);
+                doctor = new DoctorDTO(0, 0, null, null, 0, null, true, null, null, null, null, null, null, null);
                 doctor.setId(rs.getInt("IdDoctor"));
                 doctor.setNombre(rs.getString("NDoctor"));
                 doctor.setApellido(rs.getString("Apellido"));
@@ -260,10 +301,16 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
                 }
                 doctor.setGenero(genero);
                 doctor.setEspecialidad(rs.getString("Especialidad"));
+                doctor.setDireccion(rs.getString("Direccion"));
+                doctor.setCiudad(rs.getString("Ciudad"));
+                doctor.setEstado(rs.getString("Estado"));
+                doctor.setCodigoPostal(rs.getString("CodigoPostal"));
+                doctor.setFechaContratacion(rs.getDate("FechaContratacion").toLocalDate());
+                doctor.setSalario(rs.getBigDecimal("Salario"));
 
                 modelo.addRow(new Object[]{doctor.getId(), doctor.getNombre() + " " + doctor.getApellido(), doctor.getEspecialidad()});
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró ningún doctor ese nombre " + nombre);
+                JOptionPane.showMessageDialog(null, "No se encontró ningún doctor con ese nombre " + nombre);
             }
 
         } catch (SQLException e) {
@@ -271,6 +318,68 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
         }
 
         return doctor;
+
     }
+    private Map<String, Integer> doctoresMap = new HashMap<>();
+
+    public void cargarComboDoctores(JComboBox<String> c) {
+
+        DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<>();
+        c.setModel(comboModel);
+
+        Conexion cx = new Conexion();
+        DoctorDAO doctordao = new DoctorDAO(cx);
+        ArrayList<DoctorDTO> doctorList = doctordao.leer(0);
+
+        doctoresMap.clear();
+        for (DoctorDTO doctordto : doctorList) {
+            String nombreCompleto = doctordto.getNombre();
+            comboModel.addElement(nombreCompleto);
+            doctoresMap.put(nombreCompleto, doctordto.getId()); // Suponiendo que `getIdDoctor` obtiene el ID del doctor
+        }
+    }
+
+    public String obtenerNombreDoctor(int idDoctor) {
+        String nombreDoctor = "Doctor no encontrado";
+        Connection conexion = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conexion = this.conexion.establecerConexion(); // Obtener la conexión desde la instancia de la clase Conexion
+            String query = "SELECT NDoctor FROM Doctores WHERE IdDoctor = ?";
+            stmt = conexion.prepareStatement(query);
+            stmt.setInt(1, idDoctor);
+            rs = stmt.executeQuery();
+
+            // Si se encuentra el doctor, asignar el nombre
+            if (rs.next()) {
+                nombreDoctor = rs.getString("NDoctor");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener nombre del doctor: " + e.getMessage());
+        }
+        return nombreDoctor;
+    }
+
+    /*public int obtenerIdDoctor(String nombreDoctor) throws SQLException {
+        int idDoctor = -1;
+        String query = "SELECT IdDoctor FROM Doctores WHERE NDoctor = ?";
+        try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, nombreDoctor);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                idDoctor = rs.getInt("IdDoctor");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener el ID del doctor: " + ex.getMessage());
+            throw ex; // Re-lanzamos la excepción para manejarla en un nivel superior si es necesario
+        }
+
+        return idDoctor;
+    }*/
 
 }

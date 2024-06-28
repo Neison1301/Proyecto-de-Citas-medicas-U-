@@ -1,33 +1,43 @@
 package modeloDTO;
 
+import java.time.LocalDate;
+
 public class PacientesDTO {
 
-    private int id;
+    private int idPaciente;
     private int dniPaciente;
-    private int edad;
     private String nPaciente;
     private String apellidos;
+    private LocalDate fechaNacimiento;
     private int telefono;
     private String email;
     private boolean genero;
+    private String direccion;
+    private String ciudad;
+    private String estado;
+    private String codigoPostal;
 
-    public PacientesDTO(int id, int dniPaciente, int edad, String nPaciente, String apellidos, int telefono, String email, boolean genero) {
-        this.id = id;
+    public PacientesDTO(int idPaciente, int dniPaciente, String nPaciente, String apellidos, LocalDate fechaNacimiento, int telefono, String email, boolean genero, String direccion, String ciudad, String estado, String codigoPostal) {
+        this.idPaciente = idPaciente;
         this.dniPaciente = dniPaciente;
-        this.edad = edad;
         this.nPaciente = nPaciente;
         this.apellidos = apellidos;
+        this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
         this.email = email;
         this.genero = genero;
+        this.direccion = direccion;
+        this.ciudad = ciudad;
+        this.estado = estado;
+        this.codigoPostal = codigoPostal;
     }
 
-    public int getId() {
-        return id;
+    public int getIdPaciente() {
+        return idPaciente;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdPaciente(int idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     public int getDniPaciente() {
@@ -36,14 +46,6 @@ public class PacientesDTO {
 
     public void setDniPaciente(int dniPaciente) {
         this.dniPaciente = dniPaciente;
-    }
-
-    public int getEdad() {
-        return edad;
-    }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
     }
 
     public String getnPaciente() {
@@ -60,6 +62,14 @@ public class PacientesDTO {
 
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public int getTelefono() {
@@ -84,5 +94,37 @@ public class PacientesDTO {
 
     public void setGenero(boolean genero) {
         this.genero = genero;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
     }
 }

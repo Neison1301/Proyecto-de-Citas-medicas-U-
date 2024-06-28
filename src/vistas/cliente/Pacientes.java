@@ -4,11 +4,14 @@ import config.Conexion;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modeloDAO.PacientesDAO;
+import modeloDTO.PacientesDTO;
 import vistas.Doctor.Doctor;
 import vistas.Horario.Horario;
 import vistas.logueo.Inicio;
@@ -18,11 +21,11 @@ public class Pacientes extends javax.swing.JFrame {
 
     Conexion conexion = new Conexion();
     private PacientesDAO pacientesDAO;
-    PacientesDAO nPacientes = new PacientesDAO(conexion, 0,0, null, null, 0, null, true);
+    PacientesDAO nPacientes = new PacientesDAO(conexion, 0, 0, null, null, 0, null, true);
 
     public Pacientes() {
         initComponents();
-        this.pacientesDAO = new PacientesDAO(conexion, 0,0, null, null, 0, null, true);
+        this.pacientesDAO = new PacientesDAO(conexion, 0, 0, null, null, 0, null, true);
         nPacientes.mostrarCitas(tbPacientes, 0);
         mostrarFechaYHoraActual();
     }
@@ -59,6 +62,8 @@ public class Pacientes extends javax.swing.JFrame {
         txtfiltrar = new javax.swing.JTextField();
         menu8 = new Label.Menu();
         lbEliminar = new javax.swing.JLabel();
+        menu9 = new Label.Menu();
+        lbleditar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pacientes");
@@ -377,6 +382,34 @@ public class Pacientes extends javax.swing.JFrame {
             .addComponent(lbEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
         );
 
+        menu9.setBackground(new java.awt.Color(255, 255, 255));
+
+        lbleditar.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
+        lbleditar.setText(" Editar:");
+        lbleditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbleditarMouseClicked(evt);
+            }
+        });
+
+        menu9.setLayer(lbleditar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout menu9Layout = new javax.swing.GroupLayout(menu9);
+        menu9.setLayout(menu9Layout);
+        menu9Layout.setHorizontalGroup(
+            menu9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menu9Layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(lbleditar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        menu9Layout.setVerticalGroup(
+            menu9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menu9Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lbleditar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -386,10 +419,16 @@ public class Pacientes extends javax.swing.JFrame {
                 .addComponent(menu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(menu2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(menu3, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menu7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(menu2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(menu3, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(menu7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(menu9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(menu5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(menu6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -414,8 +453,10 @@ public class Pacientes extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(menu6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(menu7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(menu7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(menu9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(menu3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(menu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -451,7 +492,7 @@ public class Pacientes extends javax.swing.JFrame {
             int filaSeleccionada = tbPacientes.getSelectedRow();
             if (filaSeleccionada != -1) {
                 int idPaciente = Integer.parseInt(tbPacientes.getValueAt(filaSeleccionada, 0).toString());
-                nPacientes.mostrarDetalleCita(idPaciente, jTextArea2);
+                nPacientes.mostrarDetallePaciente(idPaciente, jTextArea2);
             }
 
         }    }//GEN-LAST:event_tbPacientesMouseClicked
@@ -489,12 +530,11 @@ public class Pacientes extends javax.swing.JFrame {
             if (!dniTexto.isEmpty()) {
                 try {
                     int dni = Integer.parseInt(dniTexto);
-                    pacientesDAO.buscarPorDni(dni, tbPacientes);
+                    pacientesDAO.buscarPorDni(dni, jTextArea2);
 
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Ingrese un número válido para el DNI.");
-                } catch (SQLException ex) {
-                    Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, e);
+                    JOptionPane.showMessageDialog(null, "Ingrese un número válido para el DNI." + e.getMessage());
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese el DNI para buscar.");
@@ -515,6 +555,36 @@ public class Pacientes extends javax.swing.JFrame {
         doctorr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lbldoctorMouseClicked
+
+    private void lbleditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbleditarMouseClicked
+        int filaSeleccionada = tbPacientes.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una cita para editar.");
+            return;
+        }
+
+        int id = (int) tbPacientes.getValueAt(filaSeleccionada, 0);
+
+        PacientesDAO pacienteDAO = new PacientesDAO(conexion, 0, 0, null, null, 0, null, true);
+
+        pacienteDAO.actualizar(id);
+
+        ArrayList<PacientesDTO> pacientesActualizados = pacienteDAO.leer(id);
+
+        DefaultTableModel modelo = (DefaultTableModel) tbPacientes.getModel();
+        modelo.setRowCount(0); // Limpiar la tabla antes de llenarla de nuevo
+
+        for (PacientesDTO paciente : pacientesActualizados) {
+            Object[] fila = {
+                paciente.getIdPaciente(),
+                paciente.getnPaciente() + " " + paciente.getApellidos(),
+                paciente.getTelefono()
+            };
+            modelo.addRow(fila);
+
+        }
+        pacienteDAO.mostrarCitas(tbPacientes, 0);
+    }//GEN-LAST:event_lbleditarMouseClicked
     private void mostrarFechaYHoraActual() {
         // Obtener la fecha y hora actual
         Date fechaHora = new Date();
@@ -581,6 +651,7 @@ public class Pacientes extends javax.swing.JFrame {
     private javax.swing.JLabel lbEliminar;
     private javax.swing.JLabel lbHorario;
     private javax.swing.JLabel lbldoctor;
+    private javax.swing.JLabel lbleditar;
     private Label.Menu menu1;
     private Label.Menu menu2;
     private Label.Menu menu3;
@@ -589,6 +660,7 @@ public class Pacientes extends javax.swing.JFrame {
     private Label.Menu menu6;
     private Label.Menu menu7;
     private Label.Menu menu8;
+    private Label.Menu menu9;
     private javax.swing.JTable tbPacientes;
     private javax.swing.JTextField txtfecha;
     private javax.swing.JTextField txtfiltrar;

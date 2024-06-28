@@ -546,6 +546,7 @@ public class Doctor extends javax.swing.JFrame {
             };
             modelo.addRow(fila);
         }
+        doctordao.mostrarCitas(tbDoctores, 0);
 
     }//GEN-LAST:event_lbleditarMouseClicked
     private void mostrarFechaYHoraActual() {

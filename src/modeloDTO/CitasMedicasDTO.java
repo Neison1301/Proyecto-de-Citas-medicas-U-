@@ -1,62 +1,65 @@
 package modeloDTO;
 
-import miAbstract.Cita;
+import java.time.LocalDateTime;
 
-public class CitasMedicasDTO extends Cita {
+public class CitasMedicasDTO {
 
-    private int id;
-    private int dni;
-    private String paciente;
-    private String doctor;
+    private int idCita;
+    private int idPaciente;
+    private int idDoctor;
+    private LocalDateTime fechaConsulta;
     private String motivo;
+    private String diagnostico;
+    private String tratamiento;
+    private Estado estado;
 
-    public CitasMedicasDTO(int id, String fecha, String paciente, String doctor, int dni, String motivo) {
-        super(fecha);
-        this.id = id;
-        this.dni = dni;
-        this.paciente = paciente;
-        this.doctor = doctor;
+    public enum Estado {
+        Programada,
+        Cancelada,
+        Realizada
+    }
+
+    public CitasMedicasDTO(int idCita, int idPaciente, int idDoctor, LocalDateTime fechaConsulta, String motivo, String diagnostico, String tratamiento, Estado estado) {
+        this.idCita = idCita;
+        this.idPaciente = idPaciente;
+        this.idDoctor = idDoctor;
+        this.fechaConsulta = fechaConsulta;
         this.motivo = motivo;
+        this.diagnostico = diagnostico;
+        this.tratamiento = tratamiento;
+        this.estado = estado;
     }
 
-    public int getId() {
-        return id;
+    public int getIdCita() {
+        return idCita;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdCita(int idCita) {
+        this.idCita = idCita;
     }
 
-    public String getPaciente() {
-        return paciente;
+    public int getIdPaciente() {
+        return idPaciente;
     }
 
-    public void setPaciente(String paciente) {
-        this.paciente = paciente;
+    public void setIdPaciente(int idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
-    public String getDoctor() {
-        return doctor;
+    public int getIdDoctor() {
+        return idDoctor;
     }
 
-    public void setDoctor(String doctor) {
-        this.doctor = doctor;
+    public void setIdDoctor(int idDoctor) {
+        this.idDoctor = idDoctor;
     }
 
-    public int getDni() {
-        return dni;
+    public LocalDateTime getFechaConsulta() {
+        return fechaConsulta;
     }
 
-    public void setDni(int dni) {
-        this.dni = dni;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setFechaConsulta(LocalDateTime fechaConsulta) {
+        this.fechaConsulta = fechaConsulta;
     }
 
     public String getMotivo() {
@@ -67,8 +70,27 @@ public class CitasMedicasDTO extends Cita {
         this.motivo = motivo;
     }
 
-    @Override
-    public void detallesCita() {
+    public String getDiagnostico() {
+        return diagnostico;
     }
 
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
+    }
+
+    public String getTratamiento() {
+        return tratamiento;
+    }
+
+    public void setTratamiento(String tratamiento) {
+        this.tratamiento = tratamiento;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
 }
