@@ -3,14 +3,16 @@ package miAbstract;
 public abstract class Persona {
 
     public int id;
+    public int dni;
     private String nombre;
     private String apellido;
     private int telefono;
     private String email;
-    private boolean genero; 
+    private boolean genero;
 
-    public Persona(int id, String nombre, String apellido, int telefono, String email, boolean genero) {
+    public Persona(int id, int dni, String nombre, String apellido, int telefono, String email, boolean genero) {
         this.id = id;
+        this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
@@ -18,13 +20,20 @@ public abstract class Persona {
         this.genero = genero;
     }
 
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
     }
 
     public String getNombre() {
@@ -50,7 +59,6 @@ public abstract class Persona {
     public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
-
 
     public String getEmail() {
         return email;

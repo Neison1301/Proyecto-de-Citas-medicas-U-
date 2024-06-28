@@ -239,9 +239,9 @@ public class Doctor extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbDoctores);
         if (tbDoctores.getColumnModel().getColumnCount() > 0) {
-            tbDoctores.getColumnModel().getColumn(0).setMinWidth(25);
-            tbDoctores.getColumnModel().getColumn(0).setPreferredWidth(25);
-            tbDoctores.getColumnModel().getColumn(0).setMaxWidth(25);
+            tbDoctores.getColumnModel().getColumn(0).setMinWidth(40);
+            tbDoctores.getColumnModel().getColumn(0).setPreferredWidth(40);
+            tbDoctores.getColumnModel().getColumn(0).setMaxWidth(40);
             tbDoctores.getColumnModel().getColumn(1).setResizable(false);
             tbDoctores.getColumnModel().getColumn(2).setMinWidth(100);
             tbDoctores.getColumnModel().getColumn(2).setPreferredWidth(100);
@@ -496,21 +496,18 @@ public class Doctor extends javax.swing.JFrame {
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             // Obtener el texto del campo de texto txtfiltrar
-            String dniTexto = txtfiltrar.getText().trim();
+            String nombretxt = txtfiltrar.getText().trim();
 
             // Validar que el texto ingresado sea un número entero válido
-            if (!dniTexto.isEmpty()) {
+            if (!nombretxt.isEmpty()) {
                 try {
-                    int dni = Integer.parseInt(dniTexto);
-                    doctorDAO.buscarDoctorPorDni(dni, tbDoctores);
-
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Ingrese un número válido para el DNI.");
+                    doctorDAO.buscarDoctorPorNombre(nombretxt, tbDoctores);
                 } catch (SQLException ex) {
                     Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Error al buscar el doctor: " + ex.getMessage());
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Ingrese el DNI para buscar.");
+                JOptionPane.showMessageDialog(null, "Ingrese el nombre del doctor para buscar.");
             }
         }
     }//GEN-LAST:event_txtfiltrarKeyPressed
@@ -544,10 +541,7 @@ public class Doctor extends javax.swing.JFrame {
         for (DoctorDTO docto : doctoresActualizadas) {
             Object[] fila = {
                 docto.getId(),
-                docto.getNombre(),
-                docto.getApellido(),
-                docto.getTelefono(),
-                docto.getEmail(),
+                docto.getNombre() + " " + docto.getApellido(),
                 docto.getEspecialidad()
             };
             modelo.addRow(fila);

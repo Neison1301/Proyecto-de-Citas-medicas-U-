@@ -14,8 +14,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
 
-    public PacientesDAO(Conexion conexion, int id, String nombre, String apellido, int telefono, String email, boolean genero) {
-        super(id, nombre, apellido, telefono, email, genero);
+    public PacientesDAO(Conexion conexion, int id, int dni, String nombre, String apellido, int telefono, String email, boolean genero) {
+        super(id, dni, nombre, apellido, telefono, email, genero);
         this.conexion = conexion;
     }
 
@@ -113,7 +113,7 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         modelo.setRowCount(0);
         Conexion c = new Conexion();
-        PacientesDAO pacientesdao = new PacientesDAO(c, 0, null, null, 0, null, true);
+        PacientesDAO pacientesdao = new PacientesDAO(c,0, 0, null, null, 0, null, true);
         ArrayList<PacientesDTO> pacientesss = pacientesdao.leer(ids);
 
         if (pacientesss != null) {
@@ -128,7 +128,7 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
 
     public void mostrarDetalleCita(int id, JTextArea textArea) {
         int ids = 0;
-        PacientesDAO dao = new PacientesDAO(conexion, 0, null, null, 0, null, true);
+        PacientesDAO dao = new PacientesDAO(conexion,0, 0, null, null, 0, null, true);
         ArrayList<PacientesDTO> mostrar = dao.leer(ids);
 
         for (PacientesDTO pacientesDTO : mostrar) {
@@ -150,7 +150,7 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         modelo.setRowCount(0);
 
-        String sql = "SELECT * FROM Pacientes WHERE DniPaciente = ?";
+        String sql = "CALL BuscarPacientePorDni(?)";
         try (Connection conn = conexion.establecerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, dni);

@@ -316,7 +316,7 @@ public class RegistrarDoctor extends javax.swing.JFrame {
             especialidad = tfEspecialidad1.getText();
 
             // Crear una instancia de Ndoctor
-            DoctorDTO nuevoDoctor = new DoctorDTO(dni, nombre, apellido, telefono, correo, genero, especialidad);
+            DoctorDTO nuevoDoctor = new DoctorDTO(0, dni, nombre, apellido, telefono, correo, genero, especialidad);
             Conexion conexion = new Conexion();
             DoctorDAO doctordao = new DoctorDAO(conexion);
             doctordao.crear(nuevoDoctor);

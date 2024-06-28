@@ -18,11 +18,11 @@ public class Pacientes extends javax.swing.JFrame {
 
     Conexion conexion = new Conexion();
     private PacientesDAO pacientesDAO;
-    PacientesDAO nPacientes = new PacientesDAO(conexion, 0, null, null, 0, null, true);
+    PacientesDAO nPacientes = new PacientesDAO(conexion, 0,0, null, null, 0, null, true);
 
     public Pacientes() {
         initComponents();
-        this.pacientesDAO = new PacientesDAO(conexion, 0, null, null, 0, null, true);
+        this.pacientesDAO = new PacientesDAO(conexion, 0,0, null, null, 0, null, true);
         nPacientes.mostrarCitas(tbPacientes, 0);
         mostrarFechaYHoraActual();
     }

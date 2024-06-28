@@ -2,6 +2,7 @@ package vistas.Horario;
 
 import vistas.Doctor.Doctor;
 import vistas.cliente.MenuPrincipal;
+import vistas.cliente.Pacientes;
 import vistas.logueo.Inicio;
 import vistas.servicio.Citas;
 
@@ -116,6 +117,11 @@ public class Horario extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         jLabel12.setText("  PACIENTES");
         jLabel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
+            }
+        });
         menu1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 140, 60));
 
         menu2.setBackground(new java.awt.Color(255, 255, 255));
@@ -156,6 +162,7 @@ public class Horario extends javax.swing.JFrame {
             .addGroup(menu2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(txthora, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
@@ -337,6 +344,12 @@ public class Horario extends javax.swing.JFrame {
         Doctor doctorr = new Doctor();
         doctorr.setVisible(true);
         this.dispose();    }//GEN-LAST:event_lbldoctorMouseClicked
+
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        Pacientes pacien = new Pacientes();
+        pacien.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel12MouseClicked
 
     /**
      * @param args the command line arguments

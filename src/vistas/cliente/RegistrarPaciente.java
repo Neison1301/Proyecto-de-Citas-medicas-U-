@@ -339,7 +339,7 @@ public class RegistrarPaciente extends javax.swing.JFrame {
             PacientesDTO nuevoPaciente = new PacientesDTO(0, dni, edad, nombre, apellido, telefono, email, genero);
 
             Conexion conexion = new Conexion(); 
-            PacientesDAO nPacientesDAO = new PacientesDAO(conexion, 0, nombre, apellido, telefono, email, genero);
+            PacientesDAO nPacientesDAO = new PacientesDAO(conexion, 0,0, nombre, apellido, telefono, email, genero);
 
             nPacientesDAO.crear(nuevoPaciente);
 

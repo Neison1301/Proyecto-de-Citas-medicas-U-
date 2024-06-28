@@ -22,17 +22,17 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
 
     @Override
     public void crear(DoctorDTO doctor) {
-        String sql = "INSERT INTO Doctores (NDoctor, Apellido, Telefono, Email, Genero, Especialidad) "
-                + "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Doctores (DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, doctor.getNombre());
-            pstmt.setString(2, doctor.getApellido());
-            pstmt.setInt(3, doctor.getTelefono());
-            pstmt.setString(4, doctor.getEmail());
-            pstmt.setString(5, doctor.isGenero() ? "Masculino" : "Femenino");
-            pstmt.setString(6, doctor.getEspecialidad());
+            pstmt.setInt(1, doctor.getDni());
+            pstmt.setString(2, doctor.getNombre());
+            pstmt.setString(3, doctor.getApellido());
+            pstmt.setInt(4, doctor.getTelefono());
+            pstmt.setString(5, doctor.getEmail());
+            pstmt.setString(6, doctor.isGenero() ? "Masculino" : "Femenino");
+            pstmt.setString(7, doctor.getEspecialidad());
 
             pstmt.execute();
 
@@ -47,7 +47,7 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
     public ArrayList<DoctorDTO> leer(int dni) {
         ArrayList<DoctorDTO> doctores = new ArrayList<>();
 
-        String sql = "SELECT IdDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad FROM Doctores";
+        String sql = "SELECT IdDoctor, DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad FROM Doctores";
         if (dni != 0) {
             sql += " WHERE IdDoctor = ?";
         }
@@ -62,6 +62,7 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
 
             while (rs.next()) {
                 int doctorId = rs.getInt("IdDoctor");
+                int dniDoctor = rs.getInt("DniDoctor");
                 String nombre = rs.getString("NDoctor");
                 String apellido = rs.getString("Apellido");
                 int telefono = rs.getInt("Telefono");
@@ -69,7 +70,7 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
                 boolean genero = rs.getString("Genero").equalsIgnoreCase("Masculino");
                 String especialidad = rs.getString("Especialidad");
 
-                DoctorDTO doctor = new DoctorDTO(doctorId, nombre, apellido, telefono, email, genero, especialidad);
+                DoctorDTO doctor = new DoctorDTO(doctorId,dniDoctor, nombre, apellido, telefono, email, genero, especialidad);
                 doctores.add(doctor);
             }
 
@@ -82,8 +83,8 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
 
     @Override
     public void actualizar(int id) {
-        String sqlSelect = "SELECT NDoctor, Apellido, Telefono, Email, Genero, Especialidad FROM Doctores WHERE IdDoctor = ?";
-        String sqlUpdate = "UPDATE Doctores SET NDoctor = ?, Apellido = ?, Telefono = ?, Email = ?, Genero = ?, Especialidad = ? WHERE IdDoctor = ?";
+        String sqlSelect = "SELECT DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad FROM Doctores WHERE IdDoctor = ?";
+        String sqlUpdate = "UPDATE Doctores SET DniDoctor = ?, NDoctor = ?, Apellido = ?, Telefono = ?, Email = ?, Genero = ?, Especialidad = ? WHERE IdDoctor = ?";
 
         try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmtSelect = conn.prepareStatement(sqlSelect); PreparedStatement pstmtUpdate = conn.prepareStatement(sqlUpdate)) {
 
@@ -91,6 +92,7 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
 
             try (ResultSet rs = pstmtSelect.executeQuery()) {
                 if (rs.next()) {
+                    int dniActual = rs.getInt("DniDoctor");
                     String nombreActual = rs.getString("NDoctor");
                     String apellidoActual = rs.getString("Apellido");
                     String telefonoActual = rs.getString("Telefono");
@@ -99,6 +101,7 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
                     String especialidadActual = rs.getString("Especialidad");
 
                     // Mostrar JOptionPane para editar los datos
+                    JTextField tfDni = new JTextField(String.valueOf(dniActual));
                     JTextField tfNombre = new JTextField(nombreActual);
                     JTextField tfApellido = new JTextField(apellidoActual);
                     JTextField tfTelefono = new JTextField(telefonoActual);
@@ -119,6 +122,7 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
                     JTextField tfEspecialidad = new JTextField(especialidadActual);
 
                     Object[] message = {
+                        "Dni", tfDni,
                         "Nombre:", tfNombre,
                         "Apellido:", tfApellido,
                         "Teléfono:", tfTelefono,
@@ -130,13 +134,14 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
                     int option = JOptionPane.showConfirmDialog(null, message, "Editar Doctor", JOptionPane.OK_CANCEL_OPTION);
 
                     if (option == JOptionPane.OK_OPTION) {
-                        pstmtUpdate.setString(1, tfNombre.getText());
-                        pstmtUpdate.setString(2, tfApellido.getText());
-                        pstmtUpdate.setString(3, tfTelefono.getText());
-                        pstmtUpdate.setString(4, tfEmail.getText());
-                        pstmtUpdate.setString(5, rbMasculino.isSelected() ? "Masculino" : "Femenino");
-                        pstmtUpdate.setString(6, tfEspecialidad.getText());
-                        pstmtUpdate.setInt(7, id);
+                        pstmtUpdate.setInt(1, Integer.parseInt(tfDni.getText()));
+                        pstmtUpdate.setString(2, tfNombre.getText());
+                        pstmtUpdate.setString(3, tfApellido.getText());
+                        pstmtUpdate.setString(4, tfTelefono.getText());
+                        pstmtUpdate.setString(5, tfEmail.getText());
+                        pstmtUpdate.setString(6, rbMasculino.isSelected() ? "Masculino" : "Femenino");
+                        pstmtUpdate.setString(7, tfEspecialidad.getText());
+                        pstmtUpdate.setInt(8, id);
 
                         int rowsAffected = pstmtUpdate.executeUpdate();
 
@@ -202,7 +207,7 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
     }
 
     public void mostrarDetalleCita(int idDoctor, JTextArea textArea) {
-        String sql = "SELECT NDoctor, Apellido, Telefono, Email, Genero, Especialidad FROM Doctores WHERE IdDoctor = ?";
+        String sql = "SELECT DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad FROM Doctores WHERE IdDoctor = ?";
 
         try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -210,7 +215,8 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                String detalleDoctor = String.format("Nombre: %s\nApellido: %s\nTeléfono: %s\nEmail: %s\nGénero: %s\nEspecialidad: %s\n",
+                String detalleDoctor = String.format("Dni: %s\nNombre: %s\nApellido: %s\nTeléfono: %s\nEmail: %s\nGénero: %s\nEspecialidad: %s\n",
+                        rs.getInt("DniDoctor"),
                         rs.getString("NDoctor"),
                         rs.getString("Apellido"),
                         rs.getString("Telefono"),
@@ -228,34 +234,40 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
         }
     }
 
-    public DoctorDTO buscarDoctorPorDni(int dni, JTable tabla) throws SQLException {
+    public DoctorDTO buscarDoctorPorNombre(String nombre, JTable tabla) throws SQLException {
         DoctorDTO doctor = null;
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         modelo.setRowCount(0);
 
-        String sql = "SELECT * FROM Doctores WHERE DniDoctor = ?";
+        String sql = "CALL BuscarDoctorPorNombre(?)";
         try (Connection conn = conexion.establecerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, dni);
+            stmt.setString(1, nombre);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                doctor = new DoctorDTO(dni, sql, sql, dni, sql, true, sql);
+                doctor = new DoctorDTO(0,0, null, null, 0, null, true, null);
                 doctor.setId(rs.getInt("IdDoctor"));
                 doctor.setNombre(rs.getString("NDoctor"));
                 doctor.setApellido(rs.getString("Apellido"));
                 doctor.setTelefono(rs.getInt("Telefono"));
                 doctor.setEmail(rs.getString("Email"));
-                doctor.setGenero(rs.getBoolean("Genero"));
+                // Manejo del campo Genero según su tipo en la base de datos
+                String generoString = rs.getString("Genero");
+                boolean genero = false;
+                if (generoString != null) {
+                    genero = generoString.equals("Masculino"); // True si es "Masculino"
+                }
+                doctor.setGenero(genero);
                 doctor.setEspecialidad(rs.getString("Especialidad"));
 
-                modelo.addRow(new Object[]{doctor.getId(), doctor.getNombre() + " " + doctor.getApellido(), doctor.getTelefono()});
+                modelo.addRow(new Object[]{doctor.getId(), doctor.getNombre() + " " + doctor.getApellido(), doctor.getEspecialidad()});
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró ningún doctor con DNI " + dni);
+                JOptionPane.showMessageDialog(null, "No se encontró ningún doctor ese nombre " + nombre);
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al buscar doctor por DNI: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al buscar doctor por su nombre: " + e.getMessage());
         }
 
         return doctor;
