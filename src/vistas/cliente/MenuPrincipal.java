@@ -4,10 +4,12 @@ import modeloDAO.CitasMedicasDAO;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import  vistas.logueo.Inicio;
-import vistas.producto.Citas;
-import vistas.producto.RegistrarCitas;
-import vistas.tipoProducto.RegistrarDoctor;
+import vistas.Doctor.Doctor;
+import vistas.logueo.Inicio;
+import vistas.servicio.Citas;
+import vistas.servicio.RegistrarCitas;
+import vistas.Doctor.RegistrarDoctor;
+import vistas.Horario.Horario;
 
 public class MenuPrincipal extends javax.swing.JFrame {
 
@@ -33,7 +35,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel11 = new javax.swing.JLabel();
+        lbHorariov = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         menu3 = new Label.Menu();
@@ -53,6 +55,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu Principal");
         setResizable(false);
 
         jpMenu.setBackground(new java.awt.Color(70, 170, 200));
@@ -135,13 +138,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
         jLabel2.setText("Usuario");
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
-        jLabel11.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        jLabel11.setText("   HORARIO");
-        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbHorariov.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        lbHorariov.setText("   HORARIO");
+        lbHorariov.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        lbHorariov.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbHorariov.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbHorariovMouseClicked(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         jLabel12.setText("  PACIENTES");
@@ -157,12 +166,17 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel13.setText("   DOCTORES");
         jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
 
         menu1.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
         menu1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         menu1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         menu1.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        menu1.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu1.setLayer(lbHorariov, javax.swing.JLayeredPane.DEFAULT_LAYER);
         menu1.setLayer(jLabel12, javax.swing.JLayeredPane.DEFAULT_LAYER);
         menu1.setLayer(jLabel13, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -191,7 +205,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                             .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(menu1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(lbHorariov, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -208,7 +222,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbHorariov, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
@@ -387,9 +401,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tfCantidadDoctoresMouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-       Inicio inicio = new Inicio();
-       inicio.setVisible(true);
-       this.dispose();
+        Inicio inicio = new Inicio();
+        inicio.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
@@ -425,8 +439,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 int idCita = (int) tbCitas.getValueAt(filaSeleccionada, 0); // Suponiendo que la columna 0 contiene el Id
                 citasMedicas.mostrarDetalleCita(idCita, txaCitas);// Método para mostrar los detalles de la cita
             }
-        }   
+        }
     }//GEN-LAST:event_tbCitasMouseClicked
+
+    private void lbHorariovMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbHorariovMouseClicked
+        Horario horario = new Horario();
+        horario.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lbHorariovMouseClicked
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        Doctor doctorr = new Doctor();
+        doctorr.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel13MouseClicked
+
     private void mostrarFechaYHoraActual() {
         // Obtener la fecha y hora actual
         Date fechaHora = new Date();
@@ -478,7 +505,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -489,6 +515,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel jpMenu;
+    private javax.swing.JLabel lbHorariov;
     private javax.swing.JLabel lblRegistrarPacientes;
     private Label.Menu menu1;
     private Label.Menu menu2;

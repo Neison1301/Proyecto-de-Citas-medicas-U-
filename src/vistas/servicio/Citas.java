@@ -1,4 +1,4 @@
-package vistas.producto;
+package vistas.servicio;
 
 import modeloDAO.CitasMedicasDAO;
 import java.text.SimpleDateFormat;
@@ -7,6 +7,8 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modeloDTO.CitasMedicasDTO;
+import vistas.Doctor.Doctor;
+import vistas.Horario.Horario;
 import vistas.cliente.MenuPrincipal;
 import vistas.cliente.Pacientes;
 import vistas.logueo.Inicio;
@@ -31,11 +33,11 @@ public class Citas extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        lbldoctor = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        lblHOrario = new javax.swing.JLabel();
         menu2 = new Label.Menu();
         txtfecha = new javax.swing.JTextField();
         txthra = new javax.swing.JTextField();
@@ -53,6 +55,7 @@ public class Citas extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Citas");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -80,11 +83,6 @@ public class Citas extends javax.swing.JFrame {
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
-        jLabel11.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        jLabel11.setText("   HORARIO");
-        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
         jLabel12.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         jLabel12.setText("  PACIENTES");
         jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -95,10 +93,15 @@ public class Citas extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        jLabel13.setText("   DOCTORES");
-        jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbldoctor.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        lbldoctor.setText("   DOCTORES");
+        lbldoctor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        lbldoctor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbldoctor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbldoctorMouseClicked(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(173, 216, 230));
 
@@ -121,18 +124,29 @@ public class Citas extends javax.swing.JFrame {
                 .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
         );
 
+        lblHOrario.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        lblHOrario.setText("   HORARIO");
+        lblHOrario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        lblHOrario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblHOrario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblHOrarioMouseClicked(evt);
+            }
+        });
+
         menu1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         menu1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         menu1.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        menu1.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
         menu1.setLayer(jLabel12, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        menu1.setLayer(jLabel13, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu1.setLayer(lbldoctor, javax.swing.JLayeredPane.DEFAULT_LAYER);
         menu1.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu1.setLayer(lblHOrario, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout menu1Layout = new javax.swing.GroupLayout(menu1);
         menu1.setLayout(menu1Layout);
         menu1Layout.setHorizontalGroup(
             menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(menu1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,15 +163,12 @@ public class Citas extends javax.swing.JFrame {
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(17, 17, 17))))
+                    .addComponent(lbldoctor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(menu1Layout.createSequentialGroup()
                         .addGroup(menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(menu1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblHOrario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         menu1Layout.setVerticalGroup(
             menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,10 +182,10 @@ public class Citas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbldoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblHOrario, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -487,6 +498,18 @@ public class Citas extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tbCitasMouseClicked
+
+    private void lbldoctorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbldoctorMouseClicked
+        Doctor doctorr = new Doctor();
+        doctorr.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lbldoctorMouseClicked
+
+    private void lblHOrarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHOrarioMouseClicked
+        Horario horarioo = new Horario();
+        horarioo.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblHOrarioMouseClicked
     private void mostrarFechaYHoraActual() {
         Date fechaHora = new Date();
         SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -534,9 +557,7 @@ public class Citas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -548,6 +569,8 @@ public class Citas extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel jbEditarCita;
     private javax.swing.JLabel jlEliminarCita;
+    private javax.swing.JLabel lblHOrario;
+    private javax.swing.JLabel lbldoctor;
     private Label.Menu menu1;
     private Label.Menu menu2;
     private Label.Menu menu3;

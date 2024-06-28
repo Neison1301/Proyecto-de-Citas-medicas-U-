@@ -1,4 +1,4 @@
-package vistas.producto;
+package vistas.servicio;
 
 import modeloDAO.CitasMedicasDAO;
 import java.text.SimpleDateFormat;

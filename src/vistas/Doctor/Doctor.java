@@ -1,29 +1,34 @@
-package vistas.cliente;
+package vistas.Doctor;
 
+import vistas.cliente.*;
 import config.Conexion;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import modeloDAO.PacientesDAO;
-import vistas.Doctor.Doctor;
+import javax.swing.table.DefaultTableModel;
+import modeloDAO.DoctorDAO;
+import modeloDTO.DoctorDTO;
 import vistas.Horario.Horario;
 import vistas.logueo.Inicio;
 import vistas.servicio.Citas;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Pacientes extends javax.swing.JFrame {
+public class Doctor extends javax.swing.JFrame {
 
     Conexion conexion = new Conexion();
-    private PacientesDAO pacientesDAO;
-    PacientesDAO nPacientes = new PacientesDAO(conexion, 0, null, null, 0, null, true);
+    private DoctorDAO doctorDAO;
 
-    public Pacientes() {
+    DoctorDAO ndoctor = new DoctorDAO(conexion);
+
+    public Doctor() {
         initComponents();
-        this.pacientesDAO = new PacientesDAO(conexion, 0, null, null, 0, null, true);
-        nPacientes.mostrarCitas(tbPacientes, 0);
+        this.doctorDAO = new DoctorDAO(conexion);
+
+        ndoctor.mostrarCitas(tbDoctores, 0);
         mostrarFechaYHoraActual();
     }
 
@@ -37,7 +42,8 @@ public class Pacientes extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        lbldoctor = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         lbHorario = new javax.swing.JLabel();
@@ -46,13 +52,13 @@ public class Pacientes extends javax.swing.JFrame {
         txthora = new javax.swing.JTextField();
         menu3 = new Label.Menu();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbPacientes = new javax.swing.JTable();
+        tbDoctores = new javax.swing.JTable();
         menu4 = new Label.Menu();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         menu5 = new Label.Menu();
-        jLabel5 = new javax.swing.JLabel();
+        lbleditar = new javax.swing.JLabel();
         menu6 = new Label.Menu();
         jLabel6 = new javax.swing.JLabel();
         menu7 = new Label.Menu();
@@ -61,7 +67,7 @@ public class Pacientes extends javax.swing.JFrame {
         lbEliminar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Pacientes");
+        setTitle("Doctor");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -104,18 +110,19 @@ public class Pacientes extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         menu1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 111, 100, 10));
 
-        lbldoctor.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        lbldoctor.setText("   DOCTORES");
-        lbldoctor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        lbldoctor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbldoctor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbldoctorMouseClicked(evt);
-            }
-        });
-        menu1.add(lbldoctor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 124, 62));
+        jPanel3.setBackground(new java.awt.Color(173, 216, 230));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(173, 216, 230));
+        jLabel13.setBackground(new java.awt.Color(173, 216, 230));
+        jLabel13.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel13.setText("   DOCTORES");
+        jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 62));
+
+        menu1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 130, 60));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel12.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         jLabel12.setText("  PACIENTES");
@@ -147,7 +154,7 @@ public class Pacientes extends javax.swing.JFrame {
                 lbHorarioMouseClicked(evt);
             }
         });
-        menu1.add(lbHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 130, 60));
+        menu1.add(lbHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 130, 60));
 
         menu2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -194,7 +201,7 @@ public class Pacientes extends javax.swing.JFrame {
 
         menu3.setBackground(new java.awt.Color(255, 255, 255));
 
-        tbPacientes.setModel(new javax.swing.table.DefaultTableModel(
+        tbDoctores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -207,7 +214,7 @@ public class Pacientes extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "id ", "Paciente", "Telefono"
+                "id ", "Doctor", "Especialidad"
             }
         ) {
             Class[] types = new Class [] {
@@ -225,20 +232,20 @@ public class Pacientes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tbPacientes.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbDoctores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbPacientesMouseClicked(evt);
+                tbDoctoresMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tbPacientes);
-        if (tbPacientes.getColumnModel().getColumnCount() > 0) {
-            tbPacientes.getColumnModel().getColumn(0).setMinWidth(25);
-            tbPacientes.getColumnModel().getColumn(0).setPreferredWidth(25);
-            tbPacientes.getColumnModel().getColumn(0).setMaxWidth(25);
-            tbPacientes.getColumnModel().getColumn(1).setResizable(false);
-            tbPacientes.getColumnModel().getColumn(2).setMinWidth(75);
-            tbPacientes.getColumnModel().getColumn(2).setPreferredWidth(75);
-            tbPacientes.getColumnModel().getColumn(2).setMaxWidth(75);
+        jScrollPane1.setViewportView(tbDoctores);
+        if (tbDoctores.getColumnModel().getColumnCount() > 0) {
+            tbDoctores.getColumnModel().getColumn(0).setMinWidth(25);
+            tbDoctores.getColumnModel().getColumn(0).setPreferredWidth(25);
+            tbDoctores.getColumnModel().getColumn(0).setMaxWidth(25);
+            tbDoctores.getColumnModel().getColumn(1).setResizable(false);
+            tbDoctores.getColumnModel().getColumn(2).setMinWidth(100);
+            tbDoctores.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tbDoctores.getColumnModel().getColumn(2).setMaxWidth(100);
         }
 
         menu3.add(jScrollPane1);
@@ -247,7 +254,7 @@ public class Pacientes extends javax.swing.JFrame {
         menu4.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel3.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
-        jLabel3.setText("Datos del Paciente:");
+        jLabel3.setText("Datos del Doctor:");
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
@@ -279,10 +286,15 @@ public class Pacientes extends javax.swing.JFrame {
 
         menu5.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel5.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
-        jLabel5.setText("Historial Medico");
+        lbleditar.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
+        lbleditar.setText("Editar");
+        lbleditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbleditarMouseClicked(evt);
+            }
+        });
 
-        menu5.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        menu5.setLayer(lbleditar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout menu5Layout = new javax.swing.GroupLayout(menu5);
         menu5.setLayout(menu5Layout);
@@ -290,12 +302,12 @@ public class Pacientes extends javax.swing.JFrame {
             menu5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menu5Layout.createSequentialGroup()
                 .addContainerGap(65, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbleditar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
         menu5Layout.setVerticalGroup(
             menu5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+            .addComponent(lbleditar, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
         );
 
         menu6.setBackground(new java.awt.Color(255, 255, 255));
@@ -446,25 +458,25 @@ public class Pacientes extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void tbPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPacientesMouseClicked
+    private void tbDoctoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDoctoresMouseClicked
         if (evt.getClickCount() == 2) { //doble clic
-            int filaSeleccionada = tbPacientes.getSelectedRow();
+            int filaSeleccionada = tbDoctores.getSelectedRow();
             if (filaSeleccionada != -1) {
-                int idPaciente = Integer.parseInt(tbPacientes.getValueAt(filaSeleccionada, 0).toString());
-                nPacientes.mostrarDetalleCita(idPaciente, jTextArea2);
+                int idPaciente = Integer.parseInt(tbDoctores.getValueAt(filaSeleccionada, 0).toString());
+                ndoctor.mostrarDetalleCita(idPaciente, jTextArea2);
             }
 
-        }    }//GEN-LAST:event_tbPacientesMouseClicked
+        }    }//GEN-LAST:event_tbDoctoresMouseClicked
 
     private void lbEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbEliminarMouseClicked
-        int fila = tbPacientes.getSelectedRow();
+        int fila = tbDoctores.getSelectedRow();
 
         if (fila >= 0) {
-            int idCita = (int) tbPacientes.getValueAt(fila, 0);
+            int idCita = (int) tbDoctores.getValueAt(fila, 0);
             int confirmar = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que quieres eliminar este paciente?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
             if (confirmar == JOptionPane.YES_OPTION) {
-                nPacientes.eliminar(idCita);
-                nPacientes.mostrarCitas(tbPacientes, 0); // Actualizar la tabla de citas
+                ndoctor.eliminar(idCita);
+                ndoctor.mostrarCitas(tbDoctores, 0); // Actualizar la tabla de citas
             }
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, selecciona un paciente para eliminar.");
@@ -481,6 +493,7 @@ public class Pacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtfiltrarActionPerformed
 
     private void txtfiltrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfiltrarKeyPressed
+
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             // Obtener el texto del campo de texto txtfiltrar
             String dniTexto = txtfiltrar.getText().trim();
@@ -489,19 +502,17 @@ public class Pacientes extends javax.swing.JFrame {
             if (!dniTexto.isEmpty()) {
                 try {
                     int dni = Integer.parseInt(dniTexto);
-                    pacientesDAO.buscarPorDni(dni, tbPacientes);
+                    doctorDAO.buscarDoctorPorDni(dni, tbDoctores);
 
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "Ingrese un número válido para el DNI.");
                 } catch (SQLException ex) {
-                    Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese el DNI para buscar.");
             }
         }
-
-
     }//GEN-LAST:event_txtfiltrarKeyPressed
 
     private void lbHorarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbHorarioMouseClicked
@@ -510,11 +521,39 @@ public class Pacientes extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_lbHorarioMouseClicked
 
-    private void lbldoctorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbldoctorMouseClicked
-        Doctor doctorr = new Doctor();
-        doctorr.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_lbldoctorMouseClicked
+    private void lbleditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbleditarMouseClicked
+
+        int filaSeleccionada = tbDoctores.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una cita para editar.");
+            return;
+        }
+
+        int id = (int) tbDoctores.getValueAt(filaSeleccionada, 0);
+
+        DoctorDAO doctordao = new DoctorDAO(conexion);
+
+        doctordao.actualizar(id);
+
+        ArrayList<DoctorDTO> doctoresActualizadas = doctordao.leer(id);
+
+        // Actualizar la tabla con los datos actualizados
+        DefaultTableModel modelo = (DefaultTableModel) tbDoctores.getModel();
+        modelo.setRowCount(0); // Limpiar la tabla antes de llenarla de nuevo
+
+        for (DoctorDTO docto : doctoresActualizadas) {
+            Object[] fila = {
+                docto.getId(),
+                docto.getNombre(),
+                docto.getApellido(),
+                docto.getTelefono(),
+                docto.getEmail(),
+                docto.getEspecialidad()
+            };
+            modelo.addRow(fila);
+        }
+
+    }//GEN-LAST:event_lbleditarMouseClicked
     private void mostrarFechaYHoraActual() {
         // Obtener la fecha y hora actual
         Date fechaHora = new Date();
@@ -546,20 +585,21 @@ public class Pacientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Pacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Doctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Pacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Doctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Pacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Doctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Pacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Doctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pacientes().setVisible(true);
+                new Doctor().setVisible(true);
             }
         });
     }
@@ -567,20 +607,21 @@ public class Pacientes extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JLabel lbEliminar;
     private javax.swing.JLabel lbHorario;
-    private javax.swing.JLabel lbldoctor;
+    private javax.swing.JLabel lbleditar;
     private Label.Menu menu1;
     private Label.Menu menu2;
     private Label.Menu menu3;
@@ -589,7 +630,7 @@ public class Pacientes extends javax.swing.JFrame {
     private Label.Menu menu6;
     private Label.Menu menu7;
     private Label.Menu menu8;
-    private javax.swing.JTable tbPacientes;
+    private javax.swing.JTable tbDoctores;
     private javax.swing.JTextField txtfecha;
     private javax.swing.JTextField txtfiltrar;
     private javax.swing.JTextField txthora;

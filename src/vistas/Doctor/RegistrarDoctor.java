@@ -1,14 +1,15 @@
-package vistas.tipoProducto;
+package vistas.Doctor;
 
-import Clases.Ndoctor;
+import config.Conexion;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
-import  vistas.cliente.MenuPrincipal;
-import vistas.cliente.Pacientes;
+import modeloDAO.DoctorDAO;
+import modeloDTO.DoctorDTO;
+import vistas.cliente.MenuPrincipal;
+
 public class RegistrarDoctor extends javax.swing.JFrame {
 
     MenuPrincipal menu = new MenuPrincipal();
-    Ndoctor ndoctor = new Ndoctor(0, null, null, 0, null, false, null, 0);
 
     public RegistrarDoctor(MenuPrincipal menu) {
         initComponents();
@@ -295,8 +296,8 @@ public class RegistrarDoctor extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegresarInicio2jButton1ActionPerformed
 
     private void jbregistrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbregistrar1ActionPerformed
-        int dni;
-        String nombre, apellido, telefono, correo, especialidad;
+        int dni, telefono;
+        String nombre, apellido, correo, especialidad;
         boolean genero;
 
         if (tfDni1.getText().isEmpty() || tfNombre1.getText().isEmpty() || tfapellidos1.getText().isEmpty()
@@ -309,26 +310,28 @@ public class RegistrarDoctor extends javax.swing.JFrame {
             dni = Integer.parseInt(tfDni1.getText());
             nombre = tfNombre1.getText();
             apellido = tfapellidos1.getText();
-            telefono = tfTelefono1.getText();
+            telefono = Integer.parseInt(tfTelefono1.getText());
             correo = tfCorreo1.getText();
             genero = cbGenero1.getSelectedItem().toString().equals("Masculino");
             especialidad = tfEspecialidad1.getText();
 
-            ndoctor.agregarDoctor(dni, nombre, apellido, telefono, correo, genero, especialidad, 1);
-            // Escribir los datos del doctor en el archivo de registro
-            ndoctor.crear(ndoctor);
+            // Crear una instancia de Ndoctor
+            DoctorDTO nuevoDoctor = new DoctorDTO(dni, nombre, apellido, telefono, correo, genero, especialidad);
+            Conexion conexion = new Conexion();
+            DoctorDAO doctordao = new DoctorDAO(conexion);
+            doctordao.crear(nuevoDoctor);
 
-            JOptionPane.showMessageDialog(null, "Doctor registrado exitosamente.");
+            // Mostrar la ventana de pacientes u otra ventana según sea necesario
+            MenuPrincipal menu1 = new MenuPrincipal();
 
-            Pacientes paciente = new Pacientes();
-            paciente.setVisible(true);
+            menu1.setVisible(true);
 
             this.dispose();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para el DNI.");
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Error al registrar el doctor: " + e.getMessage());
-        
+
         }    }//GEN-LAST:event_jbregistrar1ActionPerformed
 
     private void cbGenero1jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenero1jComboBox1ActionPerformed
@@ -338,38 +341,38 @@ public class RegistrarDoctor extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (ClassNotFoundException ex) {
-        java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-        java.util.logging.Logger.getLogger(RegistrarDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                MenuPrincipal menu = new MenuPrincipal();
+                new RegistrarDoctor(menu).setVisible(true);
+
+            }
+        });
     }
-    //</editor-fold>
-
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            MenuPrincipal menu = new MenuPrincipal();
-            new RegistrarDoctor(menu).setVisible(true);
-
-        }
-    });
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnRegresarInicio2;
