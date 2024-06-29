@@ -30,22 +30,41 @@ public class CitasMedicasDAO implements CRUD<CitasMedicasDTO>, AtencionMedica {
     @Override
     public void crear(CitasMedicasDTO cita) {
         String sql = "INSERT INTO CitasMedicas (IdPaciente, IdDoctor, FechaConsulta, Motivo, Diagnostico, Tratamiento, Estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sqlHistorial = "INSERT INTO HistorialMedico (IdPaciente, FechaVisita, Diagnostico, Tratamiento, Observaciones) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = conexion.establecerConexion()) {
+            conn.setAutoCommit(false);
 
-            pstmt.setInt(1, cita.getIdPaciente());
-            pstmt.setInt(2, cita.getIdDoctor());
-            pstmt.setTimestamp(3, Timestamp.valueOf(cita.getFechaConsulta()));
-            pstmt.setString(4, cita.getMotivo());
-            pstmt.setString(5, cita.getDiagnostico());
-            pstmt.setString(6, cita.getTratamiento());
-            pstmt.setString(7, cita.getEstado().name());
+            try (PreparedStatement pstmtCita = conn.prepareStatement(sql); PreparedStatement pstmtHistorial = conn.prepareStatement(sqlHistorial)) {
 
-            pstmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Cita médica creada correctamente.");
+                // cita médica
+                pstmtCita.setInt(1, cita.getIdPaciente());
+                pstmtCita.setInt(2, cita.getIdDoctor());
+                pstmtCita.setTimestamp(3, Timestamp.valueOf(cita.getFechaConsulta()));
+                pstmtCita.setString(4, cita.getMotivo());
+                pstmtCita.setString(5, cita.getDiagnostico());
+                pstmtCita.setString(6, cita.getTratamiento());
+                pstmtCita.setString(7, cita.getEstado().name());
+                pstmtCita.executeUpdate();
 
+                // historial médico
+                pstmtHistorial.setInt(1, cita.getIdPaciente());
+                pstmtHistorial.setTimestamp(2, Timestamp.valueOf(cita.getFechaConsulta()));
+                pstmtHistorial.setString(3, cita.getDiagnostico());
+                pstmtHistorial.setString(4, cita.getTratamiento());
+                pstmtHistorial.setString(5, ""); // Aquí puedes poner observaciones adicionales si las tienes
+                pstmtHistorial.executeUpdate();
+
+                conn.commit();
+                JOptionPane.showMessageDialog(null, "Cita médica creada correctamente.");
+            } catch (SQLException e) {
+                conn.rollback();
+                System.out.println("Error al insertar cita médica: " + e.getMessage());
+            } finally {
+                conn.setAutoCommit(true);
+            }
         } catch (SQLException e) {
-            System.out.println("Error al insertar cita médica: " + e.getMessage());
+            System.out.println("Error al conectar con la base de datos: " + e.getMessage());
         }
     }
 
@@ -303,31 +322,29 @@ public class CitasMedicasDAO implements CRUD<CitasMedicasDTO>, AtencionMedica {
         return idDoctor;
     }
 
-public void crearCitaMedicaf(String nombrePaciente, String nombreDoctor, LocalDateTime fechaConsulta, String motivo, String diagnostico, String tratamiento, CitasMedicasDTO.Estado estado) {
-    String callProcedure = "{CALL CrearCitaMedica(?, ?, ?, ?, ?, ?, ?)}";
+    public void crearCitaMedicaf(String nombrePaciente, String nombreDoctor, LocalDateTime fechaConsulta, String motivo, String diagnostico, String tratamiento, CitasMedicasDTO.Estado estado) {
+        String callProcedure = "{CALL CrearCitaMedica(?, ?, ?, ?, ?, ?, ?)}";
 
-    try (Connection conn = conexion.establecerConexion(); CallableStatement stmt = conn.prepareCall(callProcedure)) {
+        try (Connection conn = conexion.establecerConexion(); CallableStatement stmt = conn.prepareCall(callProcedure)) {
 
-        stmt.setString(1, nombrePaciente);
-        stmt.setString(2, nombreDoctor);
-        stmt.setTimestamp(3, Timestamp.valueOf(fechaConsulta));
-        stmt.setString(4, motivo);
-        stmt.setString(5, diagnostico);
-        stmt.setString(6, tratamiento);
-        stmt.setString(7, estado.name());
+            stmt.setString(1, nombrePaciente);
+            stmt.setString(2, nombreDoctor);
+            stmt.setTimestamp(3, Timestamp.valueOf(fechaConsulta));
+            stmt.setString(4, motivo);
+            stmt.setString(5, diagnostico);
+            stmt.setString(6, tratamiento);
+            stmt.setString(7, estado.name());
 
-        boolean result = stmt.execute();
-        if (!result) {
-            JOptionPane.showMessageDialog(null, "Cita médica creada correctamente.");
-        } else {
-            // Manejar cualquier error o resultado inesperado
-            JOptionPane.showMessageDialog(null, "Error al crear cita médica.");
+            boolean result = stmt.execute();
+            if (!result) {
+                JOptionPane.showMessageDialog(null, "Cita médica creada correctamente.");
+            } else {
+                
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Error al llamar al procedimiento almacenado: " + ex.getMessage());
         }
-
-    } catch (SQLException ex) {
-        System.out.println("Error al llamar al procedimiento almacenado: " + ex.getMessage());
     }
-}
-
 
 }

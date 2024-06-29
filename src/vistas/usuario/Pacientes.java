@@ -373,13 +373,16 @@ public class Pacientes extends javax.swing.JFrame {
         menu8Layout.setHorizontalGroup(
             menu8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menu8Layout.createSequentialGroup()
-                .addContainerGap(65, Short.MAX_VALUE)
+                .addContainerGap(60, Short.MAX_VALUE)
                 .addComponent(lbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(21, 21, 21))
         );
         menu8Layout.setVerticalGroup(
             menu8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+            .addGroup(menu8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         menu9.setBackground(new java.awt.Color(255, 255, 255));

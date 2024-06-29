@@ -12,9 +12,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import modeloDTO.PacientesDTO;
+import java.sql.CallableStatement;
 
 public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
 
@@ -149,21 +149,18 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
 
     @Override
     public void eliminar(int id) {
-        String sql = "DELETE FROM Pacientes WHERE IdPaciente = ?";
+        String sql = "{CALL EliminarPacienteYConsultas(?)}";
 
-        try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = conexion.establecerConexion(); CallableStatement stmt = conn.prepareCall(sql)) {
 
-            pstmt.setInt(1, id);
-            int rowsAffected = pstmt.executeUpdate();
+            stmt.setInt(1, id);
+            stmt.execute();
 
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Paciente eliminado con éxito.");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el paciente seleccionado.");
-            }
+            JOptionPane.showMessageDialog(null, "Paciente y sus citas médicas eliminadas correctamente.");
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar al paciente: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al eliminar paciente y sus citas médicas: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -360,5 +357,4 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
         }
         return idPaciente;
     }*/
-
 }

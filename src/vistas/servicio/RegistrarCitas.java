@@ -1,15 +1,15 @@
-
 package vistas.servicio;
 
 import config.Conexion;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import modeloDAO.CitasMedicasDAO;
 import modeloDAO.DoctorDAO;
 import modeloDAO.PacientesDAO;
 import modeloDTO.CitasMedicasDTO;
 import vistas.usuario.MenuPrincipal;
-
 
 public class RegistrarCitas extends javax.swing.JFrame {
 
@@ -282,15 +282,15 @@ public class RegistrarCitas extends javax.swing.JFrame {
         String diagnostico = tadiagnostico.getText();
         String tratamiento = txatratamiento.getText();
         String estado = cbestado.getSelectedItem().toString();
-        LocalDateTime fechaCita = LocalDateTime.now(); // Ajusta cómo obtienes la fecha según tu necesidad
+        
+        Date fechaSeleccionada = tfFechaCita.getDate();
+        LocalDateTime fechaCita = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
-        // Crear DTO para la cita médica
-        CitasMedicasDTO cita = new CitasMedicasDTO(0, 0, 0, fechaCita, motivo, diagnostico, tratamiento, CitasMedicasDTO.Estado.Realizada);
-
+ 
         // Llamar al método para crear la cita médica en la base de datos
-        citasMedicasDAO.crearCitaMedicaf(pacienteSeleccionado, doctorSeleccionado, fechaCita, motivo, diagnostico, tratamiento, CitasMedicasDTO.Estado.Realizada);
+        citasMedicasDAO.crearCitaMedicaf(pacienteSeleccionado, doctorSeleccionado, fechaCita, motivo, diagnostico, tratamiento, CitasMedicasDTO.Estado.Programada);
         JOptionPane.showMessageDialog(null, "La cita médica se ha registrado correctamente.");
-    
+
     }//GEN-LAST:event_jbregistrar1ActionPerformed
 
     private void BtnRegresarInicio2jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarInicio2jButton1ActionPerformed
@@ -301,36 +301,36 @@ public class RegistrarCitas extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegresarInicio2jButton1ActionPerformed
 
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(RegistrarCitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(RegistrarCitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(RegistrarCitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(RegistrarCitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (ClassNotFoundException ex) {
-        java.util.logging.Logger.getLogger(RegistrarCitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        java.util.logging.Logger.getLogger(RegistrarCitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        java.util.logging.Logger.getLogger(RegistrarCitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-        java.util.logging.Logger.getLogger(RegistrarCitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
+        //</editor-fold>
 
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            new RegistrarCitas().setVisible(true);
-        }
-    });
-}
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new RegistrarCitas().setVisible(true);
+            }
+        });
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnRegresarInicio2;
     private javax.swing.JLabel LblEspecialidad1;
