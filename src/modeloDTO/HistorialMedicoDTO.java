@@ -10,14 +10,19 @@ public class HistorialMedicoDTO {
     private String diagnostico;
     private String tratamiento;
     private String observaciones;
+    private String estado;
 
-    public HistorialMedicoDTO(int idHistorial, int idPaciente, Date fechaVisita, String diagnostico, String tratamiento, String observaciones) {
+    public HistorialMedicoDTO(int idHistorial, int idPaciente, Date fechaVisita, String diagnostico, String tratamiento, String observaciones, String estado) {
         this.idHistorial = idHistorial;
         this.idPaciente = idPaciente;
         this.fechaVisita = fechaVisita;
         this.diagnostico = diagnostico;
         this.tratamiento = tratamiento;
         this.observaciones = observaciones;
+        this.estado = estado;
+    }
+
+    public HistorialMedicoDTO() {
     }
 
     public int getIdHistorial() {
@@ -67,6 +72,12 @@ public class HistorialMedicoDTO {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-    
-    
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }

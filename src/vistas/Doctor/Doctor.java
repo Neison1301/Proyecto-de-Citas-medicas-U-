@@ -16,6 +16,7 @@ import vistas.logueo.Inicio;
 import vistas.servicio.Citas;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import vistas.usuario.Pacientes;
 
 public class Doctor extends javax.swing.JFrame {
 
@@ -127,6 +128,11 @@ public class Doctor extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         jLabel12.setText("  PACIENTES");
         jLabel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -549,6 +555,12 @@ public class Doctor extends javax.swing.JFrame {
         doctordao.mostrarCitas(tbDoctores, 0);
 
     }//GEN-LAST:event_lbleditarMouseClicked
+
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        Pacientes p = new Pacientes();
+        p.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel12MouseClicked
     private void mostrarFechaYHoraActual() {
         // Obtener la fecha y hora actual
         Date fechaHora = new Date();

@@ -253,8 +253,10 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
         }
     }
 
-    public PacientesDTO buscarPorDni(int dni, JTextArea textArea) {
+    public PacientesDTO buscarPorDni(int dni, JTable tabla) {
         PacientesDTO paciente = null;
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        modelo.setRowCount(0); // Limpiar la tabla antes de agregar nuevos datos
 
         String sql = "SELECT IdPaciente, DniPaciente, NPaciente, Apellidos, FechaNacimiento, Telefono, Email, Genero, Direccion, Ciudad, Estado, CodigoPostal FROM Pacientes WHERE DniPaciente = ?";
         try (Connection conn = conexion.establecerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -266,7 +268,7 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
                     String nombrePaciente = rs.getString("NPaciente");
                     String apellidos = rs.getString("Apellidos");
                     LocalDate fechaNacimiento = rs.getDate("FechaNacimiento").toLocalDate();
-                    int telefono = rs.getInt("Telefono");
+                    int telefono = rs.getInt("Telefono"); // Cambiado a String
                     String email = rs.getString("Email");
                     boolean genero = rs.getString("Genero").equalsIgnoreCase("Masculino");
                     String direccion = rs.getString("Direccion");
@@ -275,10 +277,16 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
                     String codigoPostal = rs.getString("CodigoPostal");
 
                     paciente = new PacientesDTO(idPaciente, dniPaciente, nombrePaciente, apellidos, fechaNacimiento, telefono, email, genero, direccion, ciudad, estado, codigoPostal);
-                    JOptionPane.showMessageDialog(null, "Paciente encontrado correctamente.");
-                    textArea.append("  El paciente " + nombrePaciente + " ha sido encontrado.\n\n");
-                    textArea.append("  Nació el " + fechaNacimiento + ".\n\n");
 
+                    modelo.addRow(new Object[]{
+                        paciente.getIdPaciente(),
+                        paciente.getnPaciente() + " " + paciente.getApellidos(),
+                        paciente.getTelefono(),
+                    });
+
+                    JOptionPane.showMessageDialog(null, "Paciente encontrado correctamente.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontró ningún paciente con ese DNI " + dni);
                 }
             }
         } catch (SQLException e) {

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -286,6 +287,11 @@ public class Pacientes extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
         jLabel5.setText("Historial Medico");
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
 
         menu5.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -530,17 +536,13 @@ public class Pacientes extends javax.swing.JFrame {
             String dniTexto = txtfiltrar.getText().trim();
 
             // Validar que el texto ingresado sea un número entero válido
-            if (!dniTexto.isEmpty()) {
-                try {
-                    int dni = Integer.parseInt(dniTexto);
-                    pacientesDAO.buscarPorDni(dni, jTextArea2);
+            try {
+                int dni = Integer.parseInt(dniTexto);
+                pacientesDAO.buscarPorDni(dni, tbPacientes);                
 
-                } catch (NumberFormatException e) {
-                    Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, e);
-                    JOptionPane.showMessageDialog(null, "Ingrese un número válido para el DNI." + e.getMessage());
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Ingrese el DNI para buscar.");
+            } catch (NumberFormatException e) {
+                Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, e);
+                JOptionPane.showMessageDialog(null, "Ingrese un número válido para el DNI." + e.getMessage());
             }
         }
 
@@ -562,7 +564,7 @@ public class Pacientes extends javax.swing.JFrame {
     private void lbleditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbleditarMouseClicked
         int filaSeleccionada = tbPacientes.getSelectedRow();
         if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione una cita para editar.");
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una paciente para editar.");
             return;
         }
 
@@ -588,6 +590,34 @@ public class Pacientes extends javax.swing.JFrame {
         }
         pacienteDAO.mostrarCitas(tbPacientes, 0);
     }//GEN-LAST:event_lbleditarMouseClicked
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        /* int filaSeleccionada = tbPacientes.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un paciente.");
+        }
+
+        int id = (int) tbPacientes.getValueAt(filaSeleccionada, 0);
+        historialMedicoDAO = new HistorialMedicoDAO();
+        ArrayList<HistorialMedicoDTO> historialList = historialMedicoDAO.obtenerHistorialPorPaciente(idPaciente);
+
+        String[] columnNames = {"Fecha Visita", "Diagnóstico", "Tratamiento", "Observaciones", "Estado"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        for (HistorialMedicoDTO historial : historialList) {
+            Object[] row = {historial.getFechaVisita(), historial.getDiagnostico(), historial.getTratamiento(), historial.getObservaciones(), historial.getEstadoPaciente()};
+            model.addRow(row);
+        }
+
+        tableHistorial = new JTable(model);
+        add(new JScrollPane(tableHistorial), BorderLayout.CENTER);
+
+        setTitle("Historial Médico del Paciente");
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);*/
+
+
+    }//GEN-LAST:event_jLabel5MouseClicked
     private void mostrarFechaYHoraActual() {
         // Obtener la fecha y hora actual
         Date fechaHora = new Date();
