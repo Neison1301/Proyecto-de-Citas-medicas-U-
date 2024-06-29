@@ -1,6 +1,6 @@
 package vistas.Doctor;
 
-import vistas.cliente.*;
+import vistas.usuario.MenuPrincipal;
 import config.Conexion;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;

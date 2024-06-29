@@ -8,7 +8,7 @@ import modeloDAO.CitasMedicasDAO;
 import modeloDAO.DoctorDAO;
 import modeloDAO.PacientesDAO;
 import modeloDTO.CitasMedicasDTO;
-import vistas.cliente.MenuPrincipal;
+import vistas.usuario.MenuPrincipal;
 
 
 public class RegistrarCitas extends javax.swing.JFrame {

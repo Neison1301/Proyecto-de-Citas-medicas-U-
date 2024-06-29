@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import modeloDTO.UsuarioDTO;
 import modeloDAO.UsuarioDAO;
-import vistas.cliente.MenuPrincipal;
+import vistas.usuario.MenuPrincipal;
 
 public class Inicio extends javax.swing.JFrame {
 

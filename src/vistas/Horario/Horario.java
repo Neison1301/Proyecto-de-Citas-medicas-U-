@@ -1,8 +1,8 @@
 package vistas.Horario;
 
 import vistas.Doctor.Doctor;
-import vistas.cliente.MenuPrincipal;
-import vistas.cliente.Pacientes;
+import vistas.usuario.MenuPrincipal;
+import vistas.usuario.Pacientes;
 import vistas.logueo.Inicio;
 import vistas.servicio.Citas;
 

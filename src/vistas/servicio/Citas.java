@@ -13,8 +13,8 @@ import modeloDAO.PacientesDAO;
 import modeloDTO.CitasMedicasDTO;
 import vistas.Doctor.Doctor;
 import vistas.Horario.Horario;
-import vistas.cliente.MenuPrincipal;
-import vistas.cliente.Pacientes;
+import vistas.usuario.MenuPrincipal;
+import vistas.usuario.Pacientes;
 import vistas.logueo.Inicio;
 
 

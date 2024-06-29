@@ -1,4 +1,4 @@
-package vistas.cliente;
+package vistas.usuario;
 
 import config.Conexion;
 import java.awt.HeadlessException;

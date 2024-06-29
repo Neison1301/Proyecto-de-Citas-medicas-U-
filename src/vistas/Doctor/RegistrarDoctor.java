@@ -8,7 +8,7 @@ import java.util.Calendar;
 import javax.swing.JOptionPane;
 import modeloDTO.DoctorDTO;
 import modeloDAO.DoctorDAO;
-import vistas.cliente.MenuPrincipal;
+import vistas.usuario.MenuPrincipal;
 
 public class RegistrarDoctor extends javax.swing.JFrame {
 

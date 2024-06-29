@@ -1,4 +1,4 @@
-package vistas.cliente;
+package vistas.usuario;
 
 import modeloDAO.CitasMedicasDAO;
 import java.awt.event.KeyEvent;
