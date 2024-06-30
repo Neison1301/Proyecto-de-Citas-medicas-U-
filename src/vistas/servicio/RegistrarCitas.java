@@ -10,6 +10,7 @@ import modeloDAO.DoctorDAO;
 import modeloDAO.PacientesDAO;
 import modeloDTO.CitasMedicasDTO;
 import vistas.usuario.MenuPrincipal;
+import vistas.servicio.Citas;
 
 public class RegistrarCitas extends javax.swing.JFrame {
 
@@ -282,15 +283,17 @@ public class RegistrarCitas extends javax.swing.JFrame {
         String diagnostico = tadiagnostico.getText();
         String tratamiento = txatratamiento.getText();
         String estado = cbestado.getSelectedItem().toString();
-        
+
         Date fechaSeleccionada = tfFechaCita.getDate();
         LocalDateTime fechaCita = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
- 
         // Llamar al método para crear la cita médica en la base de datos
         citasMedicasDAO.crearCitaMedicaf(pacienteSeleccionado, doctorSeleccionado, fechaCita, motivo, diagnostico, tratamiento, CitasMedicasDTO.Estado.Programada);
         JOptionPane.showMessageDialog(null, "La cita médica se ha registrado correctamente.");
 
+        Citas c = new Citas();
+        c.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jbregistrar1ActionPerformed
 
     private void BtnRegresarInicio2jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarInicio2jButton1ActionPerformed

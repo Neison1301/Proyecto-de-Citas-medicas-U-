@@ -1,18 +1,21 @@
 package modeloDAO;
 
 import config.Conexion;
+import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import miInterfaces.CRUD;
 import modeloDTO.HistorialMedicoDTO;
-
 
 public class HistorialMedicoDAO implements CRUD<HistorialMedicoDTO> {
 
@@ -34,28 +37,6 @@ public class HistorialMedicoDAO implements CRUD<HistorialMedicoDTO> {
             pstmt.executeUpdate();
         } catch (SQLException e) {
         }
-    }
-
-    public List<HistorialMedicoDTO> obtenerHistorialPorPaciente(int idPaciente) {
-        List<HistorialMedicoDTO> lista = new ArrayList<>();
-        String sql = "SELECT * FROM HistorialMedico WHERE IdPaciente = ?";
-        try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, idPaciente);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    HistorialMedicoDTO historial = new HistorialMedicoDTO();
-                    historial.setIdHistorial(rs.getInt("IdHistorial"));
-                    historial.setIdPaciente(rs.getInt("IdPaciente"));
-                    historial.setFechaVisita(rs.getDate("FechaVisita"));
-                    historial.setDiagnostico(rs.getString("Diagnostico"));
-                    historial.setTratamiento(rs.getString("Tratamiento"));
-                    historial.setObservaciones(rs.getString("Observaciones"));
-                    lista.add(historial);
-                }
-            }
-        } catch (SQLException e) {
-        }
-        return lista;
     }
 
     @Override
@@ -150,4 +131,35 @@ public class HistorialMedicoDAO implements CRUD<HistorialMedicoDTO> {
         }
     }
 
+    public void HistorialMedicoViewer(ArrayList<HistorialMedicoDTO> historialList) {
+        JFrame frame = new JFrame();
+        String[] columnNames = {"Fecha Visita", "Diagnóstico", "Tratamiento", "Observaciones", "Estado"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        for (HistorialMedicoDTO historial : historialList) {
+            Object[] row = {
+                historial.getFechaVisita(),
+                historial.getDiagnostico(),
+                historial.getTratamiento(),
+                historial.getObservaciones(),
+                historial.getEstado()
+            };
+            model.addRow(row);
+        }
+
+        JTable tableHistorial = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(tableHistorial);
+
+        // Establecer un diseño adecuado
+        frame.getContentPane().setLayout(new BorderLayout());
+
+        // Añadir el JScrollPane al contenedor
+        frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+        frame.setTitle("Historial Médico del Paciente");
+        frame.setSize(600, 400);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
 }

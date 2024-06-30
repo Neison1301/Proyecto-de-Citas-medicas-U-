@@ -1,6 +1,7 @@
 package vistas.usuario;
 
 import config.Conexion;
+import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -9,9 +10,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modeloDAO.HistorialMedicoDAO;
 import modeloDAO.PacientesDAO;
+import modeloDTO.HistorialMedicoDTO;
 import modeloDTO.PacientesDTO;
 import vistas.Doctor.Doctor;
 import vistas.Horario.Horario;
@@ -538,7 +544,7 @@ public class Pacientes extends javax.swing.JFrame {
             // Validar que el texto ingresado sea un número entero válido
             try {
                 int dni = Integer.parseInt(dniTexto);
-                pacientesDAO.buscarPorDni(dni, tbPacientes);                
+                pacientesDAO.buscarPorDni(dni, tbPacientes);
 
             } catch (NumberFormatException e) {
                 Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, e);
@@ -592,30 +598,17 @@ public class Pacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_lbleditarMouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        /* int filaSeleccionada = tbPacientes.getSelectedRow();
+        int filaSeleccionada = tbPacientes.getSelectedRow();
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un paciente.");
+            return; // Salir si no se selecciona ninguna fila
         }
 
         int id = (int) tbPacientes.getValueAt(filaSeleccionada, 0);
-        historialMedicoDAO = new HistorialMedicoDAO();
-        ArrayList<HistorialMedicoDTO> historialList = historialMedicoDAO.obtenerHistorialPorPaciente(idPaciente);
+        HistorialMedicoDAO historialMedicoDAO = new HistorialMedicoDAO();
+        ArrayList<HistorialMedicoDTO> historialList = historialMedicoDAO.leer(id);
 
-        String[] columnNames = {"Fecha Visita", "Diagnóstico", "Tratamiento", "Observaciones", "Estado"};
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-
-        for (HistorialMedicoDTO historial : historialList) {
-            Object[] row = {historial.getFechaVisita(), historial.getDiagnostico(), historial.getTratamiento(), historial.getObservaciones(), historial.getEstadoPaciente()};
-            model.addRow(row);
-        }
-
-        tableHistorial = new JTable(model);
-        add(new JScrollPane(tableHistorial), BorderLayout.CENTER);
-
-        setTitle("Historial Médico del Paciente");
-        setSize(600, 400);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);*/
-
+      historialMedicoDAO.HistorialMedicoViewer(historialList);
 
     }//GEN-LAST:event_jLabel5MouseClicked
     private void mostrarFechaYHoraActual() {
