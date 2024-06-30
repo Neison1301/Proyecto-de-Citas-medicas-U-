@@ -131,32 +131,32 @@ public class HistorialMedicoDAO implements CRUD<HistorialMedicoDTO> {
         }
     }
 
-    public void HistorialMedicoViewer(ArrayList<HistorialMedicoDTO> historialList) {
+    public void mostrarHistorialMedicoPorPaciente(int idPaciente, ArrayList<HistorialMedicoDTO> historialList) {
         JFrame frame = new JFrame();
         String[] columnNames = {"Fecha Visita", "Diagnóstico", "Tratamiento", "Observaciones", "Estado"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
+        // Filtrar historiales solo del paciente con idPaciente especificado
         for (HistorialMedicoDTO historial : historialList) {
-            Object[] row = {
-                historial.getFechaVisita(),
-                historial.getDiagnostico(),
-                historial.getTratamiento(),
-                historial.getObservaciones(),
-                historial.getEstado()
-            };
-            model.addRow(row);
+            if (historial.getIdPaciente() == idPaciente) {
+                Object[] row = {
+                    historial.getFechaVisita(),
+                    historial.getDiagnostico(),
+                    historial.getTratamiento(),
+                    historial.getObservaciones(),
+                    historial.getEstado()
+                };
+                model.addRow(row);
+            }
         }
 
         JTable tableHistorial = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(tableHistorial);
 
-        // Establecer un diseño adecuado
+        // Configuración del JFrame
         frame.getContentPane().setLayout(new BorderLayout());
-
-        // Añadir el JScrollPane al contenedor
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
-
-        frame.setTitle("Historial Médico del Paciente");
+        frame.setTitle("Historial Médico del Paciente " + idPaciente); // Agregar el idPaciente al título
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);

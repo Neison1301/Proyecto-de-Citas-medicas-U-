@@ -30,7 +30,8 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
         String sql = "INSERT INTO Pacientes (DniPaciente, NPaciente, Apellidos, FechaNacimiento, Telefono, Email, Genero, Direccion, Ciudad, Estado, CodigoPostal) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = conexion.establecerConexion();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, paciente.getDniPaciente());
             pstmt.setString(2, paciente.getnPaciente());
             pstmt.setString(3, paciente.getApellidos());
@@ -151,7 +152,8 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
     public void eliminar(int id) {
         String sql = "{CALL EliminarPacienteYConsultas(?)}";
 
-        try (Connection conn = conexion.establecerConexion(); CallableStatement stmt = conn.prepareCall(sql)) {
+        try (Connection conn = conexion.establecerConexion();
+                CallableStatement stmt = conn.prepareCall(sql)) {
 
             stmt.setInt(1, id);
             stmt.execute();
@@ -160,7 +162,6 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar paciente y sus citas médicas: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 

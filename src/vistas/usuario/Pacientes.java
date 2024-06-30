@@ -608,7 +608,7 @@ public class Pacientes extends javax.swing.JFrame {
         HistorialMedicoDAO historialMedicoDAO = new HistorialMedicoDAO();
         ArrayList<HistorialMedicoDTO> historialList = historialMedicoDAO.leer(id);
 
-      historialMedicoDAO.HistorialMedicoViewer(historialList);
+        historialMedicoDAO.mostrarHistorialMedicoPorPaciente(id, historialList);
 
     }//GEN-LAST:event_jLabel5MouseClicked
     private void mostrarFechaYHoraActual() {

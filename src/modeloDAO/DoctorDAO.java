@@ -199,18 +199,14 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
 
     @Override
     public void eliminar(int id) {
-        String sql = "DELETE FROM Doctores WHERE IdDoctor = ?";
+        String sql = "{CALL EliminarDoctor(?)}";
 
-        try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = conexion.establecerConexion(); 
+                CallableStatement stmt = conn.prepareCall(sql)) {
 
-            pstmt.setInt(1, id);
-            int rowsAffected = pstmt.executeUpdate();
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Doctor eliminado con éxito.");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el doctor seleccionado.");
-            }
+            stmt.setInt(1, id);
+            stmt.execute();
+            JOptionPane.showMessageDialog(null, "Doctor eliminado correctamente.");
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar doctor: " + e.getMessage());

@@ -282,7 +282,6 @@ public class CitasMedicasDAO implements CRUD<CitasMedicasDTO>, AtencionMedica {
             // Ejecutar la consulta
             pstmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Cita médica creada correctamente.");
         } catch (SQLException ex) {
             System.out.println("Error al crear cita médica: " + ex.getMessage());
         }

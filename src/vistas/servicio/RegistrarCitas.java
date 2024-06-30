@@ -5,24 +5,18 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import modeloDAO.CitasMedicasDAO;
-import modeloDAO.DoctorDAO;
-import modeloDAO.PacientesDAO;
-import modeloDTO.CitasMedicasDTO;
+import mvc.CitasMedicasMVC;
 import vistas.usuario.MenuPrincipal;
-import vistas.servicio.Citas;
 
 public class RegistrarCitas extends javax.swing.JFrame {
 
     Conexion conexion = new Conexion();
-    DoctorDAO doctoresDAO = new DoctorDAO(conexion);
-    PacientesDAO pacientesDAO = new PacientesDAO(conexion, 0, 0, null, null, 0, null, true);
-    CitasMedicasDAO citasMedicasDAO = new CitasMedicasDAO();
+    CitasMedicasMVC citasMedicasMVC = new CitasMedicasMVC();
 
     public RegistrarCitas() {
         initComponents();
-        doctoresDAO.cargarComboDoctores(cbdoctor);
-        pacientesDAO.cargarComboPacientes(cbpaciente);
+        citasMedicasMVC.cargarComboDoctores(cbdoctor);
+        citasMedicasMVC.cargarComboPacientes(cbpaciente);
     }
 
     @SuppressWarnings("unchecked")
@@ -282,13 +276,13 @@ public class RegistrarCitas extends javax.swing.JFrame {
         String motivo = tfMotivo.getText();
         String diagnostico = tadiagnostico.getText();
         String tratamiento = txatratamiento.getText();
-        String estado = cbestado.getSelectedItem().toString();
+        String estado = "Programada";
 
         Date fechaSeleccionada = tfFechaCita.getDate();
         LocalDateTime fechaCita = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
         // Llamar al método para crear la cita médica en la base de datos
-        citasMedicasDAO.crearCitaMedicaf(pacienteSeleccionado, doctorSeleccionado, fechaCita, motivo, diagnostico, tratamiento, CitasMedicasDTO.Estado.Programada);
+        citasMedicasMVC.crearCitaMedica(pacienteSeleccionado, doctorSeleccionado, fechaCita, motivo, diagnostico, tratamiento, estado);
         JOptionPane.showMessageDialog(null, "La cita médica se ha registrado correctamente.");
 
         Citas c = new Citas();
