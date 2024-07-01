@@ -1,19 +1,13 @@
 package vistas.usuario;
 
 import config.Conexion;
-import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modeloDAO.HistorialMedicoDAO;
 import modeloDAO.PacientesDAO;

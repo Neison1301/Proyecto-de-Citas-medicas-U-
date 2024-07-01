@@ -9,8 +9,7 @@ import java.sql.SQLException;
 public class Conexion {
 
     private Connection conector;
- 
-    
+
     String usuario = "root", contraseña = "12345", cadena = "jdbc:mysql://localhost:3306/POO";
 
     public Connection getConector() {
@@ -48,6 +47,4 @@ public class Conexion {
         }
         return conector.prepareStatement(sql);
     }
-    
-    
 }
