@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.sql.CallableStatement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -25,6 +26,10 @@ public class CitasMedicasDAO implements CRUD<CitasMedicasDTO>, AtencionMedica {
 
     public CitasMedicasDAO() {
         this.conexion = new Conexion();
+    }
+
+    CitasMedicasDAO(Conexion c) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -338,12 +343,59 @@ public class CitasMedicasDAO implements CRUD<CitasMedicasDTO>, AtencionMedica {
             if (!result) {
                 JOptionPane.showMessageDialog(null, "Cita médica creada correctamente.");
             } else {
-                
+
             }
 
         } catch (SQLException ex) {
             System.out.println("Error al llamar al procedimiento almacenado: " + ex.getMessage());
         }
     }
+
+
+    public void mostrarDetallesCitaporf (Date fechaSeleccionada, JTextArea textArea) {
+        // Lógica para obtener y mostrar detalles de la cita según la fecha seleccionada
+        ArrayList<CitasMedicasDTO> citas = obtenerCitasPorFecha(fechaSeleccionada); // Método para obtener citas por fecha
+        DoctorDAO doctorDAO = new DoctorDAO(conexion);
+        PacientesDAO pacienteDAO = new PacientesDAO(conexion, 0, 0, null, null, 0, null, true);
+
+        boolean citaEncontrada = false;
+
+        for (CitasMedicasDTO cita : citas) {
+            String nombreDoctor = doctorDAO.obtenerNombreDoctor(cita.getIdDoctor());
+            String nombrePaciente = pacienteDAO.obtenerNombrePaciente(cita.getIdPaciente());
+
+            String detalleCita = "Fecha: " + cita.getFechaConsulta() + "\n"
+                    + "Paciente: " + nombrePaciente + "\n"
+                    + "Doctor: " + nombreDoctor + "\n"
+                    + "Motivo: " + cita.getMotivo() + "\n"
+                    + "Diagnóstico: " + cita.getDiagnostico() + "\n"
+                    + "Tratamiento: " + cita.getTratamiento() + "\n"
+                    + "Estado: " + cita.getEstado() + "\n";
+
+            textArea.setText(detalleCita);
+            citaEncontrada = true;
+            break; // Termina el bucle al encontrar la primera cita
+        }
+
+        if (!citaEncontrada) {
+            textArea.setText("No hay citas para la fecha seleccionada.");
+        }
+    }
+
+    private ArrayList<CitasMedicasDTO> obtenerCitasPorFecha(Date fecha) {
+        // Implementa la lógica para obtener citas por la fecha especificada
+        // Ejemplo de implementación:
+        ArrayList<CitasMedicasDTO> citasPorFecha = new ArrayList<>();
+        ArrayList<CitasMedicasDTO> citas = leer(0); // Método para obtener todas las citas
+
+        for (CitasMedicasDTO cita : citas) {
+            if (cita.getFechaConsulta().equals(fecha)) {
+                citasPorFecha.add(cita);
+            }
+        }
+
+        return citasPorFecha;
+    }
+
 
 }

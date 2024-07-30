@@ -201,8 +201,7 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
     public void eliminar(int id) {
         String sql = "{CALL EliminarDoctor(?)}";
 
-        try (Connection conn = conexion.establecerConexion(); 
-                CallableStatement stmt = conn.prepareCall(sql)) {
+        try (Connection conn = conexion.establecerConexion(); CallableStatement stmt = conn.prepareCall(sql)) {
 
             stmt.setInt(1, id);
             stmt.execute();
@@ -241,7 +240,8 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
     public void mostrarDetalleCita(int idDoctor, JTextArea textArea) {
         String sql = "SELECT DniDoctor, NDoctor, Apellido, Telefono, Email, Genero, Especialidad, Direccion, Ciudad, Estado, CodigoPostal, FechaContratacion, Salario FROM Doctores WHERE IdDoctor = ?";
 
-        try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = conexion.establecerConexion();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, idDoctor);
             ResultSet rs = pstmt.executeQuery();
@@ -359,25 +359,31 @@ public class DoctorDAO implements CRUD<DoctorDTO>, Boleta {
         return nombreDoctor;
     }
 
-    /*public int obtenerIdDoctor(String nombreDoctor) throws SQLException {
-        int idDoctor = -1;
-        String query = "SELECT IdDoctor FROM Doctores WHERE NDoctor = ?";
-        try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+   public String obtenerNombreyApellidoDoctor(int idDoctor) {
+    String nombreDoctor = "Doctor no encontrado";
+    Connection conexion = null;
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
 
-            pstmt.setString(1, nombreDoctor);
-            ResultSet rs = pstmt.executeQuery();
+    try {
+        conexion = this.conexion.establecerConexion(); // Obtener la conexión desde la instancia de la clase Conexion
+        String query = "SELECT NDoctor, Apellido FROM Doctores WHERE IdDoctor = ?";
+        stmt = conexion.prepareStatement(query);
+        stmt.setInt(1, idDoctor);
+        rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                idDoctor = rs.getInt("IdDoctor");
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("Error al obtener el ID del doctor: " + ex.getMessage());
-            throw ex; // Re-lanzamos la excepción para manejarla en un nivel superior si es necesario
+        // Si se encuentra el doctor, asignar el nombre y apellido
+        if (rs.next()) {
+            nombreDoctor = rs.getString("NDoctor") + " " + rs.getString("Apellido");
         }
+    } catch (SQLException e) {
+        System.out.println("Error al obtener nombre del doctor: " + e.getMessage());
+    
+    }
+    return nombreDoctor;
+}
 
-        return idDoctor;
-    }*/
+
     public void asignarEspecialidad(int idDoctor, int idEspecialidad) {
         String sql = "INSERT INTO Doctor_Especialidad (IdDoctor, IdEspecialidad) VALUES (?, ?)";
 

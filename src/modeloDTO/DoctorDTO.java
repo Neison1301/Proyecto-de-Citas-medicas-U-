@@ -25,6 +25,7 @@ public class DoctorDTO extends Persona {
         this.salario = salario;
     }
 
+
     public String getEspecialidad() {
         return especialidad;
     }

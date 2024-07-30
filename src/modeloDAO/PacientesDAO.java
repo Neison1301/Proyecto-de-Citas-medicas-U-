@@ -30,8 +30,7 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
         String sql = "INSERT INTO Pacientes (DniPaciente, NPaciente, Apellidos, FechaNacimiento, Telefono, Email, Genero, Direccion, Ciudad, Estado, CodigoPostal) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = conexion.establecerConexion();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, paciente.getDniPaciente());
             pstmt.setString(2, paciente.getnPaciente());
             pstmt.setString(3, paciente.getApellidos());
@@ -152,8 +151,7 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
     public void eliminar(int id) {
         String sql = "{CALL EliminarPacienteYConsultas(?)}";
 
-        try (Connection conn = conexion.establecerConexion();
-                CallableStatement stmt = conn.prepareCall(sql)) {
+        try (Connection conn = conexion.establecerConexion(); CallableStatement stmt = conn.prepareCall(sql)) {
 
             stmt.setInt(1, id);
             stmt.execute();
@@ -282,8 +280,7 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
                     modelo.addRow(new Object[]{
                         paciente.getIdPaciente(),
                         paciente.getnPaciente() + " " + paciente.getApellidos(),
-                        paciente.getTelefono(),
-                    });
+                        paciente.getTelefono(),});
 
                     JOptionPane.showMessageDialog(null, "Paciente encontrado correctamente.");
                 } else {
@@ -354,16 +351,35 @@ public class PacientesDAO extends Persona implements CRUD<PacientesDTO> {
         return nombrePaciente;
     }
 
-    /*public int obtenerIdPaciente(String nombrePaciente) throws SQLException {
-        int idPaciente = -1;
-        String query = "SELECT IdPaciente FROM Pacientes WHERE NPaciente = ?";
-        try (Connection conn = conexion.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, nombrePaciente);
-            ResultSet rs = pstmt.executeQuery();
+    public PacientesDTO obtenerPacientePorId(int idpaciente) {
+        PacientesDTO pacienteDTO = null;
+        Connection cx = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            cx = this.conexion.establecerConexion(); // Obtener la conexión desde la instancia de la clase Conexion
+            String query = "SELECT * FROM Pacientes WHERE IdPaciente = ?";
+            stmt = cx.prepareStatement(query);
+            stmt.setInt(1, idpaciente);
+            rs = stmt.executeQuery();
+
+            // Si se encuentra el paciente, asignar los datos al objeto PacientesDTO
             if (rs.next()) {
-                idPaciente = rs.getInt("IdPaciente");
+                pacienteDTO = new PacientesDTO();
+                pacienteDTO.setIdPaciente(rs.getInt("IdPaciente"));
+                pacienteDTO.setDniPaciente(rs.getInt("DniPaciente"));
+                pacienteDTO.setnPaciente(rs.getString("NPaciente"));
+                pacienteDTO.setApellidos(rs.getString("Apellidos"));
+                pacienteDTO.setDireccion(rs.getString("Direccion"));
+                pacienteDTO.setTelefono(rs.getInt("Telefono"));
+                pacienteDTO.setEmail(rs.getString("Email"));
+                // Añade más campos según tu estructura de base de datos y DTO
             }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener paciente por ID: " + e.getMessage());
         }
-        return idPaciente;
-    }*/
+
+        return pacienteDTO;
+    }
 }

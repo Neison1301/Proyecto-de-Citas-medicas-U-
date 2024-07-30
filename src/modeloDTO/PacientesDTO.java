@@ -32,6 +32,21 @@ public class PacientesDTO {
         this.codigoPostal = codigoPostal;
     }
 
+    public PacientesDTO() {
+    }
+    
+    
+    private String paciente; // Nombre del paciente
+
+    // Constructor, getters y setters
+    public String getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(String paciente) {
+        this.paciente = paciente;
+    }
+
     public int getIdPaciente() {
         return idPaciente;
     }

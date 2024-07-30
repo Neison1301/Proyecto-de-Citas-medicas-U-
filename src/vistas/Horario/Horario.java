@@ -1,5 +1,7 @@
 package vistas.Horario;
 
+import java.util.Date;
+import modeloDAO.CitasMedicasDAO;
 import vistas.Doctor.Doctor;
 import vistas.usuario.MenuPrincipal;
 import vistas.usuario.Pacientes;
@@ -7,6 +9,7 @@ import vistas.logueo.Inicio;
 import vistas.servicio.Citas;
 
 public class Horario extends javax.swing.JFrame {
+    CitasMedicasDAO citasMedicas = new CitasMedicasDAO();
 
     public Horario() {
         initComponents();
@@ -37,7 +40,7 @@ public class Horario extends javax.swing.JFrame {
         menu4 = new Label.Menu();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jtxtdia = new javax.swing.JTextArea();
         menu5 = new Label.Menu();
         jLabel5 = new javax.swing.JLabel();
         menu6 = new Label.Menu();
@@ -172,9 +175,9 @@ public class Horario extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
         jLabel3.setText("Datos :");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane3.setViewportView(jTextArea2);
+        jtxtdia.setColumns(20);
+        jtxtdia.setRows(5);
+        jScrollPane3.setViewportView(jtxtdia);
 
         menu4.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         menu4.setLayer(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -268,6 +271,12 @@ public class Horario extends javax.swing.JFrame {
             .addComponent(lbEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
         );
 
+        jCalendar1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jCalendar1PropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -351,6 +360,15 @@ public class Horario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel12MouseClicked
 
+    private void jCalendar1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar1PropertyChange
+        if ("calendar".equals(evt.getPropertyName())) {
+            Date dia = jCalendar1.getDate();
+            
+            citasMedicas.mostrarDetallesCitaporf(dia, jtxtdia);
+        }
+
+    }//GEN-LAST:event_jCalendar1PropertyChange
+
     /**
      * @param args the command line arguments
      */
@@ -400,7 +418,7 @@ public class Horario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jtxtdia;
     private javax.swing.JLabel lbEliminar;
     private javax.swing.JLabel lbldoctor;
     private Label.Menu menu1;
