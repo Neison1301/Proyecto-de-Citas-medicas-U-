@@ -1,10 +1,6 @@
 package vistas.servicio;
 
 import config.Conexion;
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
 import modeloDAO.CitasMedicasDAO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,7 +9,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modeloDAO.DoctorDAO;
 import modeloDAO.PacientesDAO;
-import modeloDAO.ReporteHTML;
 import modeloDTO.CitasMedicasDTO;
 import vistas.Doctor.Doctor;
 import vistas.Horario.Horario;
@@ -64,8 +59,6 @@ public class Citas extends javax.swing.JFrame {
         menu6 = new Label.Menu();
         jbEditarCita = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        menu7 = new Label.Menu();
-        jbImprimir = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Citas");
@@ -382,32 +375,6 @@ public class Citas extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel7.setText("Citas Registradas");
 
-        menu7.setBackground(new java.awt.Color(255, 255, 255));
-
-        jbImprimir.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
-        jbImprimir.setText("Imprimir");
-        jbImprimir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbImprimirMouseClicked(evt);
-            }
-        });
-
-        menu7.setLayer(jbImprimir, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout menu7Layout = new javax.swing.GroupLayout(menu7);
-        menu7.setLayout(menu7Layout);
-        menu7Layout.setHorizontalGroup(
-            menu7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menu7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
-        );
-        menu7Layout.setVerticalGroup(
-            menu7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jbImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -428,8 +395,7 @@ public class Citas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(menu5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(menu6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(menu7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(menu6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(menu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -450,13 +416,11 @@ public class Citas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 36, Short.MAX_VALUE)
                 .addComponent(menu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(45, 45, 45)
                 .addComponent(menu5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(menu6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(menu7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addGap(70, 70, 70))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 540));
@@ -562,31 +526,6 @@ public class Citas extends javax.swing.JFrame {
         horarioo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblHOrarioMouseClicked
-
-    private void jbImprimirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbImprimirMouseClicked
-        String rutaArchivo = "C:\\Users\\NEISON\\OneDrive - Universidad Tecnologica del Peru\\reportefd_facturas.html";
-        int fila = tbCitas.getSelectedRow();
-        if (fila >= 0) {
-            int idCita = (int) tbCitas.getValueAt(fila, 0);
-            int confirmar = JOptionPane.showConfirmDialog(this, "Deseas Imprimir estacita?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-            if (confirmar == JOptionPane.YES_OPTION) {
-
-                ReporteHTML reporteHTML = new ReporteHTML();
-
-                reporteHTML.generarReporte(idCita);
-
-                try {
-                    Desktop.getDesktop().browse(new File(rutaArchivo).toURI());
-                } catch (IOException e) {
-                    System.out.println("Error al abrir el archivo en el navegador: " + e.getMessage());
-                }
-
-                citasMedicas.mostrarCitas(tbCitas);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona una cita para eliminar.");
-        }
-    }//GEN-LAST:event_jbImprimirMouseClicked
     private void mostrarFechaYHoraActual() {
         Date fechaHora = new Date();
         SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -645,7 +584,6 @@ public class Citas extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel jbEditarCita;
-    private javax.swing.JLabel jbImprimir;
     private javax.swing.JLabel jlEliminarCita;
     private javax.swing.JLabel lblHOrario;
     private javax.swing.JLabel lbldoctor;
@@ -655,7 +593,6 @@ public class Citas extends javax.swing.JFrame {
     private Label.Menu menu4;
     private Label.Menu menu5;
     private Label.Menu menu6;
-    private Label.Menu menu7;
     private javax.swing.JTable tbCitas;
     private javax.swing.JTextArea txArea;
     private javax.swing.JTextField txtfecha;
